@@ -1,0 +1,25 @@
+@import './base.css';
+header{
+  background-color: rgb(63, 29, 184);
+  height: 40px;
+  overflow: hidden;
+  text-align: center;
+}
+.content-area{
+  display: flex;
+  min-height: calc(100vh - 80px);
+}
+aside{
+  flex: 15%;
+  border-right: 1px solid;
+}
+main{
+  flex: 85%;
+}
+footer{
+  background-color: rgb(48, 47, 47);
+  height: 40px;
+  overflow: hidden;
+  text-align: center;
+}
+
