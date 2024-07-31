@@ -5,6 +5,9 @@ header{
   overflow: hidden;
   text-align: center;
 }
+header, footer{
+  color: white;
+}
 .content-area{
   display: flex;
   min-height: calc(100vh - 80px);
@@ -16,8 +19,13 @@ aside{
 main{
   flex: 85%;
 }
+
+body{
+  background-color: #f9fbfd;
+  color: black
+}
 footer{
-  background-color: rgb(48, 47, 47);
+  background-color: rgb(25, 13, 68);
   height: 40px;
   overflow: hidden;
   text-align: center;
