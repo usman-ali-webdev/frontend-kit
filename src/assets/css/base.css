@@ -4,7 +4,7 @@
     --text-light-color: #ffffff;
     --background-color: #f4f4f9;
     --header-background: #4169e1;
-    --sidebar-background: #2e3d55;
+    --sidebar-background: #e0ecff;
     --footer-background: #4169e1;
     --navbar-background: #4169e1;
     --navbar-text-color: #ffffff;
@@ -43,14 +43,14 @@
 /* Import the Montserrat Variable Fonts */
 @font-face {
   font-family: 'Montserrat';
-  src: url(./fonts/Montserrat-VariableFont_wght.ttf) format('truetype');
+  src: url(../fonts/Montserrat-VariableFont_wght.ttf) format('truetype');
   font-weight: 100 900;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Montserrat';
-  src: url(./fonts/Montserrat-Italic-VariableFont_wght.ttf) format('truetype');
+  src: url(../fonts/Montserrat-Italic-VariableFont_wght.ttf) format('truetype');
   font-weight: 100 900;
   font-style: italic;
 }

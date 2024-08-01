@@ -1,4 +1,4 @@
-@import './base.css';
+@import url('base.css');
 header{
   height: 40px;
   overflow: hidden;
