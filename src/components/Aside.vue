@@ -2,7 +2,7 @@
     <aside>
         <nav>
             <ul>
-                <li><a href="#">Getting Started</a></li>
+                <li class="active"><a href="#">Getting Started</a></li>
                 <li><a href="#">Layout Generator</a></li>
                 <li><a href="#">Components</a></li>
                 <li><a href="#">Utilities</a></li>

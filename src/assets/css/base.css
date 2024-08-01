@@ -9,6 +9,7 @@
     --navbar-background: #4169e1;
     --navbar-text-color: #ffffff;
     --sidebar-text-color: #ffffff;
+    --sidebar-background-color: #ffffff;
     --sidebar-link-color: #a8b0c1;
     --sidebar-link-hover-color: #ffffff;
     --main-heading-color: #333333;
@@ -64,7 +65,7 @@ body {
   min-height: 100vh;
   background-color: var(--background-color);
   color: var(--text-color);
-  font-size: 16px;
+  /* font-size: 16px; */
   line-height: 1;
   font-family: 'Montserrat', sans-serif;
 }
