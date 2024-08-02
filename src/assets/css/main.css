@@ -68,17 +68,12 @@ aside nav ul li {
   text-align: left;
   margin-right: 0;
   padding: 0.5em;
-  transition: border-radius .1.5s ease-in;
-  -webkit-transition: border-radius .1.5s ease-in;
-  -moz-transition: border-radius .1.5s ease-in;
-  -ms-transition: border-radius .1.5s ease-in;
-  -o-transition: border-radius .1.5s ease-in;
+  border-radius: 17px 0px;
 }
 aside nav ul li:hover,
 aside nav ul li.active
 {
   background: white;
-  border-radius: 17px 0px;
 }
 aside nav ul li:hover a,
 aside nav ul li.active a
@@ -89,10 +84,6 @@ aside nav ul li.active a
 aside nav ul li a {
   color: var(--sidebar-link-color);
   text-decoration: none;
-}
-
-aside nav ul li a:hover {
-  
 }
 
 main h1, main h2, main h3 {
