@@ -1,5 +1,6 @@
 <template>
     <aside>
+        <h1 style="color: var(--primary-color)">FrontendKit</h1>
         <nav>
             <ul>
                 <li class="active"><a href="#">Getting Started</a></li>

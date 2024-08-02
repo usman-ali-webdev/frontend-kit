@@ -1,13 +1,17 @@
 <template>
 
   <!-- Header Section -->
-  <Header></Header>
+  <div class="header-area">
+    <Header></Header>
+  </div>
 
   <!-- Content Section -->
   <div class="content-area">
 
     <!-- Sidebar Area -->
-    <Aside></Aside>
+    <div class="sidebar-area">
+      <Aside></Aside>
+    </div>
     <!-- Main Area  -->
     <Main></Main>
     
