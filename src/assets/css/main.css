@@ -6,6 +6,7 @@ header{
   background-color: var(--header-background);
   color: var(--text-light-color);
   text-align: center;
+  padding-inline: 30px;
 }
 
 
@@ -69,6 +70,7 @@ aside nav ul li {
   margin-right: 0;
   padding: 0.5em;
   border-radius: 17px 0px;
+  padding-inline-start: 15px;
 }
 aside nav ul li:hover,
 aside nav ul li.active
