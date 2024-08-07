@@ -29,6 +29,8 @@ aside{
   width: 12.8vw;
   position: fixed;
   top: 56px;
+  overflow: hidden auto;
+  height: 85vh;
 }
 
 .content-area{

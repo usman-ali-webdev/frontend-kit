@@ -1,6 +1,6 @@
 <template>
-    <header style="display: flex;">
-      <!-- <h1>FrontendKit</h1> -->
+    <header id="navbar" style="display: flex;">
+      <h1>FrontendKit</h1>
       <nav style="flex:1; text-align: center;">
           <ul>
               <li><a href="#">Home</a></li>

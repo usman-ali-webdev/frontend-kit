@@ -1,6 +1,6 @@
 <template>
+    <h1 class="sidebar-logo" style="color: var(--primary-color)">FrontendKit</h1>
     <aside>
-        <h1 style="color: var(--primary-color)">FrontendKit</h1>
         <nav>
             <ul>
                 <li class="active"><a href="#">Getting Started</a></li>
@@ -21,5 +21,8 @@
 </script>
 
 <style scoped>
-
+.sidebar-logo{
+    position: sticky;
+    top: 5px;
+}
 </style>
