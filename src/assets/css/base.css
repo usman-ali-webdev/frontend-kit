@@ -5,7 +5,7 @@
     --background-color: #f4f4f9;
     --header-background: #4169e1;
     --sidebar-background: #e0ecff;
-    --footer-background: #4169e1;
+    --footer-background: #e0ecff;
     --navbar-background: #4169e1;
     --navbar-text-color: #ffffff;
     --sidebar-text-color: #ffffff;
@@ -14,9 +14,9 @@
     --sidebar-link-hover-color: #ffffff;
     --main-heading-color: #333333;
     --main-paragraph-color: #555555;
-    --footer-text-color: #ffffff;
-    --footer-link-color: #a8b0c1;
-    --footer-link-hover-color: #ffffff;
+    --footer-text-color: #555555;
+    --footer-link-color: #4169e1;
+    --footer-link-hover-color: #577ae2;
 }
 
 @media (prefers-color-scheme: dark) {

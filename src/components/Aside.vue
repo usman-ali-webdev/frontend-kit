@@ -1,5 +1,5 @@
 <template>
-    <h1 class="sidebar-logo" style="color: var(--primary-color)">FrontendKit</h1>
+    <!-- <h1 class="sidebar-logo" style="color: var(--primary-color)">FrontendKit</h1> -->
     <aside>
         <nav>
             <ul>
@@ -10,6 +10,37 @@
                 <li><a href="#">Themes</a></li>
                 <li><a href="#">Customization</a></li>
                 <li><a href="#">Examples</a></li>
+                <li><a href="#">Updates</a></li>
+                <li><a href="#">Updates</a></li>
+                <li><a href="#">Updates</a></li>
+                <li><a href="#">Updates</a></li>
+                <li><a href="#">Updates</a></li>
+                <li><a href="#">Updates</a></li>
+                <li><a href="#">Updates</a></li>
+                <li><a href="#">Updates</a></li>
+                <li><a href="#">Updates</a></li>
+                <li><a href="#">Updates</a></li>
+                <li><a href="#">Updates</a></li>
+                <li><a href="#">Updates</a></li>
+                <li><a href="#">Updates</a></li>
+                <li><a href="#">Updates</a></li>
+                <li><a href="#">Updates</a></li>
+                <li><a href="#">Updates</a></li>
+                <li><a href="#">Updates</a></li>
+                <li><a href="#">Updates</a></li>
+                <li><a href="#">Updates</a></li>
+                <li><a href="#">Updates</a></li>
+                <li><a href="#">Updates</a></li>
+                <li><a href="#">Updates</a></li>
+                <li><a href="#">Updates</a></li>
+                <li><a href="#">Updates</a></li>
+                <li><a href="#">Updates</a></li>
+                <li><a href="#">Updates</a></li>
+                <li><a href="#">Updates</a></li>
+                <li><a href="#">Updates</a></li>
+                <li><a href="#">Updates</a></li>
+                <li><a href="#">Updates</a></li>
+                <li><a href="#">Updates</a></li>
                 <li><a href="#">Updates</a></li>
             </ul>
         </nav>
