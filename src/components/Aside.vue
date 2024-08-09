@@ -11,37 +11,6 @@
                 <li><a href="#">Customization</a></li>
                 <li><a href="#">Examples</a></li>
                 <li><a href="#">Updates</a></li>
-                <li><a href="#">Updates</a></li>
-                <li><a href="#">Updates</a></li>
-                <li><a href="#">Updates</a></li>
-                <li><a href="#">Updates</a></li>
-                <li><a href="#">Updates</a></li>
-                <li><a href="#">Updates</a></li>
-                <li><a href="#">Updates</a></li>
-                <li><a href="#">Updates</a></li>
-                <li><a href="#">Updates</a></li>
-                <li><a href="#">Updates</a></li>
-                <li><a href="#">Updates</a></li>
-                <li><a href="#">Updates</a></li>
-                <li><a href="#">Updates</a></li>
-                <li><a href="#">Updates</a></li>
-                <li><a href="#">Updates</a></li>
-                <li><a href="#">Updates</a></li>
-                <li><a href="#">Updates</a></li>
-                <li><a href="#">Updates</a></li>
-                <li><a href="#">Updates</a></li>
-                <li><a href="#">Updates</a></li>
-                <li><a href="#">Updates</a></li>
-                <li><a href="#">Updates</a></li>
-                <li><a href="#">Updates</a></li>
-                <li><a href="#">Updates</a></li>
-                <li><a href="#">Updates</a></li>
-                <li><a href="#">Updates</a></li>
-                <li><a href="#">Updates</a></li>
-                <li><a href="#">Updates</a></li>
-                <li><a href="#">Updates</a></li>
-                <li><a href="#">Updates</a></li>
-                <li><a href="#">Updates</a></li>
             </ul>
         </nav>
     </aside>

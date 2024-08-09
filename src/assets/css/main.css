@@ -73,6 +73,7 @@ nav ul li a:hover {
 
 aside nav {
   padding: 1.2em .4em;
+  background-color: transparent;
 }
 aside nav ul {
   list-style: none;
@@ -88,11 +89,14 @@ aside nav ul li {
   padding: 0.5em;
   border-radius: 17px 0px;
   padding-inline-start: 15px;
+  background-color: var(--primary-color);
+  border: 2px solid transparent;
 }
 aside nav ul li:hover,
 aside nav ul li.active
 {
   background: white;
+  border: 2px dashed var(--primary-color);
 }
 aside nav ul li:hover a,
 aside nav ul li.active a
@@ -103,6 +107,7 @@ aside nav ul li.active a
 aside nav ul li a {
   color: var(--sidebar-link-color);
   text-decoration: none;
+  font-weight: 500;
 }
 
 main h1, main h2, main h3 {
