@@ -97,6 +97,7 @@ aside nav ul li.active
 {
   background: white;
   border: 2px dashed var(--primary-color);
+  background-clip: padding-box;
 }
 aside nav ul li:hover a,
 aside nav ul li.active a
