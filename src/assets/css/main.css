@@ -86,9 +86,8 @@ aside nav ul li {
   margin-bottom: 0.5em;
   text-align: left;
   margin-right: 0;
-  padding: 0.5em;
+  
   border-radius: 17px 0px;
-  padding-inline-start: 15px;
   background-color: var(--primary-color);
   border: 2px solid transparent;
 }
@@ -109,6 +108,15 @@ aside nav ul li a {
   color: var(--sidebar-link-color);
   text-decoration: none;
   font-weight: 500;
+  width: 100%;
+  display: block;
+  padding: 0.5em;
+  padding-inline-start: 15px;
+  border-radius: inherit;
+  -webkit-border-radius: inherit;
+  -moz-border-radius: inherit;
+  -ms-border-radius: inherit;
+  -o-border-radius: inherit;
 }
 
 main h1, main h2, main h3 {
