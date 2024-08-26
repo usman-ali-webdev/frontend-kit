@@ -15,7 +15,6 @@
 
     <!-- Main Area  -->
     <main>
-      <Home v-if="$route.path === '/'"></Home>
       <router-view></router-view>
     </main>
     
@@ -29,10 +28,8 @@
 <script setup>
 import Header from './components/Header.vue';
 import Aside from './components/Aside.vue';
-// import Home from './views/Home.vue';
 import Footer from './components/Footer.vue';
 import { ref, computed, onMounted } from 'vue';
-import router from './router'
 // import api from '@/services/api';
 </script>
 
