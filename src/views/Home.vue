@@ -1,5 +1,4 @@
 <template>
-    <main>
         <section>
             <h1>Getting Started with Frontend Kit</h1>
             <p>Welcome to the Frontend Kit! This guide will help you get started with using our frontend components and tools. Follow the steps below to set up your development environment and begin creating amazing projects.</p>
@@ -21,7 +20,6 @@
             
             <p>Thank you for choosing the Frontend Kit. We hope you find it useful and easy to work with. Happy coding!</p>
         </section>
-    </main>
 </template>
 
 <script setup>

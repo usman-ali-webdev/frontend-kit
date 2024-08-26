@@ -3,8 +3,12 @@
     <aside>
         <nav>
             <ul>
-                <li class="active"><a href="#">Getting Started</a></li>
-                <li><a href="#">Layout Generator</a></li>
+                <li class="active">
+                    <router-link to="/">Getting Started</router-link>
+                </li>
+                <li>
+                    <router-link to="/layout-generator">Layout Generator</router-link>
+                </li>
                 <li><a href="#">Components</a></li>
                 <li><a href="#">Utilities</a></li>
                 <li><a href="#">Themes</a></li>
