@@ -1,5 +1,4 @@
 <template>
-
   <!-- Header Section -->
   <div class="header-area">
     <Header></Header>
@@ -9,19 +8,19 @@
   <div class="content-area">
 
     <!-- Sidebar Area -->
-    <div class="sidebar-area">
+    <div v-if="$route.path !== '/'" class="sidebar-area">
       <Aside></Aside>
     </div>
 
     <!-- Main Area  -->
-    <main>
+    <main class="main-area">
       <router-view></router-view>
     </main>
     
   </div>
 
   <!-- Footer Section -->
-  <Footer></Footer>
+  <!-- <Footer></Footer> -->
 
 </template>
 
@@ -34,5 +33,27 @@ import { ref, computed, onMounted } from 'vue';
 </script>
 
 <style scoped>
+/* .header-area {
+    background-color: #4a4ad0;
+    color: white;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .content-area {
+    display: flex;
+    flex-direction: row;
+  } */
+/* 
 
+  .sidebar-area {
+    width: 200px;
+    background-color: #f4f4f4;
+    padding: 20px;
+  }
+
+  .main-area {
+    flex-grow: 1;
+    padding: 20px;
+  } */
 </style>

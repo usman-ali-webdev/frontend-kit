@@ -78,6 +78,40 @@
       alert(`Viewport width: ${width}px, height: ${height}px`);
 
     </script> -->
+    <script>
+      function filterSuggestions(query) {
+        const list = document.getElementById('suggestionList');
+        const items = list.querySelectorAll('li');
+        const q = query.toLowerCase();
+    
+        items.forEach((item) => {
+          item.style.display = item.textContent.toLowerCase().includes(q) ? 'block' : 'none';
+        });
+    
+        list.style.display = q ? 'block' : 'none';
+      }
+    
+      // function selectSuggestion(text) {
+      //   const input = document.querySelector('.search-input');
+      //   input.value = text;
+      //   document.getElementById('suggestionList').style.display = 'none';
+      //   if (input.value !== '') {
+      //       this.$router.push('/ui-component');
+      //   }
+      // }
+    
+      function showSuggestions() {
+        const list = document.getElementById('suggestionList');
+        list.style.display = 'block';
+      }
+    
+      function hideSuggestionsDelayed() {
+        setTimeout(() => {
+          document.getElementById('suggestionList').style.display = 'none';
+        }, 150);
+      }
+    </script>
+    
 </html>
 
 
