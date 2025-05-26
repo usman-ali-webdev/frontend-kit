@@ -2,7 +2,7 @@
   <section class="landing">
     <h1></h1>
     <div class="search-section">
-  <h2 class="search-title">Prebuilt Components &ndash; <br> Fast, Easy UI Integration!</h2>
+  <h2 class="search-title">Prebuilt Components &ndash; <br> Fast, Easy <span style="color: #FF7519;">UI Integration!</span></h2>
   
   <div class="search-box">
     <input
@@ -23,7 +23,7 @@
       <li onclick="selectSuggestion('Dropdown')">Dropdown</li>
       <li onclick="selectSuggestion('Login Form')">Login Form</li>
     </ul>
-    <button class="search-button">Explore</button>
+    <!-- <button class="search-button">Explore</button> -->
   </div>
 
   <!-- <p class="search-note">Type to find a component like "header", "sidebar", or "tabs".</p> -->
@@ -56,17 +56,18 @@ onMounted(() => {
 <style scoped>
 .search-section {
   max-width: 700px;
-  margin: 60px auto;
+  margin: 0 auto;
+  padding-block: 60px;
   text-align: center;
   padding: 20px;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: Samsung Sharp Sans Bold;
 }
 
 .search-title {
   font-size: 45px;
   margin-bottom: 20px;
-  color: #2e2e2e;
-  font-weight: bold;
+  color: white;
+  font-family: Samsung Sharp Sans Bold;
 }
 
 .search-box {

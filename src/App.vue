@@ -43,6 +43,7 @@ import { ref, computed, onMounted } from 'vue';
   .content-area {
     display: flex;
     flex-direction: row;
+      background-image: url('../images/bg/wave-bg.svg');
   } */
 /* 
 
@@ -56,4 +57,5 @@ import { ref, computed, onMounted } from 'vue';
     flex-grow: 1;
     padding: 20px;
   } */
+    
 </style>

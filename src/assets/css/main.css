@@ -1,17 +1,20 @@
 @import url('base.css');
 @import url('typography.css');
 
-.header-area{
+/* .header-area{
   position: sticky;
   top: 0;
-}
+} */
 header{
-  height: 45px;
+  /* height: 45px; */
+  padding-block: 14px;
   overflow: hidden;
-  background-color: var(--header-background);
+  /* background-color: var(--header-background); */
   color: var(--text-light-color);
   text-align: center;
   padding-inline: 30px;
+  background-color: #5151dc;
+  box-shadow: 0 0px 19px 0px #0000005e;
 }
 
 .sidebar-area{

@@ -42,31 +42,55 @@
   font-weight: normal;
 }
 
-/* Import the Montserrat Variable Fonts */
-@font-face {
-  font-family: 'Montserrat';
-  src: url(../fonts/Montserrat-VariableFont_wght.ttf) format('truetype');
-  font-weight: 100 900;
-  font-style: normal;
-}
+    @font-face {
+    font-family: 'Samsung Sharp Sans Regular';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Samsung Sharp Sans Regular'), url(../fonts/samsungsharpsans.woff) format('woff');
+    }
 
-@font-face {
-  font-family: 'Montserrat';
-  src: url(../fonts/Montserrat-Italic-VariableFont_wght.ttf) format('truetype');
-  font-weight: 100 900;
-  font-style: italic;
-}
+    @font-face {
+    font-family: 'Samsung Sharp Sans Medium';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Samsung Sharp Sans Medium'), url(../fonts/samsungsharpsans-medium.woff) format('woff');
+    }
 
-/* Use cases for the imported fonts */
+    @font-face {
+    font-family: 'Samsung Sharp Sans Bold';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Samsung Sharp Sans Bold'), url(../fonts/samsungsharpsans-bold.woff) format('woff');
+    }
+
 .italic-text {
   font-style: italic;
 }
 
 body {
   min-height: 100vh;
-  background-color: var(--background-color);
+  background-color: white;
   color: var(--text-color);
   font-size: 16px;
+  font-family: 'Samsung Sharp Sans Regular', 'Segoe UI', Helvetica, Arial, sans-serif;
   line-height: 1;
-  font-family: 'Montserrat', sans-serif;
 }
+.main-area:has(.landing) {
+  padding: 0;
+}
+.landing {
+    background-image: url('../images/bg/wave-bg.svg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center 101%;
+    background-size: contain;
+    background-color: #4A4AD0;
+    min-height: calc(100vh - 25%);
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+  }
+  .main-area h1{
+  font-family: 'Samsung Sharp Sans Medium';
+  }
+

@@ -1,7 +1,7 @@
 <template>
   <header id="navbar" style="display: flex;">
     <!-- <h1>FrontendKit</h1> -->
-    <h1 style="line-height: 0.5; font-size: 1.6em; padding-top: 9px;">FrontendKit <br> <small style="font-size: xx-small;">
+    <h1 style="line-height: 0.5; font-size: 1.6em;">FrontendKit <br> <small style="font-size: xx-small;">
         Your Development Companion</small></h1>
     <!-- <nav style="flex:1; text-align: center;">
           <ul>
@@ -19,4 +19,6 @@
 
 </script>
 
-<style scoped></style>
+<style scoped>
+
+</style>
