@@ -69,23 +69,30 @@
 
 body {
   min-height: 100vh;
-  background-color: white;
+  background-color: #fcfafa;
   color: var(--text-color);
   font-size: 16px;
   font-family: 'Samsung Sharp Sans Regular', 'Segoe UI', Helvetica, Arial, sans-serif;
   line-height: 1;
 }
+
+@media (-webkit-min-device-pixel-ratio: 1.25) {
+  body {
+    zoom: 0.93;
+  }
+}
 .main-area:has(.landing) {
   padding: 0;
 }
 .landing {
-    background-image: url('../images/bg/wave-bg.svg');
+    /* background-image: url('../images/bg/wave-bg.svg'); */
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center 101%;
     background-size: contain;
-    background-color: #4A4AD0;
-    min-height: calc(100vh - 25%);
+    background-color: #4a4ad0;
+    /* min-height: calc(100vh - 25%); */
+    padding-bottom: 50px;
     display: flex;
     justify-content: center;
     padding-top: 50px;
