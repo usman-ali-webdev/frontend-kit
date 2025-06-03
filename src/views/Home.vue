@@ -1,5 +1,66 @@
 <template>
-  <section class="landing">
+  <section class="landing" style="position: relative;">
+    <svg width="20" height="20" class="floatY" style="position:absolute; top:20px; left:30px; opacity:0.15;">
+  <circle cx="10" cy="10" r="10" fill="#E0E0E0"/>
+</svg>
+<svg width="20" height="20" class="spin" style="position:absolute; top:60px; right:40px; opacity:0.15;">
+  <polygon points="10,0 20,20 0,20" fill="#F2C94C"/>
+</svg>
+<svg width="20" height="20" class="pulse" style="position:absolute; bottom:30px; left:50px; opacity:0.1;">
+  <rect width="20" height="20" fill="#6FCF97"/>
+</svg>
+<svg width="40" height="20" class="floatX" style="position:absolute; top:10px; right:20px; opacity:0.1;">
+  <polyline points="0,10 10,0 20,10 30,0 40,10" stroke="#2D9CDB" stroke-width="2" fill="none"/>
+</svg>
+<svg width="20" height="20" class="spin pulse" style="position:absolute; bottom:40px; right:30px; opacity:0.15;">
+  <line x1="10" y1="0" x2="10" y2="20" stroke="#BB6BD9" stroke-width="2"/>
+  <line x1="0" y1="10" x2="20" y2="10" stroke="#BB6BD9" stroke-width="2"/>
+</svg>
+<svg width="24" height="24" class="pulse" style="position:absolute; top:40px; left:5%; opacity:0.08;">
+  <circle cx="4" cy="4" r="4" fill="#EB5757"/>
+  <circle cx="20" cy="4" r="4" fill="#EB5757"/>
+  <circle cx="12" cy="20" r="4" fill="#EB5757"/>
+</svg>
+<svg width="30" height="30" class="floatY" style="position:absolute; top:150px; right:10%; opacity:0.1;">
+  <polygon points="15,0 30,30 0,30" fill="#27AE60"/>
+</svg>
+<svg width="60" height="20" class="floatX" style="position:absolute; bottom:20px; left:8%; opacity:0.05;">
+  <path d="M0 10 Q15 0 30 10 T60 10" stroke="#2D9CDB" stroke-width="2" fill="none"/>
+</svg>
+<svg width="16" height="16" class="spin" style="position:absolute; bottom:60px; right:20%; opacity:0.08;">
+  <line x1="8" y1="0" x2="8" y2="16" stroke="#F2994A" stroke-width="2"/>
+  <line x1="0" y1="8" x2="16" y2="8" stroke="#F2994A" stroke-width="2"/>
+</svg>
+<svg width="30" height="15" class="pulse" style="position:absolute; top:180px; left:15%; opacity:0.1;">
+  <path d="M0,15 A15,15 0 0,1 30,15" fill="#BB6BD9"/>
+</svg>
+<svg width="40" height="40" class="floatY" style="position:absolute; top:100px; left:10%; opacity:0.15;">
+  <circle cx="20" cy="20" r="15" stroke="limegreen" stroke-width="6" fill="transparent"/>
+</svg>
+<!-- Small O - Top Left-Center -->
+<!-- <svg width="24" height="24" class="pulse" style="position:absolute; top:80px; left:35%; opacity:0.15;">
+  <circle cx="12" cy="12" r="9" stroke="limegreen" stroke-width="4" fill="transparent"/>
+</svg> -->
+
+<!-- Medium O - Center Right -->
+<svg width="36" height="36" class="floatY" style="position:absolute; top:50%; right:28%; opacity:0.1;">
+  <circle cx="18" cy="18" r="13" stroke="limegreen" stroke-width="5" fill="transparent"/>
+</svg>
+
+<!-- Large O - Below Center Left -->
+<svg width="48" height="48" class="floatX" style="position:absolute; top:60%; left:32%; opacity:0.08;">
+  <circle cx="24" cy="24" r="18" stroke="limegreen" stroke-width="6" fill="transparent"/>
+</svg>
+
+<!-- Tiny O - Near Top Right-Center -->
+<!-- <svg width="16" height="16" class="spin" style="position:absolute; top:100px; right:35%; opacity:0.12;">
+  <circle cx="8" cy="8" r="6" stroke="limegreen" stroke-width="3" fill="transparent"/>
+</svg> -->
+
+
+
+
+
     <h1></h1>
     <div class="search-section">
       <h2 class="search-title">Prebuilt Components &ndash; <br> Fast, Easy <span style="color: #FF7519;">UI
@@ -28,7 +89,8 @@
 
   <section>
     <div class="container" style="text-align: center; margin-top: 1rem;">
-      <h2 class="section-title" style="color: #464646; font-family: 'Samsung Sharp Sans Bold'; font-size: 25px;">Examples</h2>
+      <h2 class="section-title" style="color: #464646; font-family: 'Samsung Sharp Sans Bold'; font-size: 25px;">
+        Examples</h2>
       <div class="examples-container">
         <div class="example-card">
           <img src="" alt="Header Example">
@@ -54,7 +116,9 @@
       </div>
 
       <div class="featured-section">
-        <h2 class="section-title" style="color: #464646; font-family: 'Samsung Sharp Sans Bold'; font-size: 25px; margin-bottom: 0;">Key Features</h2>
+        <h2 class="section-title"
+          style="color: #464646; font-family: 'Samsung Sharp Sans Bold'; font-size: 25px; margin-bottom: 0;">Key
+          Features</h2>
         <div class="feature-flex">
           <div class="feature-item">
             <span class="feature-icon">🚀</span>
@@ -73,12 +137,14 @@
           </div>
         </div>
       </div>
-
-     
-
-
     </div>
   </section>
+
+  <div class="cta-hire-me">
+    <button class="hire-me-btn" @click="router.push('/contact')">
+      Hire Me 👋
+    </button>
+  </div>
 
 </template>
 
@@ -234,50 +300,106 @@ onMounted(() => {
 }
 
 .view-more-section {
-        margin: 2rem 0;
-      }
+  margin: 2rem 0;
+}
 
-      .view-more-btn {
-        background: #4a4ad0;
-        color: white;
-        padding: 12px 24px;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 16px;
-        transition: background 0.3s;
-      }
+.view-more-btn {
+  background: #4a4ad0;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s;
+}
 
-      .view-more-btn:hover {
-        background: #3939a0;
-      }
+.view-more-btn:hover {
+  background: #3939a0;
+}
 
-      .featured-section {
-        margin-top: 3rem;
-      }
+.featured-section {
+  margin-top: 3rem;
+}
 
-      .feature-flex {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 2rem;
-        margin-top: .5rem;
-      }
+.feature-flex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: .5rem;
+}
 
-      .feature-item {
-        flex: 1;
-        min-width: 270px;
-        max-width: 270px;
-        text-align: center;
-        padding: 1.5rem;
-        /* background: #cee0f2; */
-        border-radius: 12px;
-        font-size: 15px;
-      }
+.feature-item {
+  flex: 1;
+  min-width: 270px;
+  max-width: 270px;
+  text-align: center;
+  padding: 1.5rem;
+  /* background: #cee0f2; */
+  border-radius: 12px;
+  font-size: 15px;
+}
 
-      .feature-icon {
-        font-size: 2rem;
-        display: block;
-        margin-bottom: 1rem;
-      }
+.feature-icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.cta-hire-me {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 1000;
+}
+
+.hire-me-btn {
+  background: #FF7519;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(255, 117, 25, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hire-me-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255, 117, 25, 0.4);
+}
+
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+@keyframes floatX {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(10px); }
+}
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+/* Animation Classes */
+.floatY {
+  animation: floatY 4s ease-in-out infinite;
+}
+.floatX {
+  animation: floatX 6s ease-in-out infinite;
+}
+.spin {
+  animation: spin 12s linear infinite;
+}
+.pulse {
+  animation: pulse 3s ease-in-out infinite;
+}
 </style>
