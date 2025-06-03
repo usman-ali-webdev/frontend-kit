@@ -24,7 +24,7 @@
 <svg width="30" height="30" class="floatY" style="position:absolute; top:150px; right:10%; opacity:0.1;">
   <polygon points="15,0 30,30 0,30" fill="#27AE60"/>
 </svg>
-<svg width="60" height="20" class="floatX" style="position:absolute; bottom:20px; left:8%; opacity:0.05;">
+<svg width="60" height="20" class="floatX" style="position:absolute; bottom:20px; left:8%; opacity:0.15;">
   <path d="M0 10 Q15 0 30 10 T60 10" stroke="#2D9CDB" stroke-width="2" fill="none"/>
 </svg>
 <svg width="16" height="16" class="spin" style="position:absolute; bottom:60px; right:20%; opacity:0.08;">
