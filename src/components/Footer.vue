@@ -1,6 +1,7 @@
 <template>
     <footer>
-        <p>&copy; 2024 Frontend Kit. All rights reserved.</p>
+        <!-- <p>&copy; 2024 Frontend Kit. All rights reserved.</p> -->
+        <p>Developed with ❤️ by Usman Ali</p>
         
     </footer>
 </template>

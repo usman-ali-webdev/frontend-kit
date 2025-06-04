@@ -93,7 +93,8 @@
         Examples</h2>
       <div class="examples-container">
         <div class="example-card">
-          <img src="" alt="Header Example">
+            <!-- <img src="@/assets/images/samples/header-navbar-sample.png" alt="Header Example"> -->
+            <img src="" alt="Header Example">
           <h3>Header</h3>
           <p>Clean and responsive header designs</p>
         </div>

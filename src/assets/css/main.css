@@ -132,11 +132,12 @@ main p {
 }
 
 footer{
-  height: 40px;
+  /* height: 40px; */
   overflow: hidden;
-  background-color: var(--footer-background);
+  /* background-color: var(--footer-background); */
   color: var(--footer-text-color);
-  padding: 1em;
+  /* padding: 1em; */
+  padding: 1.2em;
   text-align: center;
   z-index: 1;
   position: relative;

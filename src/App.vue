@@ -20,7 +20,7 @@
   </div>
 
   <!-- Footer Section -->
-  <!-- <Footer></Footer> -->
+  <Footer></Footer>
 
 </template>
 
