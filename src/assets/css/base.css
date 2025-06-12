@@ -42,6 +42,9 @@
   font-weight: normal;
 }
 
+body{
+  overflow-x: hidden;
+}
     @font-face {
     font-family: 'Samsung Sharp Sans Regular';
     font-style: normal;

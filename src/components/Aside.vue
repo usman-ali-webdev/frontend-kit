@@ -19,7 +19,7 @@ import { computed } from 'vue'
 const route = useRoute()
 
 const navItems = [
-    { text: 'Getting Started', path: '/' },
+    { text: 'Home', path: '/' },
     { text: 'Layout Generator', path: '/layout-generator' },
     { text: 'UI Components', path: '/ui-components' },
     { text: 'Animations / Transitions', path: null },
