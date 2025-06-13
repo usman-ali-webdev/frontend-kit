@@ -94,17 +94,20 @@
       <div class="examples-container">
         <div class="example-card">
             <!-- <img src="@/assets/images/samples/header-navbar-sample.png" alt="Header Example"> -->
-            <img src="" alt="Header Example">
+            <!-- <img src="" alt="Header Example"> -->
+            <i class="fas fa-window-maximize" style="font-size: 48px; color: #4a4ad0;"></i>
           <h3>Header</h3>
           <p>Clean and responsive header designs</p>
         </div>
         <div class="example-card">
-          <img src="" alt="Sidebar Example">
+            <!-- <img src="" alt="Sidebar Example"> -->
+            <i class="fas fa-columns" style="font-size: 48px; color: #4a4ad0;"></i>
           <h3>Sidebar</h3>
           <p>Customizable sidebar navigation</p>
         </div>
         <div class="example-card">
-          <img src="" alt="Form Example">
+          <!-- <img src="" alt="Form Example"> -->
+          <i class="fas fa-wpforms" style="font-size: 48px; color: #4a4ad0;"></i>
           <h3>Forms</h3>
           <p>Modern form components and validations</p>
         </div>
