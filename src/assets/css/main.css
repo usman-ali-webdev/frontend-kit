@@ -194,7 +194,9 @@ p, h1, h2, h3, h4, h5, h6{
     position: relative;
     z-index: 20;
     transition: background 0.2s;
-    border: 2px solid #ff7519;
+    /* border: 2px solid #ff7519; */
+    /* background-color: transparent; */
+    background-color: #FF7519;
     padding: 4px;
     border-radius: 50%;
     -webkit-border-radius: 50%;
@@ -222,7 +224,8 @@ p, h1, h2, h3, h4, h5, h6{
     
 }
 .menu-btn.open span {
-  background: #ff5252;
+  /* background: #ff5252; */
+  background: white;
 }
 .menu-btn span:nth-child(1) {
   /* Top bar */
