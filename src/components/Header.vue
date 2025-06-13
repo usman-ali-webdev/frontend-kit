@@ -1,8 +1,8 @@
 <template>
     <header id="navbar" style="display: flex; justify-content: space-between; align-items: center;">
         <!-- <h1>FrontendKit</h1> -->
-        <h1 style="line-height: 0.5; font-size: 1.6em;">
-            <i class="fa-solid fa-diamond" style="color: white;"></i>
+        <h1 class="in-go-home" @click="$router.push('/')" style="line-height: 0.5; font-size: 1.6em;">
+            <i class="fa-solid fa-diamond" style="color: #FF7519;"></i>
             FrontendKit
             <!-- <br> <small style="font-size: xx-small;">Your Development Companion</small> -->
         </h1>
@@ -56,8 +56,25 @@ function isActive(path) {
     return path && route.path === path
 }
 
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 const sidebarOpen = ref(false);
+function handleClickOutside(event) {
+    const sidebar = document.querySelector('.sidebar');
+    const menuBtn = document.querySelector('.menu-btn');
+    if (sidebarOpen.value && 
+        !sidebar.contains(event.target) && 
+        !menuBtn.contains(event.target)) {
+        sidebarOpen.value = false;
+    }
+}
+
+onMounted(() => {
+    document.addEventListener('click', handleClickOutside);
+});
+
+onUnmounted(() => {
+    document.removeEventListener('click', handleClickOutside);
+});
 </script>
 
 <style scoped></style>
