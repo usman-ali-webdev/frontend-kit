@@ -144,7 +144,7 @@
     </div>
   </section>
 
-  <div class="cta-hire-me">
+  <div class="cta-hire-me" hidden>
     <button class="hire-me-btn" @click="router.push('/contact')">
       Hire Me 👋
     </button>
