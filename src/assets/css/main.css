@@ -251,7 +251,7 @@ p, h1, h2, h3, h4, h5, h6{
   width: 220px;
   max-width: 100%;
   background: #f8f9fa;
-  position: absolute;
+  /* position: absolute; */
   top: 54px;
   right: 0;
   height: 100%;
