@@ -1,6 +1,6 @@
 <template>
   <div class="component-view">
-    <h2>{{ componentConfig.label }}</h2>
+    <h2>{{ componentLabel }} Component</h2>
     <div class="tabs">
       <div class="tab-buttons">
         <button 
@@ -15,15 +15,16 @@
       <div class="tab-content">
         <!-- Preview Tab -->
         <div v-if="activeTab === 'preview'" class="preview-container">
-          <component :is="componentConfig.component" v-bind="componentConfig.props" />
+          <component v-if="component" :is="component" />
+          <div v-else>Component not found.</div>
         </div>
         <!-- HTML Tab -->
         <div v-if="activeTab === 'html'" class="code-container">
-          <pre><code>{{ componentConfig.htmlContent }}</code></pre>
+          <pre><code>{{ htmlContent }}</code></pre>
         </div>
         <!-- CSS Tab -->
         <div v-if="activeTab === 'css'" class="code-container">
-          <pre><code>{{ componentConfig.cssContent }}</code></pre>
+          <pre><code>{{ cssContent }}</code></pre>
         </div>
       </div>
     </div>
@@ -31,92 +32,15 @@
 </template>
 
 <script>
-// Example: Add more components here as needed
-import TrimMultilineText from '@/components/snippets/TrimMultilineText.vue';
-import loginForm from '@/components/snippets/loginForm.vue';
 import { useRoute } from 'vue-router';
+import { defineAsyncComponent } from 'vue';
 
-const componentMap = {
-  TrimMultilineText: {
-    label: 'TrimMultilineText',
-    component: TrimMultilineText,
-    props: {
-      text: 'This is a sample long text that will be trimmed across multiple lines. You can adjust the number of lines and other properties here.',
-      maxLines: 3
-    },
-    htmlContent: `<template>
-  <p class="excerpt">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod enim eget ultricies sollicitudin. Nunc aliquam arcu arcu, non suscipit metus luctus id.
-  </p>
-</template>`,
-    cssContent: `.excerpt {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}`
-  },
-  loginForm: {
-    label: 'Login Form',
-    component: loginForm,
-    props: {},
-    htmlContent: `<template>
-    <div class="login-form">
-        <form>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" class="form-input" required placeholder="Enter your email">
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" class="form-input" required placeholder="Enter your password">
-            </div>
-            <button type="submit" class="login-button">Login</button>
-        </form>
-    </div>
-</template>`,
-    cssContent: `.login-form {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
-}
-.form-group {
-    margin-bottom: 1rem;
-}
-label {
-    display: block;
-    margin-bottom: 0.5rem;
-}
-.form-input {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-}
-.login-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-.login-button:hover {
-    background-color: #45a049;
-}`
-  }
-  // Add more components here as needed
-};
+// Dynamically import all components from the snippets folder
+const snippetModules = import.meta.glob('@/components/snippets/*.vue');
+const snippetCodeModules = import.meta.glob('@/components/snippets/*.vue', { as: 'raw' });
 
 export default {
   name: 'ComponentView',
-  props: {
-    componentName: {
-      type: String,
-      default: 'TrimMultilineText'
-    }
-  },
   data() {
     return {
       activeTab: 'preview',
@@ -124,18 +48,37 @@ export default {
         { id: 'preview', label: 'Preview' },
         { id: 'html', label: 'HTML' },
         { id: 'css', label: 'CSS' }
-      ]
+      ],
+      component: null,
+      htmlContent: '',
+      cssContent: ''
     };
   },
-  setup(props) {
-    const route = useRoute();
-    return { route };
-  },
   computed: {
-    componentConfig() {
-      // Use route param if available, fallback to prop
-      const slug = this.route?.params?.slug || this.componentName;
-      return componentMap[slug] || componentMap['TrimMultilineText'];
+    slug() {
+      return this.$route?.params?.slug;
+    },
+    componentLabel() {
+      return this.slug.replace(/([A-Z])/g, ' $1').replace(/^./, s => s.toUpperCase()).trim();
+    }
+  },
+  async created() {
+    // Find the matching component by slug
+    const match = Object.keys(snippetModules).find(path => {
+      const fileName = path.split('/').pop().replace('.vue', '');
+      return fileName.toLowerCase() === this.slug?.toLowerCase();
+    });
+    if (match) {
+      this.component = defineAsyncComponent(snippetModules[match]);
+      // Load the raw code for code preview
+      const rawCode = await snippetCodeModules[match]();
+      // Extract <template> and <style> blocks
+      const templateMatch = rawCode.match(/<template>([\s\S]*?)<\/template>/);
+      const styleMatch = rawCode.match(/<style[^>]*>([\s\S]*?)<\/style>/);
+      this.htmlContent = templateMatch ? templateMatch[1].trim() : 'No <template> found.';
+      this.cssContent = styleMatch ? styleMatch[1].trim() : 'No <style> found.';
+    } else {
+      this.$router.replace({ name: 'NotFound' });
     }
   }
 };
