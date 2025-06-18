@@ -71,13 +71,14 @@
           oninput="filterSuggestions(this.value)" onfocus="showSuggestions()" onblur="hideSuggestionsDelayed()" />
         <ul class="suggestions" id="suggestionList">
           <li onclick="selectSuggestion('Header')">Header</li>
+          <li onclick="selectSuggestion('Excerpt')">Excerpt - <small style="font-size: 10px; letter-spacing: .6px; color: gray;">Trim multiline text</small></li>
+          <li onclick="selectSuggestion('Login Form')">Form - <small style="font-size: 10px; letter-spacing: .6px; color: gray;">Modern login form</small></li>
           <li onclick="selectSuggestion('Footer')">Footer</li>
           <li onclick="selectSuggestion('Navbar')">Navbar</li>
           <li onclick="selectSuggestion('Sidebar')">Sidebar</li>
           <li onclick="selectSuggestion('Tab System')">Tab System</li>
           <li onclick="selectSuggestion('Accordion')">Accordion</li>
           <li onclick="selectSuggestion('Dropdown')">Dropdown</li>
-          <li onclick="selectSuggestion('Login Form')">Login Form</li>
         </ul>
         <!-- <button class="search-button">Explore</button> -->
       </div>
@@ -158,12 +159,25 @@ import { onMounted } from 'vue';
 
 const router = useRouter();
 
+const suggestionMap = {
+  'Header': 'Header',
+  'Excerpt': 'TrimMultilineText',
+  'Login Form': 'loginForm',
+  'Footer': 'Footer',
+  'Navbar': 'Navbar',
+  'Sidebar': 'Sidebar',
+  'Tab System': 'TabSystem',
+  'Accordion': 'Accordion',
+  'Dropdown': 'Dropdown'
+};
+
 function selectSuggestion(text) {
   const input = document.querySelector('.search-input');
   input.value = text;
   document.getElementById('suggestionList').style.display = 'none';
   if (input.value !== '') {
-    router.push('/ui-components');
+    const slug = suggestionMap[text] || text.replace(/\s+/g, '');
+    router.push(`/component/${slug}`);
   }
 }
 

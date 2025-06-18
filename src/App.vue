@@ -8,7 +8,7 @@
   <div class="content-area">
 
     <!-- Sidebar Area -->
-    <div v-if="$route.path !== '/'" class="sidebar-area">
+    <div v-if="$route.path !== '/'" class="sidebar-area" hidden>
       <Aside></Aside>
     </div>
 
