@@ -1,6 +1,6 @@
 <template>
   <div class="component-view">
-    <h2>{{ componentConfig.label }} Component</h2>
+    <h2>{{ componentConfig.label }}</h2>
     <div class="tabs">
       <div class="tab-buttons">
         <button 

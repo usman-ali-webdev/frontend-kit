@@ -22,7 +22,7 @@
       </nav> -->
     </header>
 
-    <aside :class="{ open: sidebarOpen }" class="sidebar" style="z-index: 1;">
+    <aside :class="{ open: sidebarOpen }" class="sidebar" style="z-index: 4;">
         <nav>
             <ul>
                 <li v-for="item in navItems" :key="item.path" :id="item.text" :class="{ active: isActive(item.path) }">
@@ -62,9 +62,12 @@ const sidebarOpen = ref(false);
 function handleClickOutside(event) {
     const sidebar = document.querySelector('.sidebar');
     const menuBtn = document.querySelector('.menu-btn');
-    if (sidebarOpen.value && 
+    const clickedLink = event.target.closest('a');
+    
+    if ((sidebarOpen.value && 
         !sidebar.contains(event.target) && 
-        !menuBtn.contains(event.target)) {
+        !menuBtn.contains(event.target)) ||
+        (clickedLink && clickedLink.getAttribute('href') !== '#')) {
         sidebarOpen.value = false;
     }
 }
