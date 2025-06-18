@@ -42,8 +42,9 @@ const route = useRoute()
 
 const navItems = [
     // { text: 'Home', path: '/' },
+    { text: 'Home', path: '/' },
+    { text: 'All UI Components', path: '/ui-components' },
     { text: 'Layout Generator', path: '/layout-generator' },
-    { text: 'UI Components', path: '/ui-components' },
     { text: 'Animations / Transitions', path: null },
     { text: 'Utilities', path: null },
     { text: 'Themes', path: null },

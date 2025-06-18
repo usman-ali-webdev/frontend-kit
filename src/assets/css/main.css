@@ -271,3 +271,11 @@ i{
 .in-go-home{
   cursor: pointer;
 }
+.component-view {
+  max-width: 1024px;
+  margin: 0 auto;
+}
+.in-components-wrapper {
+  max-width: 1280px;
+  margin: 0 auto;
+}
