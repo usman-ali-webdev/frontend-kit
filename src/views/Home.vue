@@ -160,15 +160,15 @@ import { onMounted } from 'vue';
 const router = useRouter();
 
 const suggestionMap = {
-  'Excerpt': 'TrimMultilineText',
-  'Login Form': 'loginForm',
   'Header': 'Header',
+  'Excerpt': 'TrimMultilineText',
   'Footer': 'Footer',
-  // 'Navbar': 'Navbar',
-  // 'Sidebar': 'Sidebar',
-  // 'Tab System': 'TabSystem',
-  // 'Accordion': 'Accordion',
-  // 'Dropdown': 'Dropdown'
+  'Navbar': 'Navbar',
+  'Sidebar': 'Sidebar',
+  'Tab System': 'TabSystem',
+  'Accordion': 'Accordion',
+  'Dropdown': 'Dropdown',
+  'Login Form': 'loginForm',
 };
 
 function selectSuggestion(text) {
@@ -176,8 +176,7 @@ function selectSuggestion(text) {
   input.value = text;
   document.getElementById('suggestionList').style.display = 'none';
   if (input.value !== '') {
-    const slug = suggestionMap[text] || text.replace(/\s+/g, '');
-    router.push(`/component/${slug}`);
+    router.push(`/search/${encodeURIComponent(text)}`);
   }
 }
 
