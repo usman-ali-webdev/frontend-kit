@@ -1,9 +1,9 @@
 <template>
   <div style="padding: 2rem;">
-    <h1 style="font-size: 2rem; margin-bottom: 1.5rem;">All UI Components</h1>
-    <div>
+    <div class="accordion-container" style="max-width: 1200px; margin: auto;">
+      <h1 style="font-size: 2rem; margin-bottom: 1.5rem;">All UI Components</h1>
       <div v-for="(group, groupLabel) in groupedComponents" :key="groupLabel" class="accordion-group">
-        <div class="accordion-header" @click="toggleAccordion(groupLabel)">
+        <div class="accordion-header" @click="toggleAccordion(groupLabel)" :style="{ borderBottom: openAccordions[groupLabel] ? '1px solid var(--primary-color)' : '' }">
           <span>{{ groupLabel }}</span>
           <span class="accordion-arrow">{{ openAccordions[groupLabel] ? '▲' : '▼' }}</span>
         </div>
@@ -77,39 +77,28 @@ function goToComponent(slug) {
 <style scoped>
 .accordion-group {
   margin-bottom: 2rem;
-  border-radius: 18px;
+  border-radius: 8px;
   box-shadow: 0 8px 32px rgba(74,74,208,0.13), 0 2px 8px rgba(0,0,0,0.05);
   background: rgba(255,255,255,0.7);
   backdrop-filter: blur(6px);
-  border-left: 6px solid #4a4ad0;
   transition: box-shadow 0.25s, transform 0.18s;
+  border: 1.5px solid var(--primary-color);
+  overflow: hidden;
 }
-.accordion-group:hover {
-  box-shadow: 0 16px 48px rgba(74,74,208,0.18), 0 4px 16px rgba(0,0,0,0.07);
-  transform: scale(1.012);
-}
+
 .accordion-header {
   cursor: pointer;
-  padding: 1.5rem 2rem 1.5rem 2.5rem;
+  padding: .9rem 1.5rem;
   font-size: 1.45rem;
   font-weight: 700;
   display: flex;
   align-items: center;
-  border-radius: 18px 18px 0 0;
-  background: linear-gradient(100deg, #e0e7ef 0%, #f4f6fa 60%, #e0e7ef 100%);
+  background-color: lavender;
   color: #2d3a4a;
   letter-spacing: 0.5px;
   position: relative;
-  box-shadow: 0 2px 12px 0 rgba(74,74,208,0.08), 0 1px 0 #e0e7ef;
-  border: 1.5px solid #e3e8f7;
-  border-bottom: none;
-  transition: background 0.2s, box-shadow 0.2s, border 0.2s;
 }
-.accordion-header:hover {
-  background: linear-gradient(100deg, #dbeafe 0%, #e0e7ef 60%, #f4f6fa 100%);
-  box-shadow: 0 4px 18px 0 rgba(74,74,208,0.13);
-  border: 1.5px solid #b6c6f5;
-}
+
 .accordion-header::before {
   content: '\f02e'; /* Font Awesome folder-open icon */
   font-family: 'Font Awesome 5 Free';
