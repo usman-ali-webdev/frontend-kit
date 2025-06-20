@@ -30,7 +30,7 @@
     </div>
     <!-- Random Snippets Section -->
     <div class="random-snippets-section">
-      <h3 style="margin: 2.5rem 0 1rem 0; font-size: 1.2rem; font-weight: 600;">Explore More Components</h3>
+      <h3 style="margin: 2.5rem 0 1rem 0; font-size: 1.2rem; font-weight: 600;">You May Also Like</h3>
       <div class="random-snippets-list">
         <div
           v-for="comp in randomSnippets"
