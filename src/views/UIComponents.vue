@@ -83,7 +83,6 @@ function goToComponent(slug) {
 .accordion-group {
   margin-bottom: 2rem;
   border-radius: 8px;
-  box-shadow: 0 8px 32px rgba(74,74,208,0.13), 0 2px 8px rgba(0,0,0,0.05);
   background: rgba(255,255,255,0.7);
   backdrop-filter: blur(6px);
   transition: box-shadow 0.25s, transform 0.18s;
@@ -126,7 +125,7 @@ function goToComponent(slug) {
 .accordion-content {
   padding: 2rem 2rem 1.5rem 2.5rem;
   background: rgba(255,255,255,0.85);
-  border-radius: 0 0 18px 18px;
+  border-radius: inherit;
   animation: fadeInAccordion 0.4s cubic-bezier(.4,2,.6,1);
   box-shadow: 0 2px 8px rgba(74,74,208,0.04);
   border: 1.5px solid #e3e8f7;
