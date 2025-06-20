@@ -45,12 +45,13 @@ const navItems = [
     { text: 'Home', path: '/' },
     { text: 'All UI Components', path: '/ui-components' },
     { text: 'Layout Generator', path: '/layout-generator' },
-    { text: 'Animations / Transitions', path: null },
-    { text: 'Utilities', path: null },
-    { text: 'Themes', path: null },
-    { text: 'Customization', path: null },
-    { text: 'Examples', path: null },
-    { text: 'Updates', path: null },
+    // { text: 'Animations / Transitions', path: null },
+    { text: 'Animations / Transitions', path: 'coming-soon' },
+    { text: 'Utilities', path: 'coming-soon' },
+    { text: 'Themes', path: 'coming-soon' },
+    { text: 'Customization', path: 'coming-soon' },
+    { text: 'Examples', path: 'coming-soon' },
+    { text: 'Updates', path: 'coming-soon' },
 ]
 
 function isActive(path) {

@@ -6,6 +6,7 @@ import UIComponents from '@/views/UIComponents.vue';
 import ComponentView from '@/views/ComponentView.vue';
 import NotFound from '@/views/NotFound.vue'; // Import NotFound component
 import SearchResults from '@/views/SearchResults.vue'; // Import SearchResults component
+import ComingSoon from '@/components/ComingSoon.vue';
 // Add other imports as needed
 
 
@@ -16,8 +17,9 @@ const routes = [
   { path: '/layout-generator', name: 'LayoutGenerator', component: LayoutGenerator },
   { path: '/ui-components', name: 'ui-components', component: UIComponents },
   { path: '/component/:slug', name: 'ComponentView', component: ComponentView },
-  { path: '/search/:query', name: 'SearchResults', component: SearchResults }, // Add SearchResults route
-  { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound } // Add NotFound route
+  { path: '/search/:query', name: 'SearchResults', component: SearchResults },
+  { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
+  { path: '/coming-soon', name: 'coming-soon', component: ComingSoon }
   // Add other routes here
 ];
 
