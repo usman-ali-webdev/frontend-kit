@@ -5,7 +5,12 @@
       <div v-for="(group, groupLabel) in groupedComponents" :key="groupLabel" class="accordion-group">
         <div class="accordion-header" @click="toggleAccordion(groupLabel)" :style="{ borderBottom: openAccordions[groupLabel] ? '1px solid var(--primary-color)' : '' }">
           <span>{{ groupLabel }}</span>
-          <span class="accordion-arrow">{{ openAccordions[groupLabel] ? '▲' : '▼' }}</span>
+            <span
+            class="accordion-arrow"
+            :aria-expanded="openAccordions[groupLabel] ? 'true' : 'false'"
+            >
+            <i class="fas fa-chevron-down"></i>
+            </span>
         </div>
         <div v-show="openAccordions[groupLabel]" class="accordion-content">
           <div style="display: flex; flex-wrap: wrap; gap: 1.5rem;">
@@ -112,7 +117,7 @@ function goToComponent(slug) {
   font-size: 1.5rem;
   color: #4a4ad0;
   margin-left: auto;
-  transition: transform 0.3s cubic-bezier(.4,2,.6,1), color 0.2s;
+  transition: transform 0.3s ease-in, color 0.2s;
 }
 .accordion-arrow[aria-expanded="true"] {
   transform: rotate(180deg);
