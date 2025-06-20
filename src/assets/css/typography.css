@@ -21,6 +21,7 @@
   
   h2 {
     font-size: 1.3em; /* Equivalent to 24px */
+    font-weight: 600;
   }
   
   h3 {

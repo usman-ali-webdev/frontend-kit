@@ -93,14 +93,16 @@ function goToComponent(slug) {
 .accordion-header {
   cursor: pointer;
   padding: .9rem 1.5rem;
-  font-size: 1.45rem;
+  font-size: 1.2rem;
   font-weight: 700;
   display: flex;
   align-items: center;
   background-color: lavender;
-  color: #2d3a4a;
+  color: var(--primary-color);
   letter-spacing: 0.5px;
   position: relative;
+  font-weight: bold;
+  font-family: 'Samsung Sharp Sans Medium';
 }
 
 .accordion-header::before {
