@@ -1,6 +1,15 @@
 <template>
   <div style="padding: 2rem;">
     <div class="accordion-container" style="max-width: 1200px; margin: auto;">
+      <nav class="breadcrumb">
+        <router-link to="/" class="breadcrumb-home" title="Home">
+          <i class="fas fa-home"></i>
+        </router-link>
+        <span class="breadcrumb-separator">/</span>
+        <router-link to="/ui-components">UI Components</router-link>
+        <span class="breadcrumb-separator">/</span>
+        <span>{{ componentLabel }}</span>
+      </nav>
       <h1 style="font-size: 2rem; margin-bottom: 1.5rem;">All UI Components</h1>
       <div v-for="(group, groupLabel) in groupedComponents" :key="groupLabel" class="accordion-group">
         <div class="accordion-header" @click="toggleAccordion(groupLabel)" :style="{ borderBottom: openAccordions[groupLabel] ? '1px solid var(--primary-color)' : '' }">

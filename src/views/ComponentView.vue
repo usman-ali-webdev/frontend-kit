@@ -1,5 +1,14 @@
 <template>
   <div class="component-view">
+    <nav class="breadcrumb">
+      <router-link to="/" class="breadcrumb-home" title="Home">
+        <i class="fas fa-home"></i>
+      </router-link>
+      <span class="breadcrumb-separator">/</span>
+      <router-link to="/ui-components">UI Components</router-link>
+      <span class="breadcrumb-separator">/</span>
+      <span>{{ componentLabel }}</span>
+    </nav>
     <h2>{{ componentLabel }} Component</h2>
     <div class="tabs">
       <div class="tab-buttons">

@@ -1,14 +1,13 @@
 <template>
 
-<h1>Layout Generator Page</h1>
-      
-</template>
-  
-  <script setup>
-  
-  </script>
-  
-  <style scoped>
+  <h1>Layout Generator Page</h1>
+  <ComingSoon />
 
-  </style>
-  
+</template>
+
+<script setup>
+import ComingSoon from '@/components/ComingSoon.vue';
+
+</script>
+
+<style scoped></style>
