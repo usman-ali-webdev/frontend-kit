@@ -17,6 +17,43 @@
     --footer-text-color: #555555;
     --footer-link-color: #4a4ad0;
     --footer-link-hover-color: #577ae2;
+
+    /* Primary color scale: 100% (lightest) to 0% (darkest) */
+    --primary-100: #ffffff;
+    --primary-95: #ebebfa;
+    --primary-90: #d6d6f5;
+    --primary-85: #c2c2ef;
+    --primary-80: #aeaeea;
+    --primary-75: #9a9ae5;
+    --primary-70: #8585e0;
+    --primary-65: #7171da;
+    --primary-60: #5d5dd5;
+    --primary-55: #4a4ad0;
+    --primary-50: #3434cb;
+    --primary-45: #2f2fb6;
+    --primary-40: #2a2aa2;
+    --primary-35: #25258e;
+    --primary-30: #1f1f7a;
+    --primary-25: #1a1a65;
+    --primary-20: #151551;
+    --primary-15: #10103d;
+    --primary-10: #0a0a29;
+    --primary-5:  #050514;
+    --primary-0:  #000000;
+}
+
+@media (prefers-color-scheme: light) {
+  /* :root {
+    --color-background: #f4f4f9;
+    --color-background-soft: #ffffff;
+    --color-background-mute: #e0ecff;
+
+    --color-border: #dcdcdc;
+    --color-border-hover: #c0c0c0;
+
+    --color-heading: #333333;
+    --color-text: #555555;
+  } */
 }
 
 @media (prefers-color-scheme: dark) {
