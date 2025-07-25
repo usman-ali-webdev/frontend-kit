@@ -46,13 +46,13 @@ const navItems = [
     { text: 'Home', path: '/' },
     { text: 'All UI Components', path: '/ui-components' },
     { text: 'Layout Generator', path: '/layout-generator' },
-    { text: 'About Us', path: '/about-us' },
     { text: 'Animations / Transitions', path: 'coming-soon' },
     { text: 'Utilities', path: 'coming-soon' },
     { text: 'Themes', path: 'coming-soon' },
     { text: 'Customization', path: 'coming-soon' },
     { text: 'Examples', path: 'coming-soon' },
     { text: 'Updates', path: 'coming-soon' },
+    { text: 'About Us', path: '/about-us' },
 ]
 
 function isActive(path) {
