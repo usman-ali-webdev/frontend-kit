@@ -67,7 +67,7 @@
 <script>
 import { useRoute } from 'vue-router';
 import { defineAsyncComponent } from 'vue';
-import meta from '@/meta/snippets-meta.js';
+import meta from '@/meta/snippets-meta.json';
 
 // Dynamically import all components from the snippets folder
 const snippetModules = import.meta.glob('@/components/snippets/*.vue');

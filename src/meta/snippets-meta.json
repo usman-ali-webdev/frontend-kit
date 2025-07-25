@@ -1,0 +1,26 @@
+[
+  {
+    "slug": "loginForm",
+    "label": "Login Form 1",
+    "category": "Login Forms",
+    "description": "Classic login form with labels and button."
+  },
+  {
+    "slug": "loginFormSimple",
+    "label": "Login Form 2 (Simple)",
+    "category": "Login Forms",
+    "description": "Minimal, clean login form."
+  },
+  {
+    "slug": "loginFormModern",
+    "label": "Login Form 3 (Modern)",
+    "category": "Login Forms",
+    "description": "Modern login form with icon and divider."
+  },
+  {
+    "slug": "TrimMultilineText",
+    "label": "Trim Multiline Text",
+    "category": "Text Utilities",
+    "description": "Trims and limits text to multiple lines."
+  }
+]

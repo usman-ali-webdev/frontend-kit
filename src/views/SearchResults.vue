@@ -28,7 +28,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import meta from '@/meta/snippets-meta.js';
+import meta from '@/meta/snippets-meta.json';
 const modules = import.meta.glob('@/components/snippets/*.vue');
 
 const route = useRoute();

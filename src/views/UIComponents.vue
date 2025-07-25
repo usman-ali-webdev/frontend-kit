@@ -49,7 +49,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import meta from '@/meta/snippets-meta.js';
+import meta from '@/meta/snippets-meta.json';
 
 const router = useRouter();
 const modules = import.meta.glob('@/components/snippets/*.vue');
