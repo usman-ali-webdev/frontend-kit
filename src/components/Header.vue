@@ -2,7 +2,8 @@
     <header id="navbar" style="display: flex; justify-content: space-between; align-items: center;">
         <!-- <h1>FrontendKit</h1> -->
         <h1 class="in-go-home" @click="$router.push('/')" style="line-height: 0.5; font-size: 1.6em;">
-            <i class="fa-solid fa-diamond" style="color: #FF7519;"></i>
+            <i class="fa-solid fa-diamond" style="color: white;"></i>
+             <!-- <img src="@/assets/images/logo/frontend-kit-logo.png" alt="FrontendKit Logo" style="max-width: 100%; width: 40px; height: auto; vertical-align: middle;"/> -->
             FrontendKit
             <!-- <br> <small style="font-size: xx-small;">Your Development Companion</small> -->
         </h1>
@@ -45,7 +46,7 @@ const navItems = [
     { text: 'Home', path: '/' },
     { text: 'All UI Components', path: '/ui-components' },
     { text: 'Layout Generator', path: '/layout-generator' },
-    // { text: 'Animations / Transitions', path: null },
+    { text: 'About Us', path: '/about-us' },
     { text: 'Animations / Transitions', path: 'coming-soon' },
     { text: 'Utilities', path: 'coming-soon' },
     { text: 'Themes', path: 'coming-soon' },

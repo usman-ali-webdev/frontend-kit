@@ -19,7 +19,12 @@ const routes = [
   { path: '/component/:slug', name: 'ComponentView', component: ComponentView },
   { path: '/search/:query', name: 'SearchResults', component: SearchResults },
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
-  { path: '/coming-soon', name: 'coming-soon', component: ComingSoon }
+  { path: '/coming-soon', name: 'coming-soon', component: ComingSoon },
+  {
+    path: '/about-us',
+    name: 'AboutUs',
+    component: () => import('@/views/AboutUs.vue')
+  }
   // Add other routes here
 ];
 

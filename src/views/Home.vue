@@ -106,7 +106,7 @@
           <h3>Sidebar</h3>
           <p>Customizable sidebar navigation</p>
         </div>
-        <div class="example-card">
+        <div class="example-card" @click="router.push({ path: '/ui-components', query: { highlight: 'loginForm' } })">
           <!-- <img src="" alt="Form Example"> -->
           <i class="fas fa-wpforms" style="font-size: 48px; color: #4a4ad0;"></i>
           <h3>Forms</h3>
@@ -293,6 +293,7 @@ onMounted(() => {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
   background-color: #fff;
+  cursor: pointer;
 }
 
 .example-card:hover {
