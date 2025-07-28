@@ -10,7 +10,12 @@
       <span>{{ componentLabel }}</span>
     </nav>
     <h2>{{ componentLabel }} Component</h2>
-    <div class="tabs">
+    <div v-if="loading" class="bouncing-loader">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <div v-else class="tabs">
       <div class="tab-buttons">
         <button 
           v-for="tab in tabs" 
@@ -29,10 +34,12 @@
         </div>
         <!-- HTML Tab -->
         <div v-if="activeTab === 'html'" class="code-container">
+          <button class="copy-btn" @click="copyToClipboard(htmlContent)" title="Copy HTML"><i class="fas fa-copy"></i></button>
           <pre><code>{{ htmlContent }}</code></pre>
         </div>
         <!-- CSS Tab -->
         <div v-if="activeTab === 'css'" class="code-container">
+          <button class="copy-btn" @click="copyToClipboard(cssContent)" title="Copy CSS"><i class="fas fa-copy"></i></button>
           <pre><code>{{ cssContent }}</code></pre>
         </div>
       </div>
@@ -61,6 +68,7 @@
         </div>
       </div>
     </div>
+    <div v-if="showToast" class="copy-toast">Copied!</div>
   </div>
 </template>
 
@@ -92,7 +100,9 @@ export default {
       component: null,
       htmlContent: '',
       cssContent: '',
-      randomSnippets: []
+      randomSnippets: [],
+      loading: true,
+      showToast: false
     };
   },
   computed: {
@@ -104,6 +114,7 @@ export default {
     }
   },
   async created() {
+    this.loading = true;
     // Find the matching component by slug
     const match = Object.keys(snippetModules).find(path => {
       const fileName = path.split('/').pop().replace('.vue', '');
@@ -131,12 +142,14 @@ export default {
       }
     }
     this.randomSnippets = getRandomElements(comps, 3, this.slug); // Show 3 random, not current
+    this.loading = false;
   },
   watch: {
     // Watch for route changes to update randomSnippets and component
     '$route.params.slug': {
       immediate: true,
       async handler(newSlug) {
+        this.loading = true;
         // Find the matching component by slug
         const match = Object.keys(snippetModules).find(path => {
           const fileName = path.split('/').pop().replace('.vue', '');
@@ -164,6 +177,7 @@ export default {
           }
         }
         this.randomSnippets = getRandomElements(comps, 3, newSlug);
+        this.loading = false;
       }
     }
   },
@@ -175,6 +189,15 @@ export default {
           window.scrollTo({ top: 0, behavior: 'smooth' });
         });
       });
+    },
+    copyToClipboard(content) {
+      if (!content) return;
+      navigator.clipboard.writeText(content).then(() => {
+        this.showToast = true;
+        setTimeout(() => {
+          this.showToast = false;
+        }, 1500);
+      });
     }
   }
 };
@@ -183,6 +206,35 @@ export default {
 <style scoped>
 .component-view {
     padding: 20px;
+}
+
+@keyframes bouncing-loader {
+  to {
+    opacity: 0.1;
+    transform: translate3d(0, -16px, 0);
+  }
+}
+
+.bouncing-loader {
+  display: flex;
+  justify-content: center;
+}
+
+.bouncing-loader > div {
+  width: 16px;
+  height: 16px;
+  margin: 3rem 0.2rem;
+  background: #8385aa;
+  border-radius: 50%;
+  animation: bouncing-loader 0.6s infinite alternate;
+}
+
+.bouncing-loader > div:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.bouncing-loader > div:nth-child(3) {
+  animation-delay: 0.4s;
 }
 
 .tabs {
@@ -213,6 +265,7 @@ export default {
 }
 
 .code-container {
+    position: relative;
     background-color: #f8f8f8;
     padding: 15px;
     border-radius: 4px;
@@ -271,5 +324,48 @@ export default {
   color: #464646;
   margin-bottom: 0.7rem;
   margin-top: 0.2rem;
+}
+.copy-btn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  background: #f4f4f9;
+  border: 1px solid #e3e8f7;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 1.1rem;
+  color: #4a4ad0;
+  cursor: pointer;
+  z-index: 2;
+  transition: background 0.18s, color 0.18s;
+}
+.copy-btn:hover {
+  background: #eaeafb;
+  color: #2222aa;
+}
+.copy-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 32px;
+  transform: translateX(-50%) translateY(40px);
+  background: #2222aa;
+  color: #fff;
+  padding: 0.7rem 2.2rem;
+  border-radius: 999px;
+  font-size: 1.08rem;
+  font-weight: 600;
+  box-shadow: 0 6px 32px rgba(74,74,208,0.13);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 99999;
+  animation: toast-in 0.35s cubic-bezier(.4,2,.6,1) forwards, toast-out 0.35s 1.15s cubic-bezier(.4,2,.6,1) forwards;
+}
+@keyframes toast-in {
+  from { opacity: 0; transform: translateX(-50%) translateY(40px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+@keyframes toast-out {
+  from { opacity: 1; transform: translateX(-50%) translateY(0); }
+  to { opacity: 0; transform: translateX(-50%) translateY(-40px); }
 }
 </style>
