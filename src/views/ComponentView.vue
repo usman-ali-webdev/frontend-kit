@@ -327,6 +327,9 @@ export default {
   background: none;
   border: none;
   box-shadow: none;
+  & code{
+    font-size: 13px;
+  }
 }
 
 .preview-container {

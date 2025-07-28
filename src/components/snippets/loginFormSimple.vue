@@ -15,8 +15,9 @@
   padding: 24px 18px;
   background: #fff;
   border-radius: 8px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.07);
 }
+
 .input {
   width: 100%;
   margin-bottom: 1rem;
@@ -25,6 +26,7 @@
   border-radius: 4px;
   font-size: 1rem;
 }
+
 .btn {
   width: 100%;
   padding: 10px;
@@ -36,6 +38,7 @@
   cursor: pointer;
   transition: background 0.2s;
 }
+
 .btn:hover {
   background: #003eaa;
 }

@@ -3,24 +3,12 @@
         <form>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input
-                    type="email"
-                    id="email"
-                    class="form-input"
-                    required
-                    placeholder="Enter your email"
-                >
+                <input type="email" id="email" class="form-input" required placeholder="Enter your email">
             </div>
-            
+
             <div class="form-group">
                 <label for="password">Password</label>
-                <input
-                    type="password"
-                    id="password"
-                    class="form-input"
-                    required
-                    placeholder="Enter your password"
-                >
+                <input type="password" id="password" class="form-input" required placeholder="Enter your password">
             </div>
 
             <button type="submit" class="login-button">Login</button>

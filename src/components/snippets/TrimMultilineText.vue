@@ -1,6 +1,7 @@
 <template>
   <p class="excerpt">
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod enim eget ultricies sollicitudin. Nunc aliquam arcu arcu, non suscipit metus luctus id.
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec euismod enim eget ultricies sollicitudin. Nunc
+    aliquam arcu arcu, non suscipit metus luctus id.
   </p>
 </template>
 
