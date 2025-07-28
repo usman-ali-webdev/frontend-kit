@@ -26,9 +26,9 @@
           {{ tab.label }}
         </button>
       </div>
-      <div class="tab-content">
+      <div class="tab-content" :class="{ 'preview-container': true }">
         <!-- Preview Tab -->
-        <div v-if="activeTab === 'preview'" class="preview-container">
+        <div v-if="activeTab === 'preview'">
           <component v-if="component" :is="component" />
           <div v-else>Component not found.</div>
         </div>
