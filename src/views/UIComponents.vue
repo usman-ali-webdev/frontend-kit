@@ -37,7 +37,14 @@
               </span>
               <h3 style="margin-bottom: 0.5rem;">{{ comp.label }}</h3>
               <p style="font-size: 0.95rem; color: #888; margin-bottom: 1rem;">{{ comp.description }}</p>
-              <component :is="comp.component" v-bind="comp.props || {}" />
+              <div style="display: flex; justify-content: center; align-items: center; min-height: 120px; margin-bottom: 1rem;">
+                <img
+                  :src="getPreviewImage(comp.previewImage)"
+                  alt="Preview"
+                  loading="lazy"
+                  style="max-width: 100%; max-height: 120px; object-fit: contain; border-radius: 6px; box-shadow: 0 2px 8px rgba(74,74,208,0.07); background: #f6f8fa;"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -50,6 +57,14 @@
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import meta from '@/meta/snippets-meta.json';
+// Map all preview images in the folder
+const previewImages = import.meta.glob('@/assets/images/component-previews/*', { eager: true, import: 'default' });
+
+function getPreviewImage(filename) {
+  if (!filename) return previewImages['/src/assets/images/component-previews/header-navbar-sampledd.png'];
+  const path = `/src/assets/images/component-previews/${filename}`;
+  return previewImages[path];
+}
 
 const router = useRouter();
 const modules = import.meta.glob('@/components/snippets/*.vue');
