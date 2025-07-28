@@ -33,13 +33,17 @@
           <div v-else>Component not found.</div>
         </div>
         <!-- HTML Tab -->
-        <div v-if="activeTab === 'html'" class="code-container">
-          <button class="copy-btn" @click="copyToClipboard(htmlContent)" title="Copy HTML"><i class="fas fa-copy"></i></button>
+        <div v-if="activeTab === 'html'" class="code-container code-container--with-copy">
+          <div class="code-toolbar">
+            <button class="copy-btn" @click="copyToClipboard(htmlContent)" title="Copy HTML"><i class="fas fa-copy"></i> Copy</button>
+          </div>
           <pre><code>{{ htmlContent }}</code></pre>
         </div>
         <!-- CSS Tab -->
-        <div v-if="activeTab === 'css'" class="code-container">
-          <button class="copy-btn" @click="copyToClipboard(cssContent)" title="Copy CSS"><i class="fas fa-copy"></i></button>
+        <div v-if="activeTab === 'css'" class="code-container code-container--with-copy">
+          <div class="code-toolbar">
+            <button class="copy-btn" @click="copyToClipboard(cssContent)" title="Copy CSS"><i class="fas fa-copy"></i> Copy</button>
+          </div>
           <pre><code>{{ cssContent }}</code></pre>
         </div>
       </div>
@@ -265,15 +269,51 @@ export default {
 }
 
 .code-container {
-    position: relative;
-    background-color: #f8f8f8;
-    padding: 15px;
-    border-radius: 4px;
+  position: relative;
+  background-color: #f8f8f8;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1.5px solid #e3e8f7;
+  margin-bottom: 1.2rem;
+  box-shadow: 0 2px 8px rgba(74,74,208,0.06);
 }
-
+.code-container--with-copy {
+  padding-top: 2.5rem;
+}
+.code-toolbar {
+  position: absolute;
+  top: 0.7rem;
+  right: 1.2rem;
+  display: flex;
+  gap: 0.5rem;
+}
+.copy-btn {
+  background: #f4f4f9;
+  border: 1px solid #e3e8f7;
+  border-radius: 6px;
+  padding: 6px 14px 6px 10px;
+  font-size: 1.08rem;
+  color: #4a4ad0;
+  cursor: pointer;
+  z-index: 2;
+  transition: background 0.18s, color 0.18s;
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  font-weight: 500;
+}
+.copy-btn:hover {
+  background: #eaeafb;
+  color: #2222aa;
+}
 .code-container pre {
-    margin: 0;
-    white-space: pre-wrap;
+  margin: 0;
+  white-space: pre-wrap;
+  font-size: 1.04rem;
+  font-family: 'Fira Mono', 'Consolas', 'Menlo', monospace;
+  background: none;
+  border: none;
+  box-shadow: none;
 }
 
 .preview-container {
@@ -324,24 +364,6 @@ export default {
   color: #464646;
   margin-bottom: 0.7rem;
   margin-top: 0.2rem;
-}
-.copy-btn {
-  position: absolute;
-  top: 18px;
-  right: 18px;
-  background: #f4f4f9;
-  border: 1px solid #e3e8f7;
-  border-radius: 6px;
-  padding: 6px 10px;
-  font-size: 1.1rem;
-  color: #4a4ad0;
-  cursor: pointer;
-  z-index: 2;
-  transition: background 0.18s, color 0.18s;
-}
-.copy-btn:hover {
-  background: #eaeafb;
-  color: #2222aa;
 }
 .copy-toast {
   position: fixed;
