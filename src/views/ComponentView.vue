@@ -209,7 +209,15 @@ export default {
     },
     copyToClipboard(content) {
       if (!content) return;
-      navigator.clipboard.writeText(content).then(() => {
+      // Add appropriate comment at the top if copying from HTML or CSS tab
+      let textToCopy = content;
+      const compName = this.componentLabel || '';
+      if (this.activeTab === 'html') {
+        textToCopy = `<!-- ${compName} HTML Starts Here -->\n` + content + `\n<!-- ${compName} HTML End Here (FRONTENDKIT.DEV) -->`;
+      } else if (this.activeTab === 'css') {
+        textToCopy = `/* ${compName} CSS Starts Here */\n` + content + `\n/* ${compName} CSS End Here (FRONTENDKIT.DEV) */`;
+      }
+      navigator.clipboard.writeText(textToCopy).then(() => {
         this.showToast = true;
         setTimeout(() => {
           this.showToast = false;
