@@ -91,6 +91,19 @@ function getRandomElements(arr, n, excludeSlug) {
   return shuffled.slice(0, n);
 }
 
+function trimIndentation(str) {
+  if (!str) return '';
+  const lines = str.split('\n');
+  // Remove empty lines at start/end
+  while (lines.length && lines[0].trim() === '') lines.shift();
+  while (lines.length && lines[lines.length-1].trim() === '') lines.pop();
+  // Find minimum indentation (ignore empty lines)
+  const indents = lines.filter(l => l.trim()).map(l => l.match(/^\s*/)[0].length);
+  const minIndent = indents.length ? Math.min(...indents) : 0;
+  // Remove minIndent spaces from each line
+  return lines.map(l => l.slice(minIndent)).join('\n');
+}
+
 export default {
   name: 'ComponentView',
   data() {
@@ -131,8 +144,8 @@ export default {
       // Extract <template> and <style> blocks
       const templateMatch = rawCode.match(/<template>([\s\S]*?)<\/template>/);
       const styleMatch = rawCode.match(/<style[^>]*>([\s\S]*?)<\/style>/);
-      this.htmlContent = templateMatch ? templateMatch[1].trim() : 'No <template> found.';
-      this.cssContent = styleMatch ? styleMatch[1].trim() : 'No <style> found.';
+      this.htmlContent = templateMatch ? trimIndentation(templateMatch[1]) : 'No <template> found.';
+      this.cssContent = styleMatch ? trimIndentation(styleMatch[1]) : 'No <style> found.';
     } else {
       this.$router.replace({ name: 'NotFound' });
     }
@@ -166,8 +179,8 @@ export default {
           // Extract <template> and <style> blocks
           const templateMatch = rawCode.match(/<template>([\s\S]*?)<\/template>/);
           const styleMatch = rawCode.match(/<style[^>]*>([\s\S]*?)<\/style>/);
-          this.htmlContent = templateMatch ? templateMatch[1].trim() : 'No <template> found.';
-          this.cssContent = styleMatch ? styleMatch[1].trim() : 'No <style> found.';
+          this.htmlContent = templateMatch ? trimIndentation(templateMatch[1]) : 'No <template> found.';
+          this.cssContent = styleMatch ? trimIndentation(styleMatch[1]) : 'No <style> found.';
         } else {
           this.$router.replace({ name: 'NotFound' });
         }
