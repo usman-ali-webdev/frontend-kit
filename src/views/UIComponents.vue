@@ -11,39 +11,108 @@
         <span>{{ componentLabel }}</span>
       </nav>
       <h1 style="font-size: 2rem; margin-bottom: 1.5rem;">All UI Components</h1>
-      <div v-for="(group, groupLabel) in groupedComponents" :key="groupLabel" class="accordion-group">
-        <div class="accordion-header" @click="toggleAccordion(groupLabel)" :style="{ borderBottom: openAccordions[groupLabel] ? '1px solid var(--primary-color)' : '' }">
-          <span>{{ groupLabel }}</span>
-            <span
-            class="accordion-arrow"
-            :aria-expanded="openAccordions[groupLabel] ? 'true' : 'false'"
-            >
-            <i class="fas fa-chevron-down"></i>
-            </span>
-        </div>
-        <div v-show="openAccordions[groupLabel]" class="accordion-content">
-          <div style="display: flex; flex-wrap: wrap; gap: 1.5rem;">
-            <div
-              v-for="comp in group"
-              :key="comp.slug"
-              style="flex: 1 1 200px; border: 1px solid #ccc; padding: 1rem; border-radius: 8px; position: relative; min-width: 220px; max-width: 350px; background: #fff; display: flex; flex-direction: column; align-items: stretch;"
-            >
-              <span
-                @click="goToComponent(comp.slug)"
-                title="View Code"
-                style="position: absolute; top: 10px; right: 12px; font-size: 1.3rem; color: #4a4ad0; cursor: pointer; z-index: 2;"
+      <div style="display:flex; gap: 1.5rem; margin-bottom: 2rem;">
+        <div>
+          <!-- Sticky Sidebar -->
+          <aside
+            style="
+              position: sticky;
+              top: 2rem;
+              align-self: flex-start;
+              min-width: 220px;
+              max-width: 260px;
+              background: #f8fafd;
+              border-radius: 10px;
+              box-shadow: 0 2px 8px rgba(74,74,208,0.07);
+              padding: 1.5rem 1rem;
+              margin-right: 2.5rem;
+              margin-bottom: 2rem;
+              border: 1.5px solid #e3e8f7;
+              font-size: 1.05rem;
+            "
+          >
+            <h2 style="font-size: 1.15rem; margin-bottom: 1.2rem; color: var(--primary-color); font-weight: 700;">
+              Components Index
+            </h2>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+              <li
+                v-for="(group, groupLabel) in groupedComponents"
+                :key="groupLabel"
+                style="margin-bottom: 1.1rem;"
               >
-                <i class="fas fa-eye"></i>
-              </span>
-              <h3 style="margin-bottom: 0.5rem;">{{ comp.label }}</h3>
-              <p style="font-size: 0.95rem; color: #888; margin-bottom: 1rem;">{{ comp.description }}</p>
-              <div style="display: flex; justify-content: center; align-items: center; min-height: 120px; margin-bottom: 1rem;">
-                <img
-                  :src="getPreviewImage(comp.previewImage)"
-                  alt="Preview"
-                  loading="lazy"
-                  style="max-width: 100%; max-height: 120px; object-fit: contain; border-radius: 6px; box-shadow: 0 2px 8px rgba(74,74,208,0.07); background: #f6f8fa;"
-                />
+                <a
+                  href="#"
+                  @click.prevent="toggleAccordion(groupLabel)"
+                  :style="{
+                    color: openAccordions[groupLabel] ? '#003eaa' : '#4a4ad0',
+                    fontWeight: openAccordions[groupLabel] ? 'bold' : 'normal',
+                    textDecoration: 'none',
+                    cursor: 'pointer',
+                    transition: 'color 0.2s'
+                  }"
+                >
+                  <i class="fas fa-folder-open" style="margin-right: 0.5rem;"></i>
+                  {{ groupLabel }}
+                </a>
+                <ul
+                  v-show="openAccordions[groupLabel]"
+                  style="list-style: none; padding-left: 1.2rem; margin-top: 0.5rem;"
+                >
+                  <li
+                    v-for="comp in group"
+                    :key="comp.slug"
+                    style="margin-bottom: 0.5rem;"
+                  >
+                    <a
+                      @click.prevent="goToComponent(comp.slug)"
+                      href="#"
+                      style="color: #444; text-decoration: none; font-size: 0.98rem; cursor: pointer;"
+                    >
+                      <i class="fas fa-cube" style="margin-right: 0.4rem; color: #4a4ad0;"></i>
+                      {{ comp.label }}
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </aside>
+        </div>
+        <div style="flex: 1; min-width: 0;">
+          <div v-for="(group, groupLabel) in groupedComponents" :key="groupLabel" class="accordion-group">
+            <div class="accordion-header" @click="toggleAccordion(groupLabel)" :style="{ borderBottom: openAccordions[groupLabel] ? '1px solid var(--primary-color)' : '' }">
+              <span>{{ groupLabel }}</span>
+                <span
+                class="accordion-arrow"
+                :aria-expanded="openAccordions[groupLabel] ? 'true' : 'false'"
+                >
+                <i class="fas fa-chevron-down"></i>
+                </span>
+            </div>
+            <div v-show="openAccordions[groupLabel]" class="accordion-content">
+              <div style="display: flex; flex-wrap: wrap; gap: 1.5rem;">
+                <div
+                  v-for="comp in group"
+                  :key="comp.slug"
+                  style="flex: 1 1 200px; border: 1px solid #ccc; padding: 1rem; border-radius: 8px; position: relative; min-width: 220px; max-width: 350px; background: #fff; display: flex; flex-direction: column; align-items: stretch;"
+                >
+                  <span
+                    @click="goToComponent(comp.slug)"
+                    title="View Code"
+                    style="position: absolute; top: 10px; right: 12px; font-size: 1.3rem; color: #4a4ad0; cursor: pointer; z-index: 2;"
+                  >
+                    <i class="fas fa-eye"></i>
+                  </span>
+                  <h3 style="margin-bottom: 0.5rem;">{{ comp.label }}</h3>
+                  <p style="font-size: 0.95rem; color: #888; margin-bottom: 1rem;">{{ comp.description }}</p>
+                  <div style="display: flex; justify-content: center; align-items: center; min-height: 120px; margin-bottom: 1rem;">
+                    <img
+                      :src="getPreviewImage(comp.previewImage)"
+                      alt="Preview"
+                      loading="lazy"
+                      style="max-width: 100%; max-height: 120px; object-fit: contain; border-radius: 6px; box-shadow: 0 2px 8px rgba(74,74,208,0.07); background: #f6f8fa;"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -112,6 +181,7 @@ function goToComponent(slug) {
   transition: box-shadow 0.25s, transform 0.18s;
   border: 1.5px solid var(--primary-color);
   overflow: hidden;
+  width: 100%;
 }
 
 .accordion-header {
@@ -156,6 +226,7 @@ function goToComponent(slug) {
   box-shadow: 0 2px 8px rgba(74,74,208,0.04);
   border: 1.5px solid #e3e8f7;
   border-top: none;
+  min-width: 0;
 }
 @keyframes fadeInAccordion {
   from { opacity: 0; transform: translateY(-16px); }
