@@ -1,19 +1,19 @@
 export default [
   {
     slug: 'loginForm',
-    label: 'Login Form 1',
+    label: 'Login Form Basic',
     category: 'Login Forms',
     description: 'Classic login form with labels and button.'
   },
   {
     slug: 'loginFormSimple',
-    label: 'Login Form 2 (Simple)',
+    label: 'Login Form Minimal',
     category: 'Login Forms',
     description: 'Minimal, clean login form.'
   },
   {
     slug: 'loginFormModern',
-    label: 'Login Form 3 (Modern)',
+    label: 'Login Form Modern',
     category: 'Login Forms',
     description: 'Modern login form with icon and divider.'
   },

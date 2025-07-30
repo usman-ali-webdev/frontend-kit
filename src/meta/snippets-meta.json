@@ -1,21 +1,21 @@
 [
   {
-    "slug": "loginForm",
-    "label": "Login Form 1",
-    "category": "Login Forms",
-    "description": "Classic login form with labels and button.",
-    "previewImage": "loginForm.png"
-  },
-  {
     "slug": "loginFormSimple",
-    "label": "Login Form 2 (Simple)",
+    "label": "Login Form Minimal",
     "category": "Login Forms",
     "description": "Minimal, clean login form.",
     "previewImage": "loginFormSimple.png"
   },
   {
+    "slug": "loginForm",
+    "label": "Login Form Basic",
+    "category": "Login Forms",
+    "description": "Classic login form with labels and button.",
+    "previewImage": "loginForm.png"
+  },
+  {
     "slug": "loginFormModern",
-    "label": "Login Form 3 (Modern)",
+    "label": "Login Form Modern",
     "category": "Login Forms",
     "description": "Modern login form with icon and divider.",
     "previewImage": "loginFormModern.png"
