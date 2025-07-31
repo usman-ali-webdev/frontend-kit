@@ -13,104 +13,87 @@
       <h1 style="font-size: 2rem; margin-bottom: 1.5rem;">All UI Components</h1>
       <div style="display:flex; gap: 1.5rem; margin-bottom: 2rem;">
         <div>
-          <!-- Sticky Sidebar -->
-          <aside
-            style="
-              position: sticky;
-              top: 2rem;
-              align-self: flex-start;
-              min-width: 220px;
-              max-width: 260px;
-              background: #f8fafd;
-              border-radius: 10px;
-              box-shadow: 0 2px 8px rgba(74,74,208,0.07);
-              padding: 1.5rem 1rem;
-              margin-right: 2.5rem;
-              margin-bottom: 2rem;
-              border: 1.5px solid #e3e8f7;
-              font-size: 1.05rem;
-            "
-          >
-            <h2 style="font-size: 1.15rem; margin-bottom: 1.2rem; color: var(--primary-color); font-weight: 700;">
-              Components Index
-            </h2>
-            <ul style="list-style: none; padding: 0; margin: 0;">
-              <li
-                v-for="(group, groupLabel) in groupedComponents"
-                :key="groupLabel"
-                style="margin-bottom: 1.1rem; font-size: .9rem;"
-              >
-                <a
-                  href="#"
-                  @click.prevent="toggleAccordion(groupLabel)"
-                  :style="{
+          <!-- Drawer Toggle Button (Visible only on mobile) -->
+          <button @click="sidebarOpen = !sidebarOpen" class="drawer-toggle stylish-toggle">
+            <i class="fas fa-bars"></i>
+          </button>
+          <!-- Sidebar Drawer -->
+          <!-- your existing sidebar content here -->
+          <div :class="['sidebar-drawer', { 'drawer-open': sidebarOpen }]">
+            <aside style="
+                  position: sticky;
+                  top: 2rem;
+                  align-self: flex-start;
+                  min-width: 220px;
+                  max-width: 260px;
+                  background: #f8fafd;
+                  border-radius: 10px;
+                  box-shadow: 0 2px 8px rgba(74,74,208,0.07);
+                  padding: 1.5rem 1rem;
+                  margin-right: 2.5rem;
+                  margin-bottom: 2rem;
+                  border: 1.5px solid #e3e8f7;
+                  font-size: 1.05rem;
+                ">
+              <h2 style="font-size: 1.15rem; margin-bottom: 1.2rem; color: var(--primary-color); font-weight: 700;">
+                Components Index
+              </h2>
+              <ul style="list-style: none; padding: 0; margin: 0;">
+                <li v-for="(group, groupLabel) in groupedComponents" :key="groupLabel"
+                  style="margin-bottom: 1.1rem; font-size: .9rem;">
+                  <a href="#" @click.prevent="toggleAccordion(groupLabel)" :style="{
                     color: openAccordions[groupLabel] ? '#003eaa' : '#4a4ad0',
                     fontWeight: openAccordions[groupLabel] ? 'bold' : 'normal',
                     textDecoration: 'none',
                     cursor: 'pointer',
                     transition: 'color 0.2s'
-                  }"
-                >
-                  <i class="fas fa-folder-open" style="margin-right: 0.5rem;"></i>
+                  }">
+                    <i class="fas fa-folder-open" style="margin-right: 0.5rem;"></i>
                     {{ groupLabel }} <span style="color: #888; font-size: 0.97em;">({{ group.length }})</span>
-                </a>
-                <ul
-                  v-show="openAccordions[groupLabel]"
-                  style="list-style: none; padding-left: 1.2rem; margin-top: 0.5rem;"
-                >
-                  <li
-                    v-for="comp in group"
-                    :key="comp.slug"
-                    style="margin-bottom: 0.5rem;"
-                  >
-                    <a
-                      @click.prevent="goToComponent(comp.slug)"
-                      href="#"
-                      style="color: #444; text-decoration: none; font-size: 0.85rem; cursor: pointer;"
-                    >
-                      <i class="fas fa-cube" style="margin-right: 0.4rem; color: #4a4ad0;"></i>
-                      {{ comp.label }}
-                    </a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </aside>
+                  </a>
+                  <ul v-show="openAccordions[groupLabel]"
+                    style="list-style: none; padding-left: 1.2rem; margin-top: 0.5rem;">
+                    <li v-for="comp in group" :key="comp.slug" style="margin-bottom: 0.5rem;">
+                      <a @click.prevent="goToComponent(comp.slug)" href="#"
+                        style="color: #444; text-decoration: none; font-size: 0.85rem; cursor: pointer;">
+                        <i class="fas fa-cube" style="margin-right: 0.4rem; color: #4a4ad0;"></i>
+                        {{ comp.label }}
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </aside>
+          </div>
+          <!-- Optional overlay -->
+          <div v-show="sidebarOpen" class="drawer-overlay" @click="sidebarOpen = false"></div>
+
+          <!-- Sticky Sidebar -->
+
         </div>
         <div style="flex: 1; min-width: 0;">
           <div v-for="(group, groupLabel) in groupedComponents" :key="groupLabel" class="accordion-group">
-            <div class="accordion-header" @click="toggleAccordion(groupLabel)" :style="{ borderBottom: openAccordions[groupLabel] ? '1px solid var(--primary-color)' : '' }">
+            <div class="accordion-header" @click="toggleAccordion(groupLabel)"
+              :style="{ borderBottom: openAccordions[groupLabel] ? '1px solid var(--primary-color)' : '' }">
               <span>{{ groupLabel }}</span>
-                <span
-                class="accordion-arrow"
-                :aria-expanded="openAccordions[groupLabel] ? 'true' : 'false'"
-                >
+              <span class="accordion-arrow" :aria-expanded="openAccordions[groupLabel] ? 'true' : 'false'">
                 <i class="fas fa-chevron-down"></i>
-                </span>
+              </span>
             </div>
             <div v-show="openAccordions[groupLabel]" class="accordion-content">
               <div style="display: flex; flex-wrap: wrap; gap: 1.5rem;">
-                <div
-                  v-for="comp in group"
-                  :key="comp.slug"
-                  style="flex: 1 1 200px; border: 1px solid #ccc; padding: 1rem; border-radius: 8px; position: relative; min-width: 220px; max-width: 350px; background: #fff; display: flex; flex-direction: column; align-items: stretch;"
-                >
-                  <span
-                    @click="goToComponent(comp.slug)"
-                    title="View Code"
-                    style="position: absolute; top: 10px; right: 12px; font-size: 1.3rem; color: #4a4ad0; cursor: pointer; z-index: 2;"
-                  >
+                <div v-for="comp in group" :key="comp.slug"
+                  style="flex: 1 1 200px; border: 1px solid #ccc; padding: 1rem; border-radius: 8px; position: relative; min-width: 220px; max-width: 350px; background: #fff; display: flex; flex-direction: column; align-items: stretch;">
+                  <span @click="goToComponent(comp.slug)" title="View Code"
+                    style="position: absolute; top: 10px; right: 12px; font-size: 1.3rem; color: #4a4ad0; cursor: pointer; z-index: 2;">
                     <i class="fas fa-eye"></i>
                   </span>
                   <h3 style="margin-bottom: 0.5rem;">{{ comp.label }}</h3>
                   <p style="font-size: 0.95rem; color: #888; margin-bottom: 1rem;">{{ comp.description }}</p>
-                  <div style="display: flex; justify-content: center; align-items: center; min-height: 120px; margin-bottom: 1rem;">
-                    <img
-                      :src="getPreviewImage(comp.previewImage)"
-                      alt="Preview"
-                      loading="lazy"
-                      style="max-width: 100%; max-height: 120px; object-fit: contain; border-radius: 6px; box-shadow: 0 2px 8px rgba(74,74,208,0.07); background: #f6f8fa;"
-                    />
+                  <div
+                    style="display: flex; justify-content: center; align-items: center; min-height: 120px; margin-bottom: 1rem;">
+                    <img :src="getPreviewImage(comp.previewImage)" alt="Preview" loading="lazy"
+                      style="max-width: 100%; max-height: 120px; object-fit: contain; border-radius: 6px; box-shadow: 0 2px 8px rgba(74,74,208,0.07); background: #f6f8fa;" />
                   </div>
                 </div>
               </div>
@@ -140,6 +123,8 @@ const modules = import.meta.glob('@/components/snippets/*.vue');
 
 const groupedComponents = ref({});
 const openAccordions = ref({});
+
+const sidebarOpen = ref(false);
 
 async function loadComponents() {
   const comps = [];
@@ -176,7 +161,7 @@ function goToComponent(slug) {
 .accordion-group {
   margin-bottom: 2rem;
   border-radius: 8px;
-  background: rgba(255,255,255,0.7);
+  background: rgba(255, 255, 255, 0.7);
   backdrop-filter: blur(6px);
   transition: box-shadow 0.25s, transform 0.18s;
   border: 1.5px solid var(--primary-color);
@@ -200,7 +185,8 @@ function goToComponent(slug) {
 }
 
 .accordion-header::before {
-  content: '\f02e'; /* Font Awesome folder-open icon */
+  content: '\f02e';
+  /* Font Awesome folder-open icon */
   font-family: 'Font Awesome 5 Free';
   font-weight: 900;
   color: #4a4ad0;
@@ -208,28 +194,168 @@ function goToComponent(slug) {
   margin-right: 1rem;
   opacity: 0.7;
 }
+
 .accordion-arrow {
   font-size: 1.5rem;
   color: #4a4ad0;
   margin-left: auto;
   transition: transform 0.3s ease-in, color 0.2s;
 }
+
 .accordion-arrow[aria-expanded="true"] {
   transform: rotate(180deg);
   color: #003eaa;
 }
+
 .accordion-content {
   padding: 2rem 2rem 1.5rem 2.5rem;
-  background: rgba(255,255,255,0.85);
+  background: rgba(255, 255, 255, 0.85);
   border-radius: inherit;
-  animation: fadeInAccordion 0.4s cubic-bezier(.4,2,.6,1);
-  box-shadow: 0 2px 8px rgba(74,74,208,0.04);
+  animation: fadeInAccordion 0.4s cubic-bezier(.4, 2, .6, 1);
+  box-shadow: 0 2px 8px rgba(74, 74, 208, 0.04);
   border: 1.5px solid #e3e8f7;
   border-top: none;
   min-width: 0;
 }
+
 @keyframes fadeInAccordion {
-  from { opacity: 0; transform: translateY(-16px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile drawer behavior */
+/* .sidebar-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 260px;
+  background: #f8fafd;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem 1rem;
+  border-right: 1.5px solid #e3e8f7;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+  z-index: 999;
+} */
+
+/* Show drawer */
+.drawer-open {
+  transform: translateX(0);
+}
+
+/* Overlay */
+.drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 998;
+}
+
+/* Drawer toggle button */
+.drawer-toggle {
+  display: none;
+  position: fixed;
+  top: 7rem;
+  left: 0;
+  z-index: 1000;
+  background: #4a4ad0;
+  color: white;
+  border: none;
+  padding: 0.7rem 1rem;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  font-size: 1.2rem;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: left 0.3s ease;
+}
+
+/* Optional pull-tab illusion */
+.drawer-toggle::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: -5px;
+  transform: translateY(-50%);
+  width: 5px;
+  height: 40%;
+  background: rgba(0, 0, 0, 0.08);
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+@media (max-width: 768px) {
+  .drawer-toggle {
+    display: block;
+  }
+}
+
+
+/* Mobile view: override to behave like drawer */
+@media (max-width: 768px) {
+  .sidebar-drawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 260px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 999;
+    border-radius: 0;
+    margin: 0;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.08);
+  }
+
+  .drawer-open {
+    transform: translateX(0);
+  }
+}
+
+/* Default: Desktop styles (your original) */
+.sidebar-drawer {
+  position: sticky;
+  top: 2rem;
+  align-self: flex-start;
+  min-width: 220px;
+  max-width: 260px;
+  background: #f8fafd;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(74, 74, 208, 0.07);
+  padding: 1.5rem 1rem;
+  margin-right: 2.5rem;
+  margin-bottom: 2rem;
+  border: 1.5px solid #e3e8f7;
+  font-size: 1.05rem;
+  transform: none !important;
+}
+
+/* Mobile: override as drawer */
+@media (max-width: 768px) {
+  .sidebar-drawer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 260px;
+    transform: translateX(-100%) !important;
+    transition: transform 0.3s ease-in-out;
+    z-index: 999;
+    border-radius: 0;
+    margin: 0;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.08);
+  }
+
+  .sidebar-drawer.drawer-open {
+    transform: translateX(0) !important;
+  }
 }
 </style>
