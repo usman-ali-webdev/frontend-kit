@@ -38,7 +38,7 @@
               <li
                 v-for="(group, groupLabel) in groupedComponents"
                 :key="groupLabel"
-                style="margin-bottom: 1.1rem;"
+                style="margin-bottom: 1.1rem; font-size: .9rem;"
               >
                 <a
                   href="#"
@@ -52,7 +52,7 @@
                   }"
                 >
                   <i class="fas fa-folder-open" style="margin-right: 0.5rem;"></i>
-                  {{ groupLabel }}
+                    {{ groupLabel }} <span style="color: #888; font-size: 0.97em;">({{ group.length }})</span>
                 </a>
                 <ul
                   v-show="openAccordions[groupLabel]"
@@ -66,7 +66,7 @@
                     <a
                       @click.prevent="goToComponent(comp.slug)"
                       href="#"
-                      style="color: #444; text-decoration: none; font-size: 0.98rem; cursor: pointer;"
+                      style="color: #444; text-decoration: none; font-size: 0.85rem; cursor: pointer;"
                     >
                       <i class="fas fa-cube" style="margin-right: 0.4rem; color: #4a4ad0;"></i>
                       {{ comp.label }}
