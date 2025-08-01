@@ -8,7 +8,7 @@
             <!-- <br> <small style="font-size: xx-small;">Your Development Companion</small> -->
         </h1>
         <nav style="flex:1; text-align: center; background-color: transparent;">
-            <ul>
+            <ul class="in-hide-home-li">
                 <li style="font-family: 'Samsung Sharp Sans Regular'; padding-inline: 10px; letter-spacing: 1px;" v-for="item in navItems" :key="item.path" :id="item.text" :class="{ active: isActive(item.path) }">
                     <router-link v-if="item.path" :to="item.path">{{ item.text }}</router-link>
                     <a v-else href="#">{{ item.text }}</a>
@@ -41,7 +41,7 @@ import { computed } from 'vue'
 const route = useRoute()
 
 const navItems = [
-    // { text: 'Home', path: '/' },
+    { text: 'Home', path: '/' },
     // { text: 'Home', path: '/' },
     { text: 'UI Components', path: '/ui-components' },
     { text: 'Layout Generator', path: '/layout-generator' },
@@ -105,6 +105,10 @@ header nav {
   header nav {
     display: none;
   }
+}
+
+ul.in-hide-home-li li:first-child{
+    display: none;
 }
 
 </style>
