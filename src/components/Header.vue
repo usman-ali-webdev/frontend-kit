@@ -8,8 +8,8 @@
             <br> <small style="font-size: xx-small;">Your Development Companion</small>
         </h1> -->
         <h1 class="in-go-home" style="line-height: 0.5;font-size: 1.6em;font-family: cursive;">
-            <span style=" color: #fb732a; border: 3px solid #fb732a; padding: 2px 5px;">Frontend</span>
-            <span style=" border: 3px solid #fb732a; padding: 2px 5px; border-left: none;">Kit</span> 
+            <span style="">Frontend</span>
+            <span style="background-color: #fb732a; border-left: none;">Kit</span> 
             <!-- <br> <small style="font-size: xx-small;">Your Development Companion</small> -->
         </h1>
         <nav style="flex:1; text-align: center; background-color: transparent;">
@@ -100,7 +100,9 @@ onUnmounted(() => {
 header nav {
     display: block;
 }
-
+.in-go-home span{
+    border: 3px solid #fb732a; padding: 2px 5px;
+}
 /* For screens less than 768px */
 @media (max-width: 768px) {
     .sidebar {
@@ -114,9 +116,13 @@ header nav {
     header nav {
         display: none;
     }
+    .in-go-home span{
+        border: 2px solid #fb732a; padding: 2px 5px;
+    }
 }
 
 ul.in-hide-home-li li:first-child {
     display: none;
 }
+
 </style>
