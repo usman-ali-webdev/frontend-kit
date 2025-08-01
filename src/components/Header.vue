@@ -7,7 +7,7 @@
             FrontendKit
             <br> <small style="font-size: xx-small;">Your Development Companion</small>
         </h1> -->
-        <h1 class="in-go-home" style="line-height: 0.5;font-size: 1.6em;font-family: 'Samsung Sharp Sans Bold';">
+        <h1 class="in-go-home" style="line-height: 0.5;font-size: 1.6em;font-family: cursive;">
             <span style=" color: #fb732a; border: 3px solid #fb732a; padding: 2px 5px;">Frontend</span>
             <span style=" border: 3px solid #fb732a; padding: 2px 5px; border-left: none;">Kit</span> 
             <!-- <br> <small style="font-size: xx-small;">Your Development Companion</small> -->
