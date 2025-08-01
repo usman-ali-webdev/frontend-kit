@@ -231,21 +231,6 @@ function goToComponent(slug) {
 }
 
 /* Mobile drawer behavior */
-/* .sidebar-drawer {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 260px;
-  background: #f8fafd;
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.08);
-  padding: 1.5rem 1rem;
-  border-right: 1.5px solid #e3e8f7;
-  transform: translateX(-100%);
-  transition: transform 0.3s ease-in-out;
-  z-index: 999;
-} */
-
 /* Show drawer */
 .drawer-open {
   transform: translateX(0);
@@ -327,13 +312,10 @@ function goToComponent(slug) {
   align-self: flex-start;
   min-width: 220px;
   max-width: 260px;
-  background: #f8fafd;
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(74, 74, 208, 0.07);
-  padding: 1.5rem 1rem;
-  margin-right: 2.5rem;
+  
+  /* margin-right: 2.5rem; */
   margin-bottom: 2rem;
-  border: 1.5px solid #e3e8f7;
   font-size: 1.05rem;
   transform: none !important;
 }
@@ -346,6 +328,10 @@ function goToComponent(slug) {
     left: 0;
     height: 100%;
     width: 260px;
+    background: #f8fafd;
+    padding: 1.5rem 1rem;
+    border: 1.5px solid #e3e8f7;
+    box-shadow: 0 2px 8px rgba(74, 74, 208, 0.07);
     transform: translateX(-100%) !important;
     transition: transform 0.3s ease-in-out;
     z-index: 999;
