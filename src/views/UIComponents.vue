@@ -14,12 +14,14 @@
       <div style="display:flex; gap: 1.5rem; margin-bottom: 2rem;">
         <div>
           <!-- Drawer Toggle Button (Visible only on mobile) -->
-          <button @click="sidebarOpen = !sidebarOpen" class="drawer-toggle stylish-toggle">
-            <i class="fas fa-bars"></i>
-          </button>
+          
           <!-- Sidebar Drawer -->
           <!-- your existing sidebar content here -->
           <div :class="['sidebar-drawer', { 'drawer-open': sidebarOpen }]">
+            <button @click="sidebarOpen = !sidebarOpen" :style="!sidebarOpen ? 'left: 240px;' : 'left: 248px;'" class="drawer-toggle stylish-toggle">
+            <i v-if="!sidebarOpen" style="font-size: 18px;" class="fa-solid fa-circle-chevron-right"></i>
+            <i v-else style="font-size: 18px;" class="fa-solid fa-circle-chevron-left"></i>
+          </button>
             <aside style="
                   position: sticky;
                   top: 2rem;
@@ -247,9 +249,9 @@ function goToComponent(slug) {
 /* Drawer toggle button */
 .drawer-toggle {
   display: none;
-  position: fixed;
+  position: relative;
   top: 7rem;
-  left: 0;
+  left: 240px;
   z-index: 1000;
   background: #4a4ad0;
   color: white;
