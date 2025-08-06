@@ -7,7 +7,7 @@
             FrontendKit
             <br> <small style="font-size: xx-small;">Your Development Companion</small>
         </h1> -->
-        <h1 class="in-go-home" style="line-height: 0.5;font-size: 1.6em;font-family: cursive;">
+        <h1 class="in-go-home" @click="$router.push('/')" style="line-height: 0.5;font-size: 1.6em;font-family: cursive;">
             <span style="">Frontend</span>
             <span style="background-color: #fb732a; border-left: none;">Kit</span> 
             <!-- <br> <small style="font-size: xx-small;">Your Development Companion</small> -->
