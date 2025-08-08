@@ -10,11 +10,24 @@
         <span class="breadcrumb-separator">/</span>
         <span>{{ componentLabel }}</span>
       </nav>
-      <h1 style="font-size: 2rem; margin-bottom: 1.5rem;">All UI Components</h1>
+      <div style="margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between;">
+        <h1 style="font-size: 2rem; margin-bottom: 1.5rem;">All UI Components</h1>
+        <div style="margin-bottom: 1.5rem; max-width: 400px; min-width: 320px;">
+          <input v-model="searchQuery" type="text" placeholder="Search here or pick from the sidebar..." style="
+              width: 100%;
+              padding: 0.65rem 1rem;
+              font-size: 1rem;
+              border: 1.5px solid #ccc;
+              border-radius: 6px;
+              outline: none;
+            " />
+        </div>
+      </div>
       <div style="display:flex; gap: 1.5rem; margin-bottom: 2rem;">
         <div v-show="true">
           <div :class="['sidebar-drawer', { 'drawer-open': sidebarOpen }]">
-            <button @click="sidebarOpen = !sidebarOpen" :style="!sidebarOpen ? 'left: 240px;' : 'left: 248px;'" class="drawer-toggle stylish-toggle">
+            <button @click="sidebarOpen = !sidebarOpen" :style="!sidebarOpen ? 'left: 240px;' : 'left: 248px;'"
+              class="drawer-toggle stylish-toggle">
               <i v-if="!sidebarOpen" style="font-size: 18px;" class="fa-solid fa-circle-chevron-right"></i>
               <i v-else style="font-size: 18px;" class="fa-solid fa-circle-chevron-left"></i>
             </button>
@@ -65,43 +78,49 @@
           </div>
           <div v-show="sidebarOpen" class="drawer-overlay" @click="sidebarOpen = false"></div>
         </div>
+
+
         <div style="flex: 1; min-width: 0;">
-          <div v-for="(group, groupLabel) in groupedComponents" :key="groupLabel" class="accordion-group">
-            <div class="accordion-header" @click="toggleAccordion(groupLabel)"
-              :style="{ borderBottom: openAccordions[groupLabel] ? '1px solid var(--primary-color)' : '' }">
-              <span>{{ groupLabel }}</span>
-              <span class="accordion-arrow" :aria-expanded="openAccordions[groupLabel] ? 'true' : 'false'">
-                <i class="fas fa-chevron-down"></i>
-              </span>
-            </div>
-            <div v-show="openAccordions[groupLabel]" class="accordion-content">
-              <div style="display: flex; gap: 2rem;">
-                <div style="min-width: 160px;">
-                  <ul style="list-style: none; padding: 0;">
-                    <li v-for="(comp, index) in group" :key="comp.slug" @click="activeTab[groupLabel] = index"
-                        :style="{
-                          cursor: 'pointer',
-                          padding: '0.5rem 1rem',
-                          background: activeTab[groupLabel] === index ? '#e3e8f7' : 'transparent',
-                          color: activeTab[groupLabel] === index ? '#4a4ad0' : '#333',
-                          borderRadius: '6px',
-                          marginBottom: '0.5rem'
-                        }">
-                      {{ comp.label }}
-                    </li>
-                  </ul>
-                </div>
-                <div style="flex: 1;">
-                  <div v-for="(comp, index) in group" :key="comp.slug" v-show="activeTab[groupLabel] === index"
-                    style="position: relative; border: 1px solid #ccc; padding: 1rem; border-radius: 8px; background: #fff;">
-                    <span @click="goToComponent(comp.slug)" title="View Code"
-                      style="position: absolute; top: 10px; right: 12px; font-size: 1.3rem; color: #4a4ad0; cursor: pointer; z-index: 2;">
-                      <i class="fas fa-eye"></i>
-                    </span>
-                    <h3 style="margin-bottom: 0.5rem;">{{ comp.label }}</h3>
-                    <p style="font-size: 0.95rem; color: #888; margin-bottom: 1rem;">{{ comp.description }}</p>
-                    <div style="margin-top: 1rem;">
-                      <component :is="comp.component" />
+          <div v-if="!filteredGroupedComponents">
+            <p style="color: #888; font-style: italic; text-align: center; font-size: 2vw;">No results found</p>
+          </div>
+          <div v-else>
+            <div v-for="(group, groupLabel) in filteredGroupedComponents" :key="groupLabel" class="accordion-group">
+              <div class="accordion-header" @click="toggleAccordion(groupLabel)"
+                :style="{ borderBottom: openAccordions[groupLabel] ? '1px solid var(--primary-color)' : '' }">
+                <span>{{ groupLabel }}</span>
+                <span class="accordion-arrow" :aria-expanded="openAccordions[groupLabel] ? 'true' : 'false'">
+                  <i class="fas fa-chevron-down"></i>
+                </span>
+              </div>
+              <div v-show="openAccordions[groupLabel]" class="accordion-content">
+                <div style="display: flex; gap: 2rem;">
+                  <div style="min-width: 160px;">
+                    <ul style="list-style: none; padding: 0;">
+                      <li v-for="(comp, index) in group" :key="comp.slug" @click="activeTab[groupLabel] = index" :style="{
+                        cursor: 'pointer',
+                        padding: '0.5rem 1rem',
+                        background: activeTab[groupLabel] === index ? '#e3e8f7' : 'transparent',
+                        color: activeTab[groupLabel] === index ? '#4a4ad0' : '#333',
+                        borderRadius: '6px',
+                        marginBottom: '0.5rem'
+                      }">
+                        {{ comp.label }}
+                      </li>
+                    </ul>
+                  </div>
+                  <div style="flex: 1;">
+                    <div v-for="(comp, index) in group" :key="comp.slug" v-show="activeTab[groupLabel] === index"
+                      style="position: relative; border: 1px solid #ccc; padding: 1rem; border-radius: 8px; background: #fff;">
+                      <span @click="goToComponent(comp.slug)" title="View Code"
+                        style="position: absolute; top: 10px; right: 12px; font-size: 1.3rem; color: #4a4ad0; cursor: pointer; z-index: 2;">
+                        <i class="fas fa-eye"></i>
+                      </span>
+                      <h3 style="margin-bottom: 0.5rem;">{{ comp.label }}</h3>
+                      <p style="font-size: 0.95rem; color: #888; margin-bottom: 1rem;">{{ comp.description }}</p>
+                      <div style="margin-top: 1rem;">
+                        <component :is="comp.component" />
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -115,7 +134,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import meta from '@/meta/snippets-meta.json';
 
@@ -164,6 +183,34 @@ function goToComponent(slug) {
 // function goToComponent(slug) {
 //   window.open(`/component/${slug}`, '_blank');
 // }
+const searchQuery = ref('');
+
+const filteredGroupedComponents = computed(() => {
+  if (!searchQuery.value.trim()) return groupedComponents.value;
+
+  const words = searchQuery.value.toLowerCase().split(/\s+/).filter(Boolean);
+  const filtered = {};
+
+  for (const [category, comps] of Object.entries(groupedComponents.value)) {
+    const categoryMatch = words.every(word => category.toLowerCase().includes(word));
+    const matches = comps.filter(c =>
+      words.every(word => c.label.toLowerCase().includes(word))
+    );
+
+    if (categoryMatch || matches.length) {
+      filtered[category] = categoryMatch ? comps : matches;
+    }
+  }
+
+  return Object.keys(filtered).length ? filtered : null; // null means no match
+});
+
+
+
+const componentLabel = computed(() => {
+  const currentComponent = Object.values(groupedComponents.value).flat().find(c => c.slug === router.currentRoute.value.params.slug);
+  return currentComponent ? currentComponent.label : 'UI Components';
+});
 
 </script>
 
@@ -325,7 +372,7 @@ function goToComponent(slug) {
   min-width: 220px;
   max-width: 260px;
   border-radius: 10px;
-  
+
   /* margin-right: 2.5rem; */
   margin-bottom: 2rem;
   font-size: 1.05rem;
