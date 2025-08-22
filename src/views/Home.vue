@@ -257,18 +257,36 @@ const flatFilteredList = computed(() => {
   );
 });
 // Category-level suggestions
+// const groupedCategories = computed(() => {
+//   const cats = {};
+//   flatFilteredList.value.forEach(c => {
+//     if (!cats[c.category]) cats[c.category] = [];
+//     cats[c.category].push(c);
+//   });
+//   return Object.keys(cats).map(category => ({
+//     category,
+//     count: cats[category].length
+//   }));
+// }); 
 const groupedCategories = computed(() => {
   const cats = {};
-  flatFilteredList.value.forEach(c => {
-    if (!cats[c.category]) cats[c.category] = [];
-    cats[c.category].push(c);
+  
+  // count from meta, not filtered list
+  meta.forEach(c => {
+    if (!cats[c.category]) cats[c.category] = 0;
+    cats[c.category]++;
   });
-  return Object.keys(cats).map(category => ({
-    category,
-    count: cats[category].length
-  }));
-});
 
+  // only return categories that exist in filtered list
+  const activeCategories = new Set(flatFilteredList.value.map(c => c.category));
+
+  return Object.keys(cats)
+    .filter(category => activeCategories.has(category))
+    .map(category => ({
+      category,
+      count: cats[category]
+    }));
+});
 // Navigate
 function goToCategory(category) {
   router.push(`/search/${encodeURIComponent(category)}`);
