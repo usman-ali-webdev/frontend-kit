@@ -132,7 +132,8 @@ body {
     background-size: contain;
     background-color: #4a4ad0;
     /* min-height: calc(100vh - 25%); */
-    padding-bottom: 50px;
+    /* padding-bottom: 50px; */
+    padding-bottom: 150px;
     display: flex;
     justify-content: center;
     padding-top: 50px;
@@ -140,4 +141,18 @@ body {
   .main-area h1{
   font-family: 'Samsung Sharp Sans Medium';
   }
+.wave {
+    position: absolute;
+    bottom: -150px;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    z-index: 1;
+  }
 
+  .wave svg {
+    /* position: relative;
+    display: block; */
+    width: calc(100% + 1.3px);
+    height: 265px;
+  }

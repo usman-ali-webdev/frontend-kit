@@ -1,5 +1,5 @@
 <template>
-  <section class="landing" style="position: relative;">
+  <section class="landing" style="position: relative; overflow: hidden; min-height: 400px;">
     <svg width="20" height="20" class="floatY" style="position:absolute; top:20px; left:30px; opacity:0.15;">
       <circle cx="10" cy="10" r="10" fill="#E0E0E0" />
     </svg>
@@ -57,11 +57,16 @@
   <circle cx="8" cy="8" r="6" stroke="limegreen" stroke-width="3" fill="transparent"/>
 </svg> -->
 
-
-
-
-
-    <h1></h1>
+    <div class="wave">
+      <svg viewBox="0 0 1920 265" version="1.1" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+          <g fill="#fcfafa" transform="translate(0 -402)">
+            <path d="M0,439.134243 C175.04074,464.89273 327.944386,477.771974 458.710937,477.771974 C654.860765,477.771974 870.645295,442.632362 1205.9828,410.192501 C1429.54114,388.565926 1667.54687,411.092417 1920,477.771974 L1920,667 L1017.15166,667 L0,667 L0,439.134243 Z"></path>
+          </g>
+        </g>
+      </svg>
+    </div>
+    
     <div class="search-section">
       <h2 class="search-title">Prebuilt Components &ndash; <br> Fast, Easy <span style="color: #FF7519;">UI
           Integration!</span></h2>
@@ -79,7 +84,7 @@
       </div>  -->
       <!-- Search Bar -->
       <div class="search-section">
-        <h1 class="search-title">Search Components</h1>
+        <!-- <h1 class="search-title">Search Components</h1> -->
 
         <div class="search-box">
           <!-- Search Input -->
