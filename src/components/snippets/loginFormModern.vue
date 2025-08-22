@@ -1,23 +1,23 @@
 <template>
-  <div class="login-form-modern">
+  <div class="in-login-form-modern">
     <form>
-      <div class="icon-row">
+      <div class="in-icon-row">
         <i class="fas fa-user-circle"></i>
       </div>
-      <div class="input-group">
+      <div class="in-input-group">
         <input type="email" placeholder="Email address" required />
       </div>
-      <div class="input-group">
+      <div class="in-input-group">
         <input type="password" placeholder="Password" required />
       </div>
-      <div class="divider"><span>or</span></div>
-      <button type="submit" class="login-btn">Login</button>
+      <div class="in-divider"><span>or</span></div>
+      <button type="submit" class="in-login-btn">Login</button>
     </form>
   </div>
 </template>
 
 <style scoped>
-.login-form-modern {
+.in-login-form-modern {
   max-width: 340px;
   margin: 0 auto;
   padding: 32px 24px;
@@ -26,21 +26,21 @@
   box-shadow: 0 4px 16px rgba(74, 74, 208, 0.08);
 }
 
-.icon-row {
+.in-icon-row {
   text-align: center;
   margin-bottom: 1.5rem;
 }
 
-.icon-row i {
+.in-icon-row i {
   font-size: 3rem;
   color: #4a4ad0;
 }
 
-.input-group {
+.in-input-group {
   margin-bottom: 1rem;
 }
 
-.input-group input {
+.in-input-group input {
   width: 100%;
   padding: 12px 14px;
   border: 1px solid #bbb;
@@ -49,13 +49,13 @@
   background: #fff;
 }
 
-.divider {
+.in-divider {
   text-align: center;
   margin: 1.5rem 0 1rem;
   position: relative;
 }
 
-.divider span {
+.in-divider span {
   background: #f8fafc;
   padding: 0 12px;
   color: #aaa;
@@ -63,7 +63,7 @@
   z-index: 1;
 }
 
-.divider:before {
+.in-divider:before {
   content: '';
   display: block;
   height: 1px;
@@ -75,7 +75,7 @@
   z-index: 0;
 }
 
-.login-btn {
+.in-login-btn {
   width: 100%;
   padding: 12px;
   background: #4a4ad0;
@@ -88,7 +88,7 @@
   transition: background 0.2s;
 }
 
-.login-btn:hover {
+.in-login-btn:hover {
   background: #003eaa;
 }
 </style>
