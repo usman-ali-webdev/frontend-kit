@@ -83,10 +83,10 @@
 
         <div class="search-box">
           <!-- Search Input -->
-          <input v-model="searchQuery" type="text" placeholder="Search here..." class="search-input" />
+          <input v-model="searchQuery" type="text" placeholder="Search here..." class="search-input" :class="['search-input', searchQuery.trim() ? 'search-input-focused' : '']" />
 
           <!-- Suggestions -->
-          <ul v-if="searchQuery.trim()" class="suggestions">
+          <!-- <ul v-if="searchQuery.trim()" class="suggestions">
             <li v-for="comp in flatFilteredList" :key="comp.slug" @click="goToComponent(comp.slug)">
               {{ comp.label }}
             </li>
@@ -94,7 +94,26 @@
             <li v-if="flatFilteredList.length === 0" class="no-results">
               No results found
             </li>
+          </ul> -->
+          <!-- Suggestions -->
+          <ul v-if="searchQuery.trim()" class="suggestions">
+            <!-- Category Suggestions -->
+            <li v-for="cat in groupedCategories" :key="cat.category" @click="goToCategory(cat.category)"
+              class="category-suggestion">
+              {{ cat.category }} <span style="font-family: 'Euclid'; color: gray; margin-left: 5px;">({{ cat.count }})</span>
+            </li>
+
+            <!-- Component Suggestions -->
+            <li style="font-family: 'Samsung Sharp Sans Regular'; font-size: 12px;" v-for="comp in flatFilteredList" :key="comp.slug" @click="goToComponent(comp.slug)">
+              {{ comp.label }}
+            </li>
+
+            <!-- No results -->
+            <li v-if="flatFilteredList.length === 0" class="no-results">
+              No results found
+            </li>
           </ul>
+
         </div>
       </div>
 
@@ -237,6 +256,23 @@ const flatFilteredList = computed(() => {
     words.every(word => c.label.toLowerCase().includes(word) || c.category.toLowerCase().includes(word))
   );
 });
+// Category-level suggestions
+const groupedCategories = computed(() => {
+  const cats = {};
+  flatFilteredList.value.forEach(c => {
+    if (!cats[c.category]) cats[c.category] = [];
+    cats[c.category].push(c);
+  });
+  return Object.keys(cats).map(category => ({
+    category,
+    count: cats[category].length
+  }));
+});
+
+// Navigate
+function goToCategory(category) {
+  router.push(`/search/${encodeURIComponent(category)}`);
+}
 
 // Navigate
 function goToComponent(slug) {
@@ -271,13 +307,16 @@ function goToComponent(slug) {
 .search-input {
   padding: 12px 20px;
   font-size: 16px;
-  border: 2px solid #4a4ad0;
+  /* border: 2px solid #4a4ad0; */
+  border: none;
   border-radius: 10px;
   outline: none;
   transition: 0.3s;
   width: 100%;
 }
-
+.search-input-focused {
+  border-radius: 10px 10px 0 0;
+}
 .search-input:focus {
   border-color: #003eaa;
   box-shadow: 0 0 8px rgba(0, 87, 216, 0.3);
@@ -310,7 +349,7 @@ function goToComponent(slug) {
 .suggestions {
   position: absolute;
   /* display: none; */
-  top: 48px;
+  top: 45px;
   left: 0;
   right: 0;
   background: white;
@@ -327,10 +366,13 @@ function goToComponent(slug) {
 }
 
 .suggestions li {
-  padding: 10px 20px;
+  padding: 6px 20px;
   cursor: pointer;
   text-align: left;
   /* transition: background 0.2s; */
+  &:last-child {
+    margin-bottom: 6px;
+  }
 }
 
 .suggestions li:hover {
