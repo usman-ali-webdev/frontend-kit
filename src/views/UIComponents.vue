@@ -10,10 +10,10 @@
         <span class="breadcrumb-separator">/</span>
         <span>{{ componentLabel }}</span>
       </nav>
-      <div style="margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between;">
+      <div class="header-section">
         <h1 style="font-size: 2rem; margin-bottom: 1.5rem;">All UI Components</h1>
-        <div style="margin-bottom: 1.5rem; max-width: 400px; min-width: 320px;">
-          <input v-model="searchQuery" class="in-search-component" type="text"
+        <div style="margin-bottom: 1.5rem; max-width: 400px; min-width: 280px;">
+          <input v-model="searchQuery" @input="hasInteracted = true" class="in-search-component" type="text"
             placeholder="Search here or pick from the sidebar..." />
         </div>
       </div>
@@ -32,7 +32,7 @@
               <ul style="list-style: none; padding: 0; margin: 0;">
                 <li v-for="(group, groupLabel) in groupedComponents" :key="groupLabel"
                   style="margin-bottom: 1.1rem; font-size: .9rem;">
-                  <a href="#" @click.prevent="toggleAccordion(groupLabel)" :style="{
+                  <a href="#" @click.prevent="handleSidebarClick(groupLabel)" :style="{
                     color: openAccordions[groupLabel] ? '#003eaa' : '#4a4ad0',
                     fontWeight: openAccordions[groupLabel] ? 'bold' : 'normal',
                     textDecoration: 'none',
@@ -53,14 +53,26 @@
           <div v-if="!filteredGroupedComponents">
             <p style="color: #888; font-style: italic; text-align: center; font-size: 2vw;">No results found</p>
           </div>
-          <div v-else>
+          <!-- <div v-else-if="!hasInteracted && Object.keys(filteredGroupedComponents).length === 0">
+            Click on a Category from Sidebar or Search any Component in Searchbar
+          </div> -->
+          <div v-else-if="!hasInteracted && Object.keys(filteredGroupedComponents).length === 0"
+            style="display: flex; align-items: center; justify-content: center; height: 300px; border: 1px solid #e0e0e0; border-radius: 12px; background: #f9f9ff;">
+            <div style="text-align: center; max-width: 400px; padding: 2rem;">
+              <i class="fas fa-puzzle-piece" style="font-size: 4rem; color: #4a4ad0; margin-bottom: 1rem;"></i>
+              <p style="font-size: 1.1rem; color: #333; font-weight: 500;">
+                Select a component category from the sidebar to preview its UI examples, <br />
+                or search for a component above.
+              </p>
+            </div>
+          </div>
+
+          <div v-else-if="hasInteracted">
             <div v-for="(group, groupLabel) in filteredGroupedComponents" :key="groupLabel" class="accordion-group">
-              <div class="accordion-header" @click="toggleAccordion(groupLabel)"
+              <!-- @click="toggleAccordion(groupLabel) -->
+              <div class="accordion-header"
                 :style="{ borderBottom: openAccordions[groupLabel] ? '1px solid var(--primary-color)' : '' }">
                 <span>{{ groupLabel }}</span>
-                <span class="accordion-arrow" :aria-expanded="openAccordions[groupLabel] ? 'true' : 'false'">
-                  <i class="fas fa-chevron-down"></i>
-                </span>
               </div>
               <div v-show="openAccordions[groupLabel]" class="accordion-content">
                 <div style="display: flex; gap: 2rem;">
@@ -72,7 +84,8 @@
                         background: activeTab[groupLabel] === index ? '#e3e8f7' : 'transparent',
                         color: activeTab[groupLabel] === index ? '#4a4ad0' : '#333',
                         borderRadius: '6px',
-                        marginBottom: '0.5rem'
+                        marginBottom: '0.5rem',
+                        fontWeight: activeTab[groupLabel] === index ? 'bold' : 'normal',
                       }">
                         {{ comp.label }}
                       </li>
@@ -103,85 +116,104 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue';
-import { useRouter } from 'vue-router';
-import meta from '@/meta/snippets-meta.json';
+import { ref, onMounted, computed } from 'vue'
+import { useRouter } from 'vue-router'
+import meta from '@/meta/snippets-meta.json'
 
-const previewImages = import.meta.glob('@/assets/images/component-previews/*', { eager: true, import: 'default' });
-function getPreviewImage(filename) {
-  if (!filename) return previewImages['/src/assets/images/component-previews/header-navbar-sampledd.png'];
-  const path = `/src/assets/images/component-previews/${filename}`;
-  return previewImages[path];
-}
+const router = useRouter()
+const modules = import.meta.glob('@/components/snippets/*.vue')
 
-const router = useRouter();
-const modules = import.meta.glob('@/components/snippets/*.vue');
-const groupedComponents = ref({});
-const openAccordions = ref({});
-const activeTab = ref({});
-const sidebarOpen = ref(false);
+const groupedComponents = ref({})
+const openAccordions = ref({})
+const activeTab = ref({})
+const sidebarOpen = ref(false)
+
+const searchQuery = ref('')
+const hasInteracted = ref(false)
+const selectedCategory = ref(null) // 🔑 track the active sidebar category
 
 async function loadComponents() {
-  const comps = [];
+  const comps = []
   for (const entry of meta) {
-    const path = Object.keys(modules).find(p => p.endsWith(`/${entry.slug}.vue`));
+    const path = Object.keys(modules).find(p => p.endsWith(`/${entry.slug}.vue`))
     if (path) {
-      const comp = (await modules[path]()).default;
-      comps.push({ ...entry, component: comp });
+      const comp = (await modules[path]()).default
+      comps.push({ ...entry, component: comp })
     }
   }
-  const grouped = {};
+
+  const grouped = {}
   comps.forEach(comp => {
-    if (!grouped[comp.category]) grouped[comp.category] = [];
-    grouped[comp.category].push(comp);
-  });
-  groupedComponents.value = grouped;
+    if (!grouped[comp.category]) grouped[comp.category] = []
+    grouped[comp.category].push(comp)
+  })
+
+  groupedComponents.value = grouped
+
   Object.keys(grouped).forEach(cat => {
-    openAccordions.value[cat] = true;
-    activeTab.value[cat] = 0;
-  });
+    openAccordions.value[cat] = false
+    activeTab.value[cat] = 0
+  })
 }
 
-onMounted(loadComponents);
-function toggleAccordion(label) {
-  openAccordions.value[label] = !openAccordions.value[label];
+onMounted(loadComponents)
+function handleSidebarClick(label) {
+  hasInteracted.value = true
+  searchQuery.value = ''          // 🔑 clear search when sidebar is clicked
+  selectedCategory.value = label  // set active category
+  Object.keys(openAccordions.value).forEach(cat => (openAccordions.value[cat] = false))
+  openAccordions.value[label] = true
 }
-function goToComponent(slug) {
-  router.push(`/component/${slug}`);
-}
-// function goToComponent(slug) {
-//   window.open(`/component/${slug}`, '_blank');
+// function toggleAccordion(label) { 
+// openAccordions.value[label] = !openAccordions.value[label]; 
 // }
-const searchQuery = ref('');
+function goToComponent(slug) {
+  router.push(`/component/${slug}`)
+}
 
 const filteredGroupedComponents = computed(() => {
-  if (!searchQuery.value.trim()) return groupedComponents.value;
+  if (searchQuery.value.trim()) {
+    const words = searchQuery.value.toLowerCase().split(/\s+/).filter(Boolean)
+    const filtered = {}
 
-  const words = searchQuery.value.toLowerCase().split(/\s+/).filter(Boolean);
-  const filtered = {};
+    for (const [category, comps] of Object.entries(groupedComponents.value)) {
+      const categoryMatch = words.every(word => category.toLowerCase().includes(word))
+      const matches = comps.filter(c =>
+        words.every(word => c.label.toLowerCase().includes(word))
+      )
 
-  for (const [category, comps] of Object.entries(groupedComponents.value)) {
-    const categoryMatch = words.every(word => category.toLowerCase().includes(word));
-    const matches = comps.filter(c =>
-      words.every(word => c.label.toLowerCase().includes(word))
-    );
+      if (categoryMatch || matches.length) {
+        filtered[category] = categoryMatch ? comps : matches
 
-    if (categoryMatch || matches.length) {
-      filtered[category] = categoryMatch ? comps : matches;
+        // 🔑 Auto-expand on search match (category OR subcomponent)
+        Object.keys(openAccordions.value).forEach(cat => (openAccordions.value[cat] = false))
+        openAccordions.value[category] = true
+        if (activeTab.value[category] == null) {
+          activeTab.value[category] = 0
+        }
+      }
     }
+
+    return Object.keys(filtered).length ? filtered : null
   }
 
-  return Object.keys(filtered).length ? filtered : null; // null means no match
-});
+  // if sidebar clicked
+  if (selectedCategory.value) {
+    return { [selectedCategory.value]: groupedComponents.value[selectedCategory.value] }
+  }
+
+  return {}
+})
 
 
 
 const componentLabel = computed(() => {
-  const currentComponent = Object.values(groupedComponents.value).flat().find(c => c.slug === router.currentRoute.value.params.slug);
-  return currentComponent ? currentComponent.label : 'UI Components';
-});
-
+  const currentComponent = Object.values(groupedComponents.value).flat().find(c => c.slug === router.currentRoute.value.params.slug)
+  return currentComponent ? currentComponent.label : 'UI Components'
+})
 </script>
+
+
 
 
 
@@ -396,5 +428,17 @@ const componentLabel = computed(() => {
   margin-bottom: 2rem;
   border: 1.5px solid #e3e8f7;
   font-size: 1.05rem;
+}
+
+.header-section {
+  margin-bottom: 1.1rem;
+}
+
+@media(min-width: 769px) {
+  .header-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 }
 </style>
