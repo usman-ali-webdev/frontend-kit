@@ -156,3 +156,8 @@ body {
     width: calc(100% + 1.3px);
     height: 265px;
   }
+
+  input, select, textarea {
+    accent-color: var(--primary-color);
+    caret-color: gray;
+  }
