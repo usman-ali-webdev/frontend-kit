@@ -444,15 +444,4 @@ const componentLabel = computed(() => {
     justify-content: space-between;
   }
 }
-
-.magnifier-icon {
-  position: absolute;
-  top: 54%;
-  transform: translateY(-54%);
-  color: rgb(74, 74, 208);
-  font-size: 1.2rem;
-  pointer-events: none;
-  z-index: 2;
-  left: .8rem;
-}
 </style>
