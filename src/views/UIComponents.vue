@@ -13,14 +13,8 @@
       <div style="margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between;">
         <h1 style="font-size: 2rem; margin-bottom: 1.5rem;">All UI Components</h1>
         <div style="margin-bottom: 1.5rem; max-width: 400px; min-width: 320px;">
-          <input v-model="searchQuery" type="text" placeholder="Search here or pick from the sidebar..." style="
-              width: 100%;
-              padding: 0.65rem 1rem;
-              font-size: 1rem;
-              border: 1.5px solid #ccc;
-              border-radius: 6px;
-              outline: none;
-            " />
+          <input v-model="searchQuery" class="in-search-component" type="text"
+            placeholder="Search here or pick from the sidebar..." />
         </div>
       </div>
       <div style="display:flex; gap: 1.5rem; margin-bottom: 2rem;">
@@ -31,21 +25,7 @@
               <i v-if="!sidebarOpen" style="font-size: 18px;" class="fa-solid fa-circle-chevron-right"></i>
               <i v-else style="font-size: 18px;" class="fa-solid fa-circle-chevron-left"></i>
             </button>
-            <aside style="
-              position: sticky;
-              top: 2rem;
-              align-self: flex-start;
-              min-width: 220px;
-              max-width: 260px;
-              background: #f8fafd;
-              border-radius: 10px;
-              box-shadow: 0 2px 8px rgba(74,74,208,0.07);
-              padding: 1.5rem 1rem;
-              margin-right: 2.5rem;
-              margin-bottom: 2rem;
-              border: 1.5px solid #e3e8f7;
-              font-size: 1.05rem;
-            ">
+            <aside class="in-aside-area">
               <h2 style="font-size: 1.15rem; margin-bottom: 1.2rem; color: var(--primary-color); font-weight: 700;">
                 Components Index
               </h2>
@@ -62,23 +42,12 @@
                     <i class="fas fa-folder-open" style="margin-right: 0.5rem;"></i>
                     {{ groupLabel }} <span style="color: #888; font-size: 0.97em;">({{ group.length }})</span>
                   </a>
-                  <!-- <ul v-show="openAccordions[groupLabel]"
-                    style="list-style: none; padding-left: 1.2rem; margin-top: 0.5rem;">
-                    <li v-for="comp in group" :key="comp.slug" style="margin-bottom: 0.5rem;">
-                      <a @click.prevent="goToComponent(comp.slug)" href="#"
-                        style="color: #444; text-decoration: none; font-size: 0.85rem; cursor: pointer;">
-                        <i class="fas fa-cube" style="margin-right: 0.4rem; color: #4a4ad0;"></i>
-                        {{ comp.label }}
-                      </a>
-                    </li>
-                  </ul> -->
                 </li>
               </ul>
             </aside>
           </div>
           <div v-show="sidebarOpen" class="drawer-overlay" @click="sidebarOpen = false"></div>
         </div>
-
 
         <div style="flex: 1; min-width: 0;">
           <div v-if="!filteredGroupedComponents">
@@ -402,5 +371,30 @@ const componentLabel = computed(() => {
   .sidebar-drawer.drawer-open {
     transform: translateX(0) !important;
   }
+}
+
+.in-search-component {
+  width: 100%;
+  padding: 0.65rem 1rem;
+  font-size: 1rem;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+}
+
+.in-aside-area {
+  position: sticky;
+  top: 2rem;
+  align-self: flex-start;
+  min-width: 220px;
+  max-width: 260px;
+  background: #f8fafd;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(74, 74, 208, 0.07);
+  padding: 1.5rem 1rem;
+  margin-right: 2.5rem;
+  margin-bottom: 2rem;
+  border: 1.5px solid #e3e8f7;
+  font-size: 1.05rem;
 }
 </style>
