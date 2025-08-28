@@ -9,7 +9,12 @@
       <span class="breadcrumb-separator">/</span>
       <span>{{ componentLabel }}</span>
     </nav>
-    <h2>{{ componentLabel }} Component</h2>
+    
+    <h2>
+      <button class="back-btn" @click="$router.back()" title="Go Back" style="display: inline-flex; align-items: center; gap: 0.5em; background: none; border: none; color: #4a4ad0; font-size: 1.1rem; cursor: pointer; font-weight: 500; margin-bottom: 1.2rem;">
+      <i class="fas fa-arrow-left"></i>
+      </button>&ensp;{{ componentLabel }} Component
+    </h2>
     <div v-if="loading" class="bouncing-loader">
       <div></div>
       <div></div>
