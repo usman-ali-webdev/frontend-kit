@@ -12,9 +12,12 @@
       </nav>
       <div class="header-section">
         <h1 style="font-size: 2rem; margin-bottom: 1.5rem;">All UI Components</h1>
-        <div style="margin-bottom: 1.5rem; max-width: 400px; min-width: 280px;">
+        <div style="margin-bottom: 1.5rem; max-width: 400px; min-width: 280px; position: relative;">
           <input v-model="searchQuery" @input="hasInteracted = true" class="in-search-component" type="text"
-            placeholder="Search here or pick from the sidebar..." />
+            placeholder="Search here for any components" style="padding-right: 0.5rem;padding-left: 37px;" />
+          <span class="magnifier-icon">
+            <i class="fas fa-search"></i>
+          </span>
         </div>
       </div>
       <div style="display:flex; gap: 1.5rem; margin-bottom: 2rem;">
@@ -440,5 +443,16 @@ const componentLabel = computed(() => {
     align-items: center;
     justify-content: space-between;
   }
+}
+
+.magnifier-icon {
+  position: absolute;
+  top: 54%;
+  transform: translateY(-54%);
+  color: rgb(74, 74, 208);
+  font-size: 1.2rem;
+  pointer-events: none;
+  z-index: 2;
+  left: .8rem;
 }
 </style>
