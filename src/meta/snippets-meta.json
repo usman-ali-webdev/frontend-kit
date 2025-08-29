@@ -2,21 +2,21 @@
   {
     "slug": "loginFormSimple",
     "label": "Login Form Minimal",
-    "category": "Forms",
+    "category": "Form",
     "description": "Minimal, clean login form.",
     "previewImage": "loginFormSimple.png"
   },
   {
     "slug": "loginForm",
     "label": "Login Form Basic",
-    "category": "Forms",
+    "category": "Form",
     "description": "Classic login form with labels and button.",
     "previewImage": "loginForm.png"
   },
   {
     "slug": "loginFormModern",
     "label": "Login Form Modern",
-    "category": "Forms",
+    "category": "Form",
     "description": "Modern login form with icon and divider.",
     "previewImage": "loginFormModern.png"
   },
@@ -26,5 +26,98 @@
     "category": "Text Utilities",
     "description": "Trims and limits text to multiple lines.",
     "previewImage": "trimMultilineText.png"
+  }
+,
+  {
+    "slug": "layoutGridDemo",
+    "label": "Grid Layout Demo",
+    "category": "Layout",
+    "description": "Demo of a responsive grid layout.",
+    "previewImage": "layoutGridDemo.png"
+  },
+  {
+    "slug": "primaryButton",
+    "label": "Primary Button",
+    "category": "Buttons",
+    "description": "A simple primary button.",
+    "previewImage": "primaryButton.png"
+  },
+  {
+    "slug": "statusSuccess",
+    "label": "Status Success",
+    "category": "Status",
+    "description": "Success status indicator.",
+    "previewImage": "statusSuccess.png"
+  },
+  {
+    "slug": "typographyHeading",
+    "label": "Typography Heading",
+    "category": "Typography",
+    "description": "Heading styles demo.",
+    "previewImage": "typographyHeading.png"
+  },
+  {
+    "slug": "overlayModal",
+    "label": "Overlay Modal",
+    "category": "Overlays",
+    "description": "Basic modal overlay example.",
+    "previewImage": "overlayModal.png"
+  },
+  {
+    "slug": "navSidebar",
+    "label": "Sidebar Navigation",
+    "category": "Navigation",
+    "description": "Sidebar navigation menu demo.",
+    "previewImage": "navSidebar.png"
+  },
+  {
+    "slug": "mediaIconDemo",
+    "label": "Media & Icon Demo",
+    "category": "Media and icons",
+    "description": "Demo of media and icon usage.",
+    "previewImage": "mediaIconDemo.png"
+  },
+  {
+    "slug": "dataEntryTable",
+    "label": "Data Entry Table",
+    "category": "Data Entry",
+    "description": "Simple data entry table example.",
+    "previewImage": "dataEntryTable.png"
+  }
+,
+  {
+    "slug": "cardProfile",
+    "label": "Profile Card",
+    "category": "Cards",
+    "description": "Attractive user profile card with avatar and follow button.",
+    "previewImage": "cardProfile.png"
+  },
+  {
+    "slug": "notificationToast",
+    "label": "Notification Toast",
+    "category": "Status",
+    "description": "Animated notification toast with close button.",
+    "previewImage": "notificationToast.png"
+  },
+  {
+    "slug": "progressBar",
+    "label": "Progress Bar",
+    "category": "Status",
+    "description": "Simple animated progress bar.",
+    "previewImage": "progressBar.png"
+  },
+  {
+    "slug": "avatarGroup",
+    "label": "Avatar Group",
+    "category": "Media and icons",
+    "description": "Group of overlapping user avatars.",
+    "previewImage": "avatarGroup.png"
+  },
+  {
+    "slug": "stepperHorizontal",
+    "label": "Horizontal Stepper",
+    "category": "Navigation",
+    "description": "Horizontal stepper for multi-step processes.",
+    "previewImage": "stepperHorizontal.png"
   }
 ]

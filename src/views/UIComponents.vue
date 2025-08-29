@@ -29,8 +29,8 @@
               <i v-else style="font-size: 18px;" class="fa-solid fa-circle-chevron-left"></i>
             </button>
             <aside class="in-aside-area">
-              <h2 style="font-size: 1.15rem; margin-bottom: 1.2rem; color: var(--primary-color); font-weight: 700;">
-                Components Index
+              <h2 style="font-size: 1rem; margin-bottom: 1.2rem; color: var(--primary-color); font-weight: 700;">
+                All Components
               </h2>
               <ul style="list-style: none; padding: 0; margin: 0;">
                 <li v-for="(group, groupLabel) in groupedComponents" :key="groupLabel"
