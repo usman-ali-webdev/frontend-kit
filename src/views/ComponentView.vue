@@ -121,7 +121,7 @@ export default {
         { id: 'preview', label: 'Preview' },
         { id: 'html', label: 'HTML' },
         { id: 'css', label: 'CSS' },
-        { id: 'js', label: 'JavaScript' } // 👈 new tab
+        { id: 'js', label: 'JS' } // 👈 new tab
       ],
       component: null,
       htmlContent: '',
