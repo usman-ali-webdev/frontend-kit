@@ -14,6 +14,9 @@
 <script setup>
 import { ref } from 'vue';
 const show = ref(false);
+// testing
+var abc = 123;
+console.log(abc);
 </script>
 
 <style scoped>

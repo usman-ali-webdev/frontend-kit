@@ -9,10 +9,11 @@
       <span class="breadcrumb-separator">/</span>
       <span>{{ componentLabel }}</span>
     </nav>
-    
+
     <h2>
-      <button class="back-btn" @click="$router.back()" title="Go Back" style="display: inline-flex; align-items: center; gap: 0.5em; background: none; border: none; color: #4a4ad0; font-size: 1.1rem; cursor: pointer; font-weight: 500; margin-bottom: 1.2rem;">
-      <i class="fas fa-arrow-left"></i>
+      <button class="back-btn" @click="$router.back()" title="Go Back"
+        style="display: inline-flex; align-items: center; gap: 0.5em; background: none; border: none; color: #4a4ad0; font-size: 1.1rem; cursor: pointer; font-weight: 500; margin-bottom: 1.2rem;">
+        <i class="fas fa-arrow-left"></i>
       </button>&ensp;{{ componentLabel }} Component
     </h2>
     <div v-if="loading" class="bouncing-loader">
@@ -21,16 +22,17 @@
       <div></div>
     </div>
     <div v-else class="tabs">
+      <!-- <div class="tab-buttons">
+        <button v-for="tab in tabs" :key="tab.id" :class="{ active: activeTab === tab.id }" @click="activeTab = tab.id">
+          {{ tab.label }}
+        </button>
+      </div> -->
       <div class="tab-buttons">
-        <button 
-          v-for="tab in tabs" 
-          :key="tab.id"
-          :class="{ active: activeTab === tab.id }"
-          @click="activeTab = tab.id"
-        >
+        <button v-for="tab in tabs" :key="tab.id" :class="{ active: activeTab === tab.id }" @click="activeTab = tab.id">
           {{ tab.label }}
         </button>
       </div>
+
       <div class="tab-content" :class="{ 'preview-container': true }">
         <!-- Preview Tab -->
         <div v-if="activeTab === 'preview'">
@@ -40,16 +42,27 @@
         <!-- HTML Tab -->
         <div v-if="activeTab === 'html'" class="code-container code-container--with-copy">
           <div class="code-toolbar">
-            <button class="copy-btn" @click="copyToClipboard(htmlContent)" title="Copy HTML"><i class="fas fa-copy"></i> Copy</button>
+            <button class="copy-btn" @click="copyToClipboard(htmlContent)" title="Copy HTML"><i class="fas fa-copy"></i>
+              Copy</button>
           </div>
           <pre><code>{{ htmlContent }}</code></pre>
         </div>
         <!-- CSS Tab -->
         <div v-if="activeTab === 'css'" class="code-container code-container--with-copy">
           <div class="code-toolbar">
-            <button class="copy-btn" @click="copyToClipboard(cssContent)" title="Copy CSS"><i class="fas fa-copy"></i> Copy</button>
+            <button class="copy-btn" @click="copyToClipboard(cssContent)" title="Copy CSS"><i class="fas fa-copy"></i>
+              Copy</button>
           </div>
           <pre><code>{{ cssContent }}</code></pre>
+        </div>
+        <!-- JavaScript Tab -->
+        <div v-if="activeTab === 'js'" class="code-container code-container--with-copy">
+          <div class="code-toolbar">
+            <button class="copy-btn" @click="copyToClipboard(jsContent)" title="Copy JavaScript">
+              <i class="fas fa-copy"></i> Copy
+            </button>
+          </div>
+          <pre><code>{{ jsContent }}</code></pre>
         </div>
       </div>
     </div>
@@ -57,19 +70,9 @@
     <div class="random-snippets-section">
       <h3 style="margin: 2.5rem 0 1rem 0; font-size: 1.2rem; font-weight: 600;">You May Also Like</h3>
       <div class="random-snippets-list">
-        <div
-          v-for="comp in randomSnippets"
-          :key="comp.slug"
-          class="random-snippet-box"
-        >
-        <!-- target="_blank" -->
-          <a
-            :href="`/component/${comp.slug}`"
-            rel="noopener"
-            title="View Code"
-            class="random-snippet-eye"
-            @click.stop
-          >
+        <div v-for="comp in randomSnippets" :key="comp.slug" class="random-snippet-box">
+          <!-- target="_blank" -->
+          <a :href="`/component/${comp.slug}`" rel="noopener" title="View Code" class="random-snippet-eye" @click.stop>
             <i class="fas fa-eye"></i>
           </a>
           <div class="random-snippet-label">{{ comp.label }}</div>
@@ -101,7 +104,7 @@ function trimIndentation(str) {
   const lines = str.split('\n');
   // Remove empty lines at start/end
   while (lines.length && lines[0].trim() === '') lines.shift();
-  while (lines.length && lines[lines.length-1].trim() === '') lines.pop();
+  while (lines.length && lines[lines.length - 1].trim() === '') lines.pop();
   // Find minimum indentation (ignore empty lines)
   const indents = lines.filter(l => l.trim()).map(l => l.match(/^\s*/)[0].length);
   const minIndent = indents.length ? Math.min(...indents) : 0;
@@ -117,11 +120,13 @@ export default {
       tabs: [
         { id: 'preview', label: 'Preview' },
         { id: 'html', label: 'HTML' },
-        { id: 'css', label: 'CSS' }
+        { id: 'css', label: 'CSS' },
+        { id: 'js', label: 'JavaScript' } // 👈 new tab
       ],
       component: null,
       htmlContent: '',
       cssContent: '',
+      jsContent: '',   // 👈 new state
       randomSnippets: [],
       loading: true,
       showToast: false
@@ -149,8 +154,11 @@ export default {
       // Extract <template> and <style> blocks
       const templateMatch = rawCode.match(/<template>([\s\S]*?)<\/template>/);
       const styleMatch = rawCode.match(/<style[^>]*>([\s\S]*?)<\/style>/);
+      const scriptMatch = rawCode.match(/<script[^>]*>([\s\S]*?)<\/script>/);
+
       this.htmlContent = templateMatch ? trimIndentation(templateMatch[1]) : 'No <template> found.';
       this.cssContent = styleMatch ? trimIndentation(styleMatch[1]) : 'No <style> found.';
+      this.jsContent = scriptMatch ? trimIndentation(scriptMatch[1]) : 'Enjoy, No JS required for this component.';
     } else {
       this.$router.replace({ name: 'NotFound' });
     }
@@ -221,7 +229,10 @@ export default {
         textToCopy = `<!-- ${compName} HTML Starts Here -->\n` + content + `\n<!-- ${compName} HTML End Here (FRONTENDKIT.DEV) -->`;
       } else if (this.activeTab === 'css') {
         textToCopy = `/* ${compName} CSS Starts Here */\n` + content + `\n/* ${compName} CSS End Here (FRONTENDKIT.DEV) */`;
+      } else if (this.activeTab === 'js') {
+        textToCopy = `/* ${compName} JavaScript Starts Here */\n` + content + `\n/* ${compName} JavaScript End Here (FRONTENDKIT.DEV) */`;
       }
+
       navigator.clipboard.writeText(textToCopy).then(() => {
         this.showToast = true;
         setTimeout(() => {
@@ -235,7 +246,7 @@ export default {
 
 <style scoped>
 .component-view {
-    padding: 20px;
+  padding: 20px;
 }
 
 @keyframes bouncing-loader {
@@ -250,7 +261,7 @@ export default {
   justify-content: center;
 }
 
-.bouncing-loader > div {
+.bouncing-loader>div {
   width: 16px;
   height: 16px;
   margin: 3rem 0.2rem;
@@ -259,39 +270,39 @@ export default {
   animation: bouncing-loader 0.6s infinite alternate;
 }
 
-.bouncing-loader > div:nth-child(2) {
+.bouncing-loader>div:nth-child(2) {
   animation-delay: 0.2s;
 }
 
-.bouncing-loader > div:nth-child(3) {
+.bouncing-loader>div:nth-child(3) {
   animation-delay: 0.4s;
 }
 
 .tabs {
-    margin-top: 20px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+  margin-top: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
 }
 
 .tab-buttons {
-    display: flex;
-    border-bottom: 1px solid #ddd;
+  display: flex;
+  border-bottom: 1px solid #ddd;
 }
 
 .tab-buttons button {
-    padding: 10px 20px;
-    border: none;
-    background: none;
-    cursor: pointer;
+  padding: 10px 20px;
+  border: none;
+  background: none;
+  cursor: pointer;
 }
 
 .tab-buttons button.active {
-    background-color: #f0f0f0;
-    border-bottom: 2px solid #42b883;
+  background-color: #f0f0f0;
+  border-bottom: 2px solid #42b883;
 }
 
 .tab-content {
-    padding: 20px;
+  padding: 20px;
 }
 
 .code-container {
@@ -301,11 +312,13 @@ export default {
   border-radius: 8px;
   border: 1.5px solid #e3e8f7;
   margin-bottom: 1.2rem;
-  box-shadow: 0 2px 8px rgba(74,74,208,0.06);
+  box-shadow: 0 2px 8px rgba(74, 74, 208, 0.06);
 }
+
 .code-container--with-copy {
   padding-top: 2.5rem;
 }
+
 .code-toolbar {
   position: absolute;
   top: 0.7rem;
@@ -313,6 +326,7 @@ export default {
   display: flex;
   gap: 0.5rem;
 }
+
 .copy-btn {
   background: #f4f4f9;
   border: 1px solid #e3e8f7;
@@ -328,10 +342,12 @@ export default {
   gap: 0.4em;
   font-weight: 500;
 }
+
 .copy-btn:hover {
   background: #eaeafb;
   color: #2222aa;
 }
+
 .code-container pre {
   margin: 0;
   white-space: pre-wrap;
@@ -340,25 +356,28 @@ export default {
   background: none;
   border: none;
   box-shadow: none;
-  & code{
+
+  & code {
     font-size: 13px;
   }
 }
 
 .preview-container {
-    padding: 20px;
-    border: 1px solid #eee;
-    border-radius: 4px;
+  padding: 20px;
+  border: 1px solid #eee;
+  border-radius: 4px;
 }
 
 .random-snippets-section {
   margin-top: 2.5rem;
 }
+
 .random-snippets-list {
   display: flex;
   gap: 1.5rem;
   flex-wrap: wrap;
 }
+
 .random-snippet-box {
   flex: 1 1 180px;
   min-width: 180px;
@@ -366,7 +385,7 @@ export default {
   background: #f8fafc;
   border: 1.5px solid #e3e8f7;
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(74,74,208,0.06);
+  box-shadow: 0 2px 8px rgba(74, 74, 208, 0.06);
   padding: 1rem 1rem 0.5rem 1rem;
   position: relative;
   display: flex;
@@ -374,10 +393,12 @@ export default {
   align-items: stretch;
   transition: box-shadow 0.2s, transform 0.18s;
 }
+
 .random-snippet-box:hover {
-  box-shadow: 0 8px 24px rgba(74,74,208,0.13);
+  box-shadow: 0 8px 24px rgba(74, 74, 208, 0.13);
   transform: translateY(-2px) scale(1.03);
 }
+
 .random-snippet-eye {
   position: absolute;
   top: 10px;
@@ -387,6 +408,7 @@ export default {
   cursor: pointer;
   z-index: 2;
 }
+
 .random-snippet-label {
   font-size: 1.05rem;
   font-weight: 600;
@@ -394,6 +416,7 @@ export default {
   margin-bottom: 0.7rem;
   margin-top: 0.2rem;
 }
+
 .copy-toast {
   position: fixed;
   left: 50%;
@@ -405,18 +428,34 @@ export default {
   border-radius: 999px;
   font-size: 1.08rem;
   font-weight: 600;
-  box-shadow: 0 6px 32px rgba(74,74,208,0.13);
+  box-shadow: 0 6px 32px rgba(74, 74, 208, 0.13);
   opacity: 0;
   pointer-events: none;
   z-index: 99999;
-  animation: toast-in 0.35s cubic-bezier(.4,2,.6,1) forwards, toast-out 0.35s 1.15s cubic-bezier(.4,2,.6,1) forwards;
+  animation: toast-in 0.35s cubic-bezier(.4, 2, .6, 1) forwards, toast-out 0.35s 1.15s cubic-bezier(.4, 2, .6, 1) forwards;
 }
+
 @keyframes toast-in {
-  from { opacity: 0; transform: translateX(-50%) translateY(40px); }
-  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(40px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
 }
+
 @keyframes toast-out {
-  from { opacity: 1; transform: translateX(-50%) translateY(0); }
-  to { opacity: 0; transform: translateX(-50%) translateY(-40px); }
+  from {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-40px);
+  }
 }
 </style>
