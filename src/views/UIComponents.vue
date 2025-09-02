@@ -97,7 +97,7 @@
                   <div style="flex: 1;">
                     <div v-for="(comp, index) in group" :key="comp.slug" v-show="activeTab[groupLabel] === index"
                       style="position: relative; border: 1px solid #ccc; padding: 1rem; border-radius: 8px; background: #fff;">
-                      <span @click="goToComponent(comp.slug)" title="View Code"
+                      <span @click="goToComponent(comp.slug, groupLabel, index)" title="View Code"
                         style="position: absolute; top: 10px; right: 12px; font-size: 1.3rem; color: #4a4ad0; cursor: pointer; z-index: 2;">
                         <i class="fas fa-eye"></i>
                       </span>
@@ -120,10 +120,11 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import meta from '@/meta/snippets-meta.json'
 
 const router = useRouter()
+const route = useRoute()
 const modules = import.meta.glob('@/components/snippets/*.vue')
 
 const groupedComponents = ref({})
@@ -159,19 +160,50 @@ async function loadComponents() {
   })
 }
 
-onMounted(loadComponents)
+// onMounted(loadComponents)
+// function handleSidebarClick(label) {
+//   hasInteracted.value = true
+//   searchQuery.value = ''          // 🔑 clear search when sidebar is clicked
+//   selectedCategory.value = label  // set active category
+//   Object.keys(openAccordions.value).forEach(cat => (openAccordions.value[cat] = false))
+//   openAccordions.value[label] = true
+// }
+onMounted(async () => {
+  await loadComponents()
+  const { cat, idx } = route.query
+  if (cat && groupedComponents.value[cat]) {
+    handleSidebarClick(cat)   // ✅ reuse your own function
+    // activeTab.value[cat] = Number(idx) || 0
+    activeTab.value[cat] = parseInt(idx, 10) || 0
+  }
+})
+
+// function handleSidebarClick(label) {
+//   hasInteracted.value = true
+//   searchQuery.value = ''          // 🔑 clear search when sidebar is clicked
+//   selectedCategory.value = label  // set active category
+//   Object.keys(openAccordions.value).forEach(cat => (openAccordions.value[cat] = false))
+//   openAccordions.value[label] = true
+// }
 function handleSidebarClick(label) {
   hasInteracted.value = true
-  searchQuery.value = ''          // 🔑 clear search when sidebar is clicked
-  selectedCategory.value = label  // set active category
+  searchQuery.value = ''
+  selectedCategory.value = label
   Object.keys(openAccordions.value).forEach(cat => (openAccordions.value[cat] = false))
   openAccordions.value[label] = true
+
+  router.push({
+    name: 'UIComponents',
+    query: { cat: label, idx: 0 }
+  })
 }
+
+
 // function toggleAccordion(label) { 
 // openAccordions.value[label] = !openAccordions.value[label]; 
 // }
-function goToComponent(slug) {
-  router.push(`/component/${slug}`)
+function goToComponent(slug, groupLabel, index) {
+  router.push({ path: `/component/${slug}`, query: { cat: groupLabel, idx: index } })
 }
 
 const filteredGroupedComponents = computed(() => {

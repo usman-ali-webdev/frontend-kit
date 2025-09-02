@@ -11,7 +11,7 @@
     </nav>
 
     <h2>
-      <button class="back-btn" @click="$router.back()" title="Go Back"
+      <button class="back-btn" @click="$router.push({ path: '/ui-components', query: $route.query })" title="Go Back"
         style="display: inline-flex; align-items: center; gap: 0.5em; background: none; border: none; color: #4a4ad0; font-size: 1.1rem; cursor: pointer; font-weight: 500; margin-bottom: 1.2rem;">
         <i class="fas fa-arrow-left"></i>
       </button>&ensp;{{ componentLabel }} Component
