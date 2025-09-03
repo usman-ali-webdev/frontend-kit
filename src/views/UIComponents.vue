@@ -94,6 +94,7 @@
                       </li>
                     </ul>
                   </div>
+                  <div class="in-vertical-separator"></div>
                   <div style="flex: 1;">
                     <div v-for="(comp, index) in group" :key="comp.slug" v-show="activeTab[groupLabel] === index"
                       style="position: relative; border: 1px solid #ccc; padding: 1rem; border-radius: 8px; background: #fff;">
@@ -475,5 +476,11 @@ const componentLabel = computed(() => {
     align-items: center;
     justify-content: space-between;
   }
+}
+.in-vertical-separator{
+	width:1px;
+	min-height: 260px;
+  /* background-color: gainsboro; */
+  background-image: linear-gradient(127deg, gainsboro,gainsboro,gainsboro, transparent);
 }
 </style>
