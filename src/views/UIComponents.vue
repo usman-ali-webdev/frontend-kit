@@ -1,6 +1,11 @@
 <template>
   <div style="padding: 2rem;">
-    <div class="accordion-container" style="max-width: 1200px; margin: auto;">
+    <div v-if="loading" class="bouncing-loader">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <div v-else class="accordion-container" style="max-width: 1200px; margin: auto;">
       <nav class="breadcrumb">
         <router-link to="/" class="breadcrumb-home" title="Home">
           <i class="fas fa-home"></i>
@@ -124,6 +129,8 @@ import { ref, onMounted, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import meta from '@/meta/snippets-meta.json'
 
+const loading = ref(true)
+
 const router = useRouter()
 const route = useRoute()
 const modules = import.meta.glob('@/components/snippets/*.vue')
@@ -138,6 +145,7 @@ const hasInteracted = ref(false)
 const selectedCategory = ref(null) // 🔑 track the active sidebar category
 
 async function loadComponents() {
+     loading.value = true
   const comps = []
   for (const entry of meta) {
     const path = Object.keys(modules).find(p => p.endsWith(`/${entry.slug}.vue`))
@@ -159,6 +167,7 @@ async function loadComponents() {
     openAccordions.value[cat] = false
     activeTab.value[cat] = 0
   })
+    loading.value = false
 }
 
 // onMounted(loadComponents)
@@ -170,6 +179,7 @@ async function loadComponents() {
 //   openAccordions.value[label] = true
 // }
 onMounted(async () => {
+ 
   await loadComponents()
   const { cat, idx } = route.query
   if (cat && groupedComponents.value[cat]) {
