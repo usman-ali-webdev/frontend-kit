@@ -11,7 +11,7 @@
             <span style="">Frontend</span>
             <span style="background-color: #fb732a; border-left: none;">Kit</span> 
             <!-- <br> <small style="font-size: xx-small;">Your Development Companion</small> -->
-            <br><small style="position: relative;left: -10%; top: 14px; font-size: 11px; font-family: 'Samsung Sharp Sans Regular'; word-spacing: 2px;">Making Dev Faster</small>
+            <br><small style="position: relative;left: -10%; top: 14px; font-size: 11px; font-family: 'Samsung Sharp Sans Regular'; word-spacing: 2px;">⚡ Making Dev Faster</small>
         </h1>
         <nav style="flex:1; text-align: center; background-color: transparent;">
             <ul class="in-hide-home-li">
