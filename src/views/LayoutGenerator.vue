@@ -1,7 +1,7 @@
 <template>
   <div id="layout-generator" :class="{ building }">
-    <button @click="addContainer">+ Add Container</button>
-    <button @click="exportLayout">Export Layout</button>
+  <button class="theme-btn" @click="addContainer">+ Container</button>
+  <button class="theme-btn export" @click="exportLayout">Export</button>
     <div v-for="(container, cIdx) in containers" :key="container.id" class="container" :style="containerStyle(container)" :class="{ 'user-border': container.borderWidth }">
       <div class="control-panel">
         <label for="padding">Padding</label>
@@ -11,11 +11,9 @@
         <label for="border-width">Border Width</label>
         <input type="number" placeholder="Border Width" v-model.number="container.borderWidth" />
       </div>
-      <button class="control-button" @click="addRow(cIdx)">+ Add Row</button>
+  <button class="theme-btn" @click="addRow(cIdx)">+ Row</button>
       <div v-for="(row, rIdx) in container.rows" :key="row.id" class="row">
-        <button class="control-button" @click="addColumn(cIdx, rIdx)">
-          + Add Column
-        </button>
+  <button class="theme-btn" @click="addColumn(cIdx, rIdx)">+ Column</button>
         <div v-for="(column, colIdx) in row.columns" :key="column.id" class="column" :style="columnStyle(row)">
           Column
         </div>
@@ -182,10 +180,27 @@ function exportLayout() {
 }
 
 button,
-.control-button {
-  margin: 5px;
-  padding: 5px 10px;
+.theme-btn {
+  background: linear-gradient(90deg, #4a4ad0 0%, #3b82f6 100%);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.25rem 0.7rem;
+  font-size: 0.95rem;
+  font-weight: 600;
   cursor: pointer;
+  margin: 3px 6px 3px 0;
+  box-shadow: 0 1px 4px rgba(74,74,208,0.07);
+  transition: background 0.2s;
+}
+.theme-btn:hover {
+  background: linear-gradient(90deg, #3b82f6 0%, #4a4ad0 100%);
+}
+.theme-btn.export {
+  background: linear-gradient(90deg, #10b981 0%, #3b82f6 100%);
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.25rem 0.7rem;
 }
 
 .control-panel {
