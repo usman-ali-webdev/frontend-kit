@@ -1,145 +1,244 @@
 <template>
-  <div id="layout-generator" :class="{ building }">
-  <button class="theme-btn" @click="addContainer">+ Container</button>
-  <button class="theme-btn export" @click="exportLayout">Export</button>
-    <div v-for="(container, cIdx) in containers" :key="container.id" class="container" :style="containerStyle(container)" :class="{ 'user-border': container.borderWidth }">
-      <div class="control-panel">
-        <label for="padding">Padding</label>
-        <input type="number" placeholder="Padding" v-model.number="container.padding" />
-        <label for="margin">Margin</label>
-        <input type="number" placeholder="Margin" v-model.number="container.margin" />
-        <label for="border-width">Border Width</label>
-        <input type="number" placeholder="Border Width" v-model.number="container.borderWidth" />
-      </div>
-  <button class="theme-btn" @click="addRow(cIdx)">+ Row</button>
-      <div v-for="(row, rIdx) in container.rows" :key="row.id" class="row">
-  <button class="theme-btn" @click="addColumn(cIdx, rIdx)">+ Column</button>
-        <div v-for="(column, colIdx) in row.columns" :key="column.id" class="column" :style="columnStyle(row)">
-          Column
+  <div class="builder">
+    <div class="toolbar">
+      <button class="theme-btn" @click="addContainer">+ Container</button>
+      <button class="theme-btn export" @click="exportLayout">Export</button>
+    </div>
+
+    <div id="layout-generator" :class="{ building }" @click="clearSelection">
+      <div v-for="(container, cIdx) in containers" :key="container.id"
+           class="container"
+           :data-c="cIdx"
+           :style="elementStyle(container)"
+           @click.stop="selectElement('container', cIdx)">
+           
+        <div class="toolbar-small">
+          <button class="theme-btn" @click.stop="addRow(cIdx)">+ Row</button>
         </div>
+
+        <div v-for="(row, rIdx) in container.rows" :key="row.id"
+             class="row"
+             :data-c="cIdx" :data-r="rIdx"
+             :style="elementStyle(row)"
+             @click.stop="selectElement('row', cIdx, rIdx)">
+             
+          <div class="toolbar-small">
+            <button class="theme-btn" @click.stop="addColumn(cIdx, rIdx)">+ Column</button>
+          </div>
+
+          <div v-for="(column, colIdx) in row.columns" :key="column.id"
+               class="column"
+               :data-c="cIdx" :data-r="rIdx" :data-col="colIdx"
+               :style="elementStyle(column)"
+               @click.stop="selectElement('column', cIdx, rIdx, colIdx)">
+            Column
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- floating control panel positioned at selected element's top-right -->
+    <div v-if="selected" class="control-panel" :style="panelStyle">
+      <h4>Edit {{ selected.type }}</h4>
+      <label>Padding <input type="number" v-model.number="selectedRef.padding" /></label>
+      <label>Margin  <input type="number" v-model.number="selectedRef.margin"  /></label>
+      <label>Border Width <input type="number" v-model.number="selectedRef.borderWidth" /></label>
+      <div style="margin-top:6px; font-size:12px; color:#666">
+        Click outside to close panel
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed, nextTick, watch, onMounted, onBeforeUnmount } from 'vue'
 
-let idCounter = 0
-const building = ref(true)
+/* data */
 const containers = ref([])
+const building = ref(true)
+let idCounter = 0
+function uniqueId(){ return Date.now() + '-' + (idCounter++) }
 
-function uniqueId() {
-  return idCounter++
-}
+/* selection */
+const selected = ref(null) // { type, cIdx, rIdx, colIdx }
+const selectedRef = computed({
+  get() {
+    if (!selected.value) return {}
+    const { type, cIdx, rIdx, colIdx } = selected.value
+    if (type === 'container') return containers.value[cIdx]
+    if (type === 'row') return containers.value[cIdx]?.rows[rIdx]
+    if (type === 'column') return containers.value[cIdx]?.rows[rIdx]?.columns[colIdx]
+    return {}
+  }
+})
 
+/* panel position */
+const panelPos = ref({ top: 0, right: 0 }) // <-- declared (fixes ReferenceError)
+const panelWidthEstimate = 220
+
+const panelStyle = computed(() => {
+  return {
+    position: 'absolute',
+    top: panelPos.value.top + 'px',
+    right: panelPos.value.right + 'px',
+    width: panelWidthEstimate + 'px'
+  }
+})
+
+/* utilities to add elements */
 function addContainer() {
   containers.value.push({
     id: uniqueId(),
+    type: 'container',
     padding: 10,
     margin: 10,
     borderWidth: 0,
     rows: []
   })
 }
-
 function addRow(cIdx) {
   containers.value[cIdx].rows.push({
     id: uniqueId(),
+    type: 'row',
+    padding: 10,
+    margin: 10,
+    borderWidth: 0,
     columns: []
   })
 }
-
 function addColumn(cIdx, rIdx) {
-  containers.value[cIdx].rows[rIdx].columns.push({
-    id: uniqueId()
+  const row = containers.value[cIdx].rows[rIdx]
+  row.columns.push({
+    id: uniqueId(),
+    type: 'column',
+    padding: 10,
+    margin: 10,
+    borderWidth: 0,
+    flex: 1
   })
+  // equalize flex for all columns
+  const count = row.columns.length
+  row.columns.forEach(col=> col.flex = 1 / count)
 }
 
-function containerStyle(container) {
-  return {
-    padding: container.padding + 'px',
-    margin: container.margin + 'px 0',
-    borderWidth: container.borderWidth ? container.borderWidth + 'px' : '',
-    borderStyle: container.borderWidth ? 'solid' : '',
-    borderColor: container.borderWidth ? '#000' : 'transparent',
-    width: '100%',
+/* select/deselect */
+function selectElement(type, cIdx, rIdx = null, colIdx = null){
+  selected.value = { type, cIdx, rIdx, colIdx }
+  // wait DOM update then measure & position panel
+  nextTick().then(updatePanelPos)
+}
+function clearSelection(){
+  selected.value = null
+}
+
+/* measure and position panel */
+async function updatePanelPos(){
+  if (!selected.value) return
+  await nextTick()
+  const { type, cIdx, rIdx, colIdx } = selected.value
+  let selector = ''
+  if (type === 'container') selector = `.container[data-c="${cIdx}"]`
+  else if (type === 'row') selector = `.row[data-c="${cIdx}"][data-r="${rIdx}"]`
+  else if (type === 'column') selector = `.column[data-c="${cIdx}"][data-r="${rIdx}"][data-col="${colIdx}"]`
+
+  const el = document.querySelector(selector)
+  if (!el) return
+
+  const rect = el.getBoundingClientRect()
+  const scrollX = window.scrollX || window.pageXOffset
+  const scrollY = window.scrollY || window.pageYOffset
+
+  // default place at top-right with small gap
+  let left = scrollX + rect.right + 8
+  const top = scrollY + rect.top
+
+  // if panel would overflow right edge, place to left of element
+  if (left + panelWidthEstimate > scrollX + window.innerWidth) {
+    left = scrollX + rect.left - panelWidthEstimate - 8
+    if (left < scrollX + 8) left = scrollX + 8
+  }
+
+  panelPos.value = { top, left }
+}
+
+/* style generator for elements */
+function elementStyle(el){
+  if(!el) return {}
+  const borderString = el.borderWidth && el.borderWidth > 0
+    ? `${el.borderWidth}px solid #000`
+    : (building.value ? '1px dashed #ccc' : 'none')
+
+  const base = {
+    padding: (typeof el.padding === 'number' ? el.padding : 0) + 'px',
+    margin: (typeof el.margin === 'number' ? el.margin : 0) + 'px 0',
+    border: borderString,
     boxSizing: 'border-box'
   }
-}
 
-function columnStyle(row) {
-  const count = row.columns.length || 1
-  return {
-    flexBasis: (100 / count) + '%',
-    flexGrow: 1,
-    padding: '10px',
-    margin: '10px 0',
-    boxSizing: 'border-box'
+  if (el.type === 'container') {
+    base.width = '100%'
+    base.display = 'block'
   }
+  if (el.type === 'row') {
+    base.display = 'flex'
+    base.flexWrap = 'wrap'
+    base.gap = '10px'
+  }
+  if (el.type === 'column') {
+    base.flex = el.flex ?? '1'
+    base.minHeight = '48px'
+    base.display = 'flex'
+    base.alignItems = 'center'
+    base.justifyContent = 'center'
+  }
+  return base
 }
 
-function exportLayout() {
+/* reposition panel on scroll/resize and when selected changes */
+function onWindowChange() {
+  if (selected.value) updatePanelPos()
+}
+onMounted(()=> {
+  window.addEventListener('scroll', onWindowChange, { passive: true })
+  window.addEventListener('resize', onWindowChange)
+})
+onBeforeUnmount(()=>{
+  window.removeEventListener('scroll', onWindowChange)
+  window.removeEventListener('resize', onWindowChange)
+})
+
+watch(selected, (newVal) => {
+  if (newVal) {
+    nextTick().then(updatePanelPos)
+  }
+})
+
+/* export - simplified */
+function exportLayout(){
   building.value = false
-  // Build HTML string
+  // build html (keeps user borders only if set)
   let layoutContent = ''
   containers.value.forEach(container => {
-    let containerAttrs = `style="padding:${container.padding}px;margin:${container.margin}px 0;${container.borderWidth ? `border-width:${container.borderWidth}px;border-style:solid;` : ''}width:100%;box-sizing:border-box;"${container.borderWidth ? ' class="user-border container"' : ' class="container"'}`
+    const contStyle = `padding:${container.padding}px;margin:${container.margin}px 0;${container.borderWidth?`border:${container.borderWidth}px solid #000;` : ''}width:100%;box-sizing:border-box;`
     let rowsHtml = ''
-    container.rows.forEach(row => {
-      let columnsHtml = ''
+    container.rows.forEach(row=>{
       const colCount = row.columns.length || 1
-      row.columns.forEach(() => {
-        columnsHtml += `<div class="column" style="flex-basis:${100 / colCount}%;flex-grow:1;padding:10px;margin:10px 0;box-sizing:border-box;">Column</div>`
+      let cols = ''
+      row.columns.forEach(col=>{
+        cols += `<div class="column" style="flex-basis:${100/colCount}%;flex-grow:1;padding:${col.padding}px;margin:${col.margin}px 0;box-sizing:border-box;${col.borderWidth?`border:${col.borderWidth}px solid #000;` : ''}">Column</div>`
       })
-      rowsHtml += `<div class="row" style="padding:10px;margin:10px 0;display:flex;flex-wrap:wrap;box-sizing:border-box;">${columnsHtml}</div>`
+      rowsHtml += `<div class="row" style="padding:${row.padding}px;margin:${row.margin}px 0;display:flex;flex-wrap:wrap;box-sizing:border-box;">${cols}</div>`
     })
-    layoutContent += `<div ${containerAttrs}>${rowsHtml}</div>`
+    layoutContent += `<div class="container" style="${contStyle}">${rowsHtml}</div>`
   })
 
-  const layoutHTML = `
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Exported Layout</title>
-  <style>
-    .container {
-      padding: 10px;
-      margin: 10px 0;
-      width: 100%;
-      box-sizing: border-box;
-    }
-    .row {
-      padding: 10px;
-      margin: 10px 0;
-      display: flex;
-      flex-wrap: wrap;
-      box-sizing: border-box;
-    }
-    .column {
-      padding: 10px;
-      margin: 10px 0;
-      flex-grow: 1;
-      box-sizing: border-box;
-    }
-    .user-border {
-      border-style: solid !important;
-    }
-    @media (max-width: 768px) {
-      .column {
-        flex-basis: 100% !important;
-      }
-    }
-  </style>
-</head>
-<body>
-  ${layoutContent}
-</body>
-</html>
-  `
-  // Download as file
+  const layoutHTML = `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>
+  .container{box-sizing:border-box;width:100%}
+  .row{display:flex;flex-wrap:wrap;box-sizing:border-box}
+  .column{box-sizing:border-box;flex-grow:1}
+  @media(max-width:768px){.column{flex-basis:100% !important}}
+  </style></head><body>${layoutContent}</body></html>`
+
   const blob = new Blob([layoutHTML], { type: 'text/html' })
   const url = URL.createObjectURL(blob)
   const a = document.createElement('a')
@@ -147,164 +246,49 @@ function exportLayout() {
   a.download = 'layout.html'
   a.click()
   URL.revokeObjectURL(url)
+
   building.value = true
 }
 </script>
 
 <style scoped>
-#layout-generator {
-  margin: 20px;
-}
-
-.container {
-  padding: 10px;
-  margin: 10px 0;
-  position: relative;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.row {
-  padding: 10px;
-  margin: 10px 0;
-  display: flex;
-  flex-wrap: wrap;
-  box-sizing: border-box;
-}
-
-.column {
-  padding: 10px;
-  margin: 10px 0;
-  flex-grow: 1;
-  box-sizing: border-box;
-}
-
-button,
+.builder { padding: 12px; font-family: Arial, sans-serif; }
+.toolbar { margin-bottom: 12px; }
 .theme-btn {
   background: linear-gradient(90deg, #4a4ad0 0%, #3b82f6 100%);
-  color: #fff;
-  border: none;
-  border-radius: 6px;
-  padding: 0.25rem 0.7rem;
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-  margin: 3px 6px 3px 0;
-  box-shadow: 0 1px 4px rgba(74,74,208,0.07);
-  transition: background 0.2s;
+  color: #fff; border: none; border-radius:6px; padding:6px 10px; margin-right:6px; cursor:pointer;
 }
-.theme-btn:hover {
-  background: linear-gradient(90deg, #3b82f6 0%, #4a4ad0 100%);
-}
-.theme-btn.export {
-  background: linear-gradient(90deg, #10b981 0%, #3b82f6 100%);
-  font-size: 0.9rem;
-  font-weight: 600;
-  padding: 0.25rem 0.7rem;
-}
+.theme-btn.export { background: linear-gradient(90deg,#10b981 0%,#3b82f6 100%); }
+
+#layout-generator { margin: 8px 0; position: relative; }
+
+/* elements */
+.container { background: #fafafa; margin-bottom: 14px; position: relative; }
+.row { background: #fff; margin-bottom: 8px; padding: 6px; }
+.column { background: #e7f1ff; margin-bottom: 8px; }
+
+/* small toolbars inside elements */
+.toolbar-small { padding: 6px 0; }
 
 .control-panel {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+  position: absolute; /* top/left generated dynamically via :style */
   background: #fff;
   border: 1px solid #ccc;
   padding: 10px;
-  z-index: 1000;
+  z-index: 1100;
+  width: 220px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
 }
+.control-panel label { display:block; margin-bottom:8px; font-size:13px; }
+.control-panel input { width:100%; box-sizing:border-box; padding:6px; margin-top:4px; }
 
-.control-panel input {
-  margin: 5px 0;
-  display: block;
-}
-
-.user-border {
-  border-style: solid !important;
-}
-
-@media (max-width: 768px) {
-  .column {
-    flex-basis: 100% !important;
-  }
-}
-
-body {
-  font-family: Arial, sans-serif;
-}
-
-#layout-generator {
-  margin: 20px;
-}
-
-.container {
-  padding: 10px;
-  margin: 10px 0;
-  position: relative;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-.row {
-  padding: 10px;
-  margin: 10px 0;
-  display: flex;
-  flex-wrap: wrap;
-  box-sizing: border-box;
-}
-
-.column {
-  padding: 10px;
-  margin: 10px 0;
-  flex-grow: 1;
-  box-sizing: border-box;
-}
-
-button {
-  margin: 5px;
-  padding: 5px 10px;
-  cursor: pointer;
-}
-
-.control-button {
-  margin: 5px;
-  padding: 5px 10px;
-  cursor: pointer;
-}
-
-.control-panel {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: #fff;
-  border: 1px solid #ccc;
-  padding: 10px;
-  z-index: 1000;
-}
-
-.control-panel input {
-  margin: 5px 0;
-  display: block;
-}
-
-.container,
-.row,
-.column {
-  border: 1px dashed transparent;
-}
-
+/* dashed guide borders during building */
 .building .container,
 .building .row,
 .building .column {
-  border: 1px dashed #ccc !important;
+  /* only show dashed if there is no user border */
+  outline: none;
 }
 
-.user-border {
-  border-style: solid !important;
-}
-
-@media (max-width: 768px) {
-  .column {
-    flex-basis: 100% !important;
-  }
-}
+/* note: border handled inline via elementStyle */
 </style>
