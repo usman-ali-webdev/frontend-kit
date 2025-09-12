@@ -7,6 +7,7 @@ import ComponentView from '@/views/ComponentView.vue';
 import NotFound from '@/views/NotFound.vue'; // Import NotFound component
 import SearchResults from '@/views/SearchResults.vue'; // Import SearchResults component
 import ComingSoon from '@/components/ComingSoon.vue';
+import DomManipulation from '@/views/DomManipulation.vue';
 // Add other imports as needed
 
 
@@ -20,6 +21,7 @@ const routes = [
   { path: '/search/:query', name: 'SearchResults', component: SearchResults },
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound },
   { path: '/coming-soon', name: 'coming-soon', component: ComingSoon },
+  { path: '/dom-manipulation', name: 'dom-manipulation', component: DomManipulation },
   {
     path: '/about-us',
     name: 'AboutUs',

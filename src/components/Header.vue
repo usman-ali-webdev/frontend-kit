@@ -54,7 +54,7 @@ const navItems = [
     { text: 'UI Components', path: '/ui-components' },
     { text: 'Layout Generator', path: '/layout-generator' },
     { text: 'Animations / Transitions', path: 'coming-soon' },
-    { text: 'DOM Manipulation', path: 'coming-soon' },
+    { text: 'DOM Manipulation', path: 'dom-manipulation' },
     // { text: 'Utilities', path: 'coming-soon' },
     // { text: 'Themes', path: 'coming-soon' },
     // { text: 'Customization', path: 'coming-soon' },
