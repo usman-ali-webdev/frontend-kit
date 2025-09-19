@@ -11,15 +11,12 @@
           <button class="theme-btn" @click.stop="addRow(cIdx)">+ Row</button>
         </div>
         <div v-for="(row, rIdx) in container.rows" :key="row.id" class="row" :class="{ 'selected-outline': selected?.type === 'row' && selected?.cIdx === cIdx && selected?.rIdx === rIdx }" :data-c="cIdx" :data-r="rIdx" :style="elementStyle(row)" @click.stop="selectElement('row', cIdx, rIdx)">
-          <!-- Removed snippet/component rendering for row -->
           <div v-for="(column, colIdx) in row.columns" :key="column.id" class="column" :class="{ 'selected-outline': selected?.type === 'column' && selected?.cIdx === cIdx && selected?.rIdx === rIdx && selected?.colIdx === colIdx }" :data-c="cIdx" :data-r="rIdx" :data-col="colIdx" :style="elementStyle(column)" @click.stop="selectElement('column', cIdx, rIdx, colIdx)">
             <!-- Column -->
           </div>
           <div class="toolbar-small toolbar-center">
             <button class="theme-btn" @click.stop="addColumn(cIdx, rIdx)">+ Column</button>
           </div>
-          <!-- Removed picker for row -->
-          <!-- Removed snippet/component rendering for row (duplicate) -->
         </div>
       </div>
     </div>
@@ -60,8 +57,6 @@ function deleteSelected() {
   }
 }
 import { ref, computed, nextTick, watch, onMounted, onBeforeUnmount } from 'vue'
-// ...existing imports...
-// Removed dynamic snippet/component import and picker logic
 /* data */
 const containers = ref([])
 const building = ref(true)
@@ -82,7 +77,7 @@ const selectedRef = computed({
 })
 
 /* panel position */
-const panelPos = ref({ top: 0, right: 0 }) // <-- declared (fixes ReferenceError)
+const panelPos = ref({ top: 0, right: 0 })
 const panelWidthEstimate = 220
 
 const panelStyle = computed(() => {
@@ -356,21 +351,11 @@ function exportLayout() {
   margin-top: 4px;
 }
 
-/* dashed guide borders during building */
-/* only show dashed if there is no user border */
-/* .building .container,
-.building .row,
-.building .column {
-  outline: none;
-} */
-
 /* note: border handled inline via elementStyle */
 
 .selected-outline {
   outline: 2px solid #60a5fa;
   outline-offset: 2px;
-  /* border: none !important; */
-  /* border-radius: 6px; */
 }
 
 .picker-inline {
