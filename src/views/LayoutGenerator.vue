@@ -7,7 +7,7 @@
 
     <div id="layout-generator" :class="{ building }" @click="clearSelection">
       <div v-for="(container, cIdx) in containers" :key="container.id"
-           class="container"
+           class="container" :class="{ 'selected-outline': selected?.type === 'container' && selected?.cIdx === cIdx }"
            :data-c="cIdx"
            :style="elementStyle(container)"
            @click.stop="selectElement('container', cIdx)">
@@ -17,7 +17,7 @@
         </div>
 
         <div v-for="(row, rIdx) in container.rows" :key="row.id"
-             class="row"
+             class="row" :class="{ 'selected-outline': selected?.type === 'row' && selected?.cIdx === cIdx && selected?.rIdx === rIdx }"
              :data-c="cIdx" :data-r="rIdx"
              :style="elementStyle(row)"
              @click.stop="selectElement('row', cIdx, rIdx)">
@@ -27,7 +27,7 @@
           </div>
 
           <div v-for="(column, colIdx) in row.columns" :key="column.id"
-               class="column"
+               class="column" :class="{ 'selected-outline': selected?.type === 'column' && selected?.cIdx === cIdx && selected?.rIdx === rIdx && selected?.colIdx === colIdx }"
                :data-c="cIdx" :data-r="rIdx" :data-col="colIdx"
                :style="elementStyle(column)"
                @click.stop="selectElement('column', cIdx, rIdx, colIdx)">
@@ -283,12 +283,19 @@ function exportLayout(){
 .control-panel input { width:100%; box-sizing:border-box; padding:6px; margin-top:4px; }
 
 /* dashed guide borders during building */
-.building .container,
+ /* only show dashed if there is no user border */
+/* .building .container,
 .building .row,
 .building .column {
-  /* only show dashed if there is no user border */
   outline: none;
-}
+} */
 
 /* note: border handled inline via elementStyle */
+
+.selected-outline {
+  outline: 2px solid #60a5fa;
+  outline-offset: 2px;
+  /* border: none !important; */
+  /* border-radius: 6px; */
+}
 </style>

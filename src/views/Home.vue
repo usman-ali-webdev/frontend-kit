@@ -91,7 +91,7 @@
            <span class="magnifier-icon">
             <i class="fas fa-search"></i>
           </span>
-            <input style="padding-left: 37px;" v-model="searchQuery" type="text" placeholder="Search for UI components or browse the library" autofocus class="search-input" :class="['search-input', searchQuery.trim() ? 'search-input-focused' : '']" />
+            <input style="padding-left: 37px;" v-model="searchQuery" type="text" placeholder="Search for UI components or browse the library" class="search-input" :class="['search-input', searchQuery.trim() ? 'search-input-focused' : '']" />
 
           <!-- Suggestions -->
           <!-- <ul v-if="searchQuery.trim()" class="suggestions">
