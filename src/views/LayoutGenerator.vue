@@ -7,60 +7,19 @@
 
     <div id="layout-generator" :class="{ building }" @click="clearSelection">
       <div v-for="(container, cIdx) in containers" :key="container.id" class="container" :class="{ 'selected-outline': selected?.type === 'container' && selected?.cIdx === cIdx }" :data-c="cIdx" :style="elementStyle(container)" @click.stop="selectElement('container', cIdx)">
-        <div v-for="(snip, idx) in container.snippets || []" :key="snip.name + idx" class="snippet-item">
-          <component :is="loadedSnippets[snip.name]" />
-          <button class="snippet-remove" @click.stop="removeSnippet('container', cIdx, null, null, idx)">Remove</button>
-        </div>
         <div class="toolbar-small toolbar-center">
           <button class="theme-btn" @click.stop="addRow(cIdx)">+ Row</button>
-          <button class="theme-btn" @click.stop="openPicker('container', cIdx)">+ Add Component</button>
         </div>
-        <div v-if="picker.show && picker.type === 'container' && picker.cIdx === cIdx" class="picker-inline toolbar-center">
-          <input type="text" v-model="searchQuery" placeholder="Search component..." class="picker-search" />
-          <div class="picker-list">
-            <button v-for="snip in filteredSnippets" :key="snip.name" class="picker-item" @click.stop="addSnippetToElement(snip.name)">{{ snip.name }}</button>
-          </div>
-          <button class="picker-close" @click.stop="closePicker">Close</button>
-        </div>
-
         <div v-for="(row, rIdx) in container.rows" :key="row.id" class="row" :class="{ 'selected-outline': selected?.type === 'row' && selected?.cIdx === cIdx && selected?.rIdx === rIdx }" :data-c="cIdx" :data-r="rIdx" :style="elementStyle(row)" @click.stop="selectElement('row', cIdx, rIdx)">
-          <div v-for="(snip, idx) in row.snippets || []" :key="snip.name + idx" class="snippet-item">
-            <component :is="loadedSnippets[snip.name]" />
-            <button class="snippet-remove" @click.stop="removeSnippet('row', cIdx, rIdx, null, idx)">Remove</button>
-          </div>
+          <!-- Removed snippet/component rendering for row -->
           <div v-for="(column, colIdx) in row.columns" :key="column.id" class="column" :class="{ 'selected-outline': selected?.type === 'column' && selected?.cIdx === cIdx && selected?.rIdx === rIdx && selected?.colIdx === colIdx }" :data-c="cIdx" :data-r="rIdx" :data-col="colIdx" :style="elementStyle(column)" @click.stop="selectElement('column', cIdx, rIdx, colIdx)">
             <!-- Column -->
-            <div v-for="(snip, idx) in column.snippets || []" :key="snip.name + idx" class="snippet-item">
-              <component :is="loadedSnippets[snip.name]" />
-              <button class="snippet-remove" @click.stop="removeSnippet('column', cIdx, rIdx, colIdx, idx)">Remove</button>
-            </div>
-            <div class="toolbar-small toolbar-center">
-              <button class="theme-btn" @click.stop="openPicker('column', cIdx, rIdx, colIdx)">+ Add Component</button>
-            </div>
-            <div v-if="picker.show && picker.type === 'column' && picker.cIdx === cIdx && picker.rIdx === rIdx && picker.colIdx === colIdx" class="picker-inline toolbar-center">
-              <input type="text" v-model="searchQuery" placeholder="Search component..." class="picker-search" />
-              <div class="picker-list">
-                <button v-for="snip in filteredSnippets" :key="snip.name" class="picker-item" @click.stop="addSnippetToElement(snip.name)">{{ snip.name }}</button>
-              </div>
-              <button class="picker-close" @click.stop="closePicker">Close</button>
-            </div>
           </div>
           <div class="toolbar-small toolbar-center">
             <button class="theme-btn" @click.stop="addColumn(cIdx, rIdx)">+ Column</button>
-            <button class="theme-btn" @click.stop="openPicker('row', cIdx, rIdx)">+ Add Component</button>
           </div>
-          <div v-if="picker.show && picker.type === 'row' && picker.cIdx === cIdx && picker.rIdx === rIdx" class="picker-inline toolbar-center">
-            <input type="text" v-model="searchQuery" placeholder="Search component..." class="picker-search" />
-            <div class="picker-list">
-              <button v-for="snip in filteredSnippets" :key="snip.name" class="picker-item" @click.stop="addSnippetToElement(snip.name)">{{ snip.name }}</button>
-            </div>
-            <button class="picker-close" @click.stop="closePicker">Close</button>
-          </div>
-          <!-- Render row snippets first -->
-          <div v-for="(snip, idx) in row.snippets || []" :key="snip.name + idx" class="snippet-item">
-            <component :is="loadedSnippets[snip.name]" />
-            <button class="snippet-remove" @click.stop="removeSnippet('row', cIdx, rIdx, null, idx)">Remove</button>
-          </div>
+          <!-- Removed picker for row -->
+          <!-- Removed snippet/component rendering for row (duplicate) -->
         </div>
       </div>
     </div>
@@ -72,6 +31,7 @@
     <label>Padding <input type="number" v-model.number="selectedRef.padding" /></label>
     <label>Margin <input type="number" v-model.number="selectedRef.margin" /></label>
     <label>Border Width <input type="number" v-model.number="selectedRef.borderWidth" /></label>
+    <button class="delete-btn" @click="deleteSelected">Delete {{ selected.type }}</button>
     <div style="margin-top:6px; font-size:12px; color:#666">
       Click outside to close panel
     </div>
@@ -79,66 +39,29 @@
 </template>
 
 <script setup>
+// Delete selected element (container, row, column)
+function deleteSelected() {
+  if (!selected.value) return
+  const { type, cIdx, rIdx, colIdx } = selected.value
+  if (type === 'container') {
+    containers.value.splice(cIdx, 1)
+    clearSelection()
+    return
+  }
+  if (type === 'row') {
+    containers.value[cIdx]?.rows.splice(rIdx, 1)
+    clearSelection()
+    return
+  }
+  if (type === 'column') {
+    containers.value[cIdx]?.rows[rIdx]?.columns.splice(colIdx, 1)
+    clearSelection()
+    return
+  }
+}
 import { ref, computed, nextTick, watch, onMounted, onBeforeUnmount } from 'vue'
 // ...existing imports...
-// Dynamically import all snippets/components from src/components/snippets
-
-// element picker start here
-const snippetModules = import.meta.glob('../components/snippets/*.vue')
-const snippetNames = Object.keys(snippetModules).map(path => {
-  const name = path.split('/').pop().replace('.vue', '')
-  return { path, name }
-})
-
-const loadedSnippets = ref({})
-async function loadSnippet(name) {
-  const modInfo = snippetNames.find(s => s.name === name)
-  if (!modInfo) return null
-  if (!loadedSnippets.value[name]) {
-    loadedSnippets.value[name] = (await snippetModules[modInfo.path]()).default
-  }
-  return loadedSnippets.value[name]
-}
-
-// Picker state
-function removeSnippet(type, cIdx, rIdx, colIdx, idx) {
-  let target = null
-  if (type === 'container') target = containers.value[cIdx]
-  if (type === 'row') target = containers.value[cIdx]?.rows[rIdx]
-  if (type === 'column') target = containers.value[cIdx]?.rows[rIdx]?.columns[colIdx]
-  if (!target || !target.snippets) return
-  target.snippets.splice(idx, 1)
-}
-const picker = ref({ type: null, cIdx: null, rIdx: null, colIdx: null, show: false })
-const searchQuery = ref('')
-const filteredSnippets = computed(() => {
-  if (!searchQuery.value) return snippetNames
-  return snippetNames.filter(s => s.name.toLowerCase().includes(searchQuery.value.toLowerCase()))
-})
-
-function openPicker(type, cIdx, rIdx = null, colIdx = null) {
-  picker.value = { type, cIdx, rIdx, colIdx, show: true }
-  searchQuery.value = ''
-}
-function closePicker() {
-  picker.value.show = false
-}
-
-async function addSnippetToElement(snippetName) {
-  const snippetComp = await loadSnippet(snippetName)
-  if (!snippetComp) return
-  const { type, cIdx, rIdx, colIdx } = picker.value
-  let target = null
-  if (type === 'container') target = containers.value[cIdx]
-  if (type === 'row') target = containers.value[cIdx]?.rows[rIdx]
-  if (type === 'column') target = containers.value[cIdx]?.rows[rIdx]?.columns[colIdx]
-  if (!target) return
-  if (!target.snippets) target.snippets = []
-  target.snippets.push({ name: snippetName })
-  closePicker()
-}
-
-// element picker end here
+// Removed dynamic snippet/component import and picker logic
 /* data */
 const containers = ref([])
 const building = ref(true)
@@ -338,6 +261,18 @@ function exportLayout() {
 </script>
 
 <style scoped>
+/* Delete button style for control panel */
+.delete-btn {
+  background: #f87171;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  margin: 10px 0;
+  cursor: pointer;
+  font-size: 14px;
+  width: 100%;
+}
 /* Center toolbar buttons */
 .toolbar-center {
   display: flex;
