@@ -2,7 +2,9 @@
   <div class="builder">
     <div class="toolbar">
       <button class="theme-btn" @click="addContainer">+ Container</button>
-      <button class="theme-btn export" @click="exportLayout">Export</button>
+      <button class="theme-btn export" @click="exportLayout">
+        <i class="fa fa-download" aria-hidden="true"></i>
+        Export</button>
     </div>
 
     <div id="layout-generator" :class="{ building }" @click="clearSelection">
