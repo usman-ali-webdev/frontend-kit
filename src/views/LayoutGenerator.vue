@@ -24,7 +24,12 @@
 
   <!-- floating control panel positioned at selected element's top-right -->
   <div v-if="selected" class="control-panel" :style="panelStyle">
-    <h4>Edit {{ selected.type }}</h4>
+    <h4>
+      Edit {{ selected.type }}
+      <span v-if="selectedRef.id" style="font-size:12px; color:#888;">
+        Number: {{ selectedRefIndex }})
+      </span>
+    </h4>
     <label>Padding <input type="number" v-model.number="selectedRef.padding" /></label>
     <label>Margin <input type="number" v-model.number="selectedRef.margin" /></label>
     <label>Border Width <input type="number" v-model.number="selectedRef.borderWidth" /></label>
@@ -36,6 +41,14 @@
 </template>
 
 <script setup>
+const selectedRefIndex = computed(() => {
+  if (!selected.value) return null;
+  const { type, cIdx, rIdx, colIdx } = selected.value;
+  if (type === 'container') return cIdx + 1;
+  if (type === 'row') return rIdx + 1;
+  if (type === 'column') return colIdx + 1;
+  return null;
+});
 // Delete selected element (container, row, column)
 function deleteSelected() {
   if (!selected.value) return
@@ -90,7 +103,8 @@ const panelStyle = computed(() => {
   return {
     position: 'absolute',
     top: panelPos.value.top + 'px',
-    right: panelPos.value.right + 'px',
+    // right: panelPos.value.right + 'px',
+    right: '0px',
     width: panelWidthEstimate + 'px'
   }
 })
@@ -209,13 +223,30 @@ function onWindowChange() {
   if (selected.value) updatePanelPos()
 }
 onMounted(() => {
-  window.addEventListener('scroll', onWindowChange, { passive: true })
-  window.addEventListener('resize', onWindowChange)
-})
+  window.addEventListener('scroll', onWindowChange, { passive: true });
+  window.addEventListener('resize', onWindowChange);
+  document.addEventListener('mousedown', handleOutsideClick);
+  document.addEventListener('keydown', handleEscapeKey);
+});
 onBeforeUnmount(() => {
-  window.removeEventListener('scroll', onWindowChange)
-  window.removeEventListener('resize', onWindowChange)
-})
+  window.removeEventListener('scroll', onWindowChange);
+  window.removeEventListener('resize', onWindowChange);
+  document.removeEventListener('mousedown', handleOutsideClick);
+  document.removeEventListener('keydown', handleEscapeKey);
+});
+
+function handleEscapeKey(e) {
+  if (e.key === 'Escape' && selected.value) {
+    clearSelection();
+  }
+}
+
+function handleOutsideClick(e) {
+  const panel = document.querySelector('.control-panel');
+  if (panel && !panel.contains(e.target) && selected.value) {
+    clearSelection();
+  }
+}
 
 watch(selected, (newVal) => {
   if (newVal) {
@@ -235,7 +266,8 @@ function exportLayout() {
       const colCount = row.columns.length || 1
       let cols = ''
       row.columns.forEach(col => {
-        cols += `<div class="column" style="flex-basis:${100 / colCount}%;flex-grow:1;padding:${col.padding}px;margin:${col.margin}px 0;box-sizing:border-box;${col.borderWidth ? `border:${col.borderWidth}px solid #000;` : ''}">Column</div>`
+        // flex-basis:${100 / colCount}%;
+        cols += `<div class="column" style="flex:${col.flex};padding:${col.padding}px;margin:${col.margin}px 0;box-sizing:border-box;${col.borderWidth ? `border:${col.borderWidth}px solid #000;` : ''}">Column</div>`
       })
       rowsHtml += `<div class="row" style="padding:${row.padding}px;margin:${row.margin}px 0;display:flex;flex-wrap:wrap;box-sizing:border-box;">${cols}</div>`
     })
@@ -244,8 +276,8 @@ function exportLayout() {
 
   const layoutHTML = `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>
   .container{box-sizing:border-box;width:100%}
-  .row{display:flex;flex-wrap:wrap;gap:10px;box-sizing:border-box;}
-  .column{box-sizing:border-box;flex-grow:1;border: 1px solid gainsboro;}
+  .row{display:flex;flex-wrap:wrap; /* flex-grow:1; */ gap:10px;box-sizing:border-box;}
+  .column{box-sizing:border-box;border: 1px solid gainsboro;}
   @media(max-width:768px){.column{flex-basis:100% !important;}}
   </style></head><body>${layoutContent}</body></html>`
 
