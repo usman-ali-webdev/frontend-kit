@@ -306,6 +306,7 @@ function exportLayout() {
   font-size: 14px;
   width: 100%;
 }
+
 /* Center toolbar buttons */
 .toolbar-center {
   display: flex;
@@ -314,6 +315,7 @@ function exportLayout() {
   gap: 8px;
   /* margin-top: 10px; */
 }
+
 .builder {
   padding: 12px;
   font-family: Arial, sans-serif;
@@ -449,22 +451,24 @@ function exportLayout() {
 }
 
 .snippet-item {
-position: relative;
-margin-bottom: 8px;
+  position: relative;
+  margin-bottom: 8px;
 }
+
 .snippet-remove {
-position: absolute;
-top: 4px;
-right: 4px;
-background: #f87171;
-color: #fff;
-border: none;
-border-radius: 4px;
-padding: 2px 8px;
-font-size: 12px;
-cursor: pointer;
-z-index: 10;
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  background: #f87171;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 12px;
+  cursor: pointer;
+  z-index: 10;
 }
+
 .toolbar-center {
   display: flex;
   justify-content: center;
