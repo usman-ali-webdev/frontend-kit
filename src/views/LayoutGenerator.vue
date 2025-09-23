@@ -29,7 +29,7 @@
     <h4>
       Edit {{ selected.type }}
       <span v-if="selectedRef.id" style="font-size:12px; color:#888;">
-        Number: {{ selectedRefIndex }})
+        (No. {{ selectedRefIndex }})
       </span>
     </h4>
     <label>Padding <input type="number" v-model.number="selectedRef.padding" /></label>
