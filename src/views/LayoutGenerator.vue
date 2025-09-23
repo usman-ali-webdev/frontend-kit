@@ -12,7 +12,7 @@
         </div>
         <div v-for="(row, rIdx) in container.rows" :key="row.id" class="row" :class="{ 'selected-outline': selected?.type === 'row' && selected?.cIdx === cIdx && selected?.rIdx === rIdx }" :data-c="cIdx" :data-r="rIdx" :style="elementStyle(row)" @click.stop="selectElement('row', cIdx, rIdx)">
           <div v-for="(column, colIdx) in row.columns" :key="column.id" class="column" :class="{ 'selected-outline': selected?.type === 'column' && selected?.cIdx === cIdx && selected?.rIdx === rIdx && selected?.colIdx === colIdx }" :data-c="cIdx" :data-r="rIdx" :data-col="colIdx" :style="elementStyle(column)" @click.stop="selectElement('column', cIdx, rIdx, colIdx)">
-            <!-- Column -->
+            column {{ colIdx + 1 }}
           </div>
           <div class="toolbar-small toolbar-center">
             <button class="theme-btn" @click.stop="addColumn(cIdx, rIdx)">+ Column</button>
@@ -51,7 +51,13 @@ function deleteSelected() {
     return
   }
   if (type === 'column') {
-    containers.value[cIdx]?.rows[rIdx]?.columns.splice(colIdx, 1)
+    const row = containers.value[cIdx]?.rows[rIdx]
+    row?.columns.splice(colIdx, 1)
+    // Update flex for remaining columns
+    if (row && row.columns.length > 0) {
+      const count = row.columns.length
+      row.columns.forEach(col => col.flex = 1 / count)
+    }
     clearSelection()
     return
   }
@@ -238,9 +244,9 @@ function exportLayout() {
 
   const layoutHTML = `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>
   .container{box-sizing:border-box;width:100%}
-  .row{display:flex;flex-wrap:wrap;box-sizing:border-box}
-  .column{box-sizing:border-box;flex-grow:1}
-  @media(max-width:768px){.column{flex-basis:100% !important}}
+  .row{display:flex;flex-wrap:wrap;gap:10px;box-sizing:border-box;}
+  .column{box-sizing:border-box;flex-grow:1;border: 1px solid gainsboro;}
+  @media(max-width:768px){.column{flex-basis:100% !important;}}
   </style></head><body>${layoutContent}</body></html>`
 
   const blob = new Blob([layoutHTML], { type: 'text/html' })
@@ -274,7 +280,7 @@ function exportLayout() {
   justify-content: center;
   align-items: center;
   gap: 8px;
-  margin-top: 10px;
+  /* margin-top: 10px; */
 }
 .builder {
   padding: 12px;
@@ -432,8 +438,8 @@ z-index: 10;
   justify-content: center;
   align-items: center;
   gap: 8px;
-  margin-top: 12px;
-  margin-bottom: 4px;
+  /* margin-top: 12px; */
+  /* margin-bottom: 4px; */
   width: 100%;
 }
 </style>
