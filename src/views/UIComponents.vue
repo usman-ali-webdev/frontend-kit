@@ -125,9 +125,16 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, watch, computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import meta from '@/meta/snippets-meta.json'
+import { useHead } from '@vueuse/head'
+
+const currentComponentMeta = computed(() => {
+  // Find the component based on current route slug
+  const slug = router.currentRoute.value.params.slug
+  return meta.find(m => m.slug.toLowerCase() === slug?.toLowerCase()) || null
+})
 
 const loading = ref(true)
 
@@ -188,7 +195,25 @@ onMounted(async () => {
     activeTab.value[cat] = parseInt(idx, 10) || 0
   }
 })
-
+// Dynamically update SEO meta
+watch(
+  () => router.currentRoute.value.params.slug,
+  (newSlug) => {
+    const comp = meta.find(m => m.slug.toLowerCase() === newSlug?.toLowerCase())
+    useHead({
+      title: comp ? comp.seoTitle || comp.label + ' | FrontendKit' : 'UI Components | FrontendKit',
+      meta: [
+        { name: 'description', content: comp ? comp.metaDescription || comp.description : 'FrontendKit UI Components' },
+        { name: 'keywords', content: comp ? comp.metaKeywords || '' : 'UI, Components, FrontendKit, Vue, HTML, CSS, JS' },
+        { name: 'author', content: 'Dear Usman' },
+        { property: 'og:title', content: comp ? comp.seoTitle || comp.label : 'UI Components | FrontendKit' },
+        { property: 'og:description', content: comp ? comp.metaDescription || comp.description : 'FrontendKit UI Components' },
+        { property: 'og:type', content: 'website' }
+      ]
+    })
+  },
+  { immediate: true }
+)
 // function handleSidebarClick(label) {
 //   hasInteracted.value = true
 //   searchQuery.value = ''          // 🔑 clear search when sidebar is clicked
@@ -204,7 +229,7 @@ function handleSidebarClick(label) {
   openAccordions.value[label] = true
 
   router.push({
-    name: 'UIComponents',
+    name: 'ui-components',
     query: { cat: label, idx: 0 }
   })
 }

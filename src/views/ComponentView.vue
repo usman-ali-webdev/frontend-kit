@@ -88,6 +88,7 @@
 import { useRoute } from 'vue-router';
 import { defineAsyncComponent } from 'vue';
 import meta from '@/meta/snippets-meta.json';
+import { useHead } from '@vueuse/head'
 
 // Dynamically import all components from the snippets folder
 const snippetModules = import.meta.glob('@/components/snippets/*.vue');
@@ -138,6 +139,9 @@ export default {
     },
     componentLabel() {
       return this.slug.replace(/([A-Z])/g, ' $1').replace(/^./, s => s.toUpperCase()).trim();
+    },
+    componentMeta() {
+      return meta.find(m => m.slug.toLowerCase() === this.slug?.toLowerCase()) || {}
     }
   },
   async created() {
@@ -178,7 +182,18 @@ export default {
     // Watch for route changes to update randomSnippets and component
     '$route.params.slug': {
       immediate: true,
-      async handler(newSlug) {
+      async handler(newSlug)  {
+        const componentData = meta.find(c => c.slug === newSlug)
+        if (componentData) {
+          useHead({
+            title: `${componentData.label} | FrontendKit`,
+            meta: [
+              { name: 'description', content: componentData.description },
+              { property: 'og:title', content: `${componentData.label} | FrontendKit` },
+              { property: 'og:description', content: componentData.description }
+            ]
+          })
+        }
         this.loading = true;
         // Find the matching component by slug
         const match = Object.keys(snippetModules).find(path => {
@@ -240,6 +255,17 @@ export default {
         }, 1500);
       });
     }
+  },
+  updateMeta() {
+    const comp = this.componentMeta
+    useHead({
+      title: comp.seoTitle || `${comp.label || 'UI Component'} | FrontendKit`,
+      meta: [
+        { name: 'description', content: comp.metaDescription || comp.description || 'FrontendKit UI Component' },
+        { name: 'keywords', content: comp.metaKeywords || 'UI, Component, FrontendKit, Vue, HTML, CSS, JS' },
+        { name: 'author', content: 'Dear Usman' }
+      ]
+    })
   }
 };
 </script>

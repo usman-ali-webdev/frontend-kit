@@ -4,120 +4,169 @@
     "label": "Login Form Minimal",
     "category": "Form",
     "description": "Minimal, clean login form.",
-    "previewImage": "loginFormSimple.png"
+    "previewImage": "loginFormSimple.png",
+    "seoTitle": "Login Form Minimal | FrontendKit",
+    "metaDescription": "Minimal, clean login form component for modern web apps.",
+    "metaKeywords": "Login, Form, Minimal, FrontendKit, HTML, CSS, JS, Vue"
   },
   {
     "slug": "loginForm",
     "label": "Login Form Basic",
     "category": "Form",
     "description": "Classic login form with labels and button.",
-    "previewImage": "loginForm.png"
+    "previewImage": "loginForm.png",
+    "seoTitle": "Login Form Basic | FrontendKit",
+    "metaDescription": "Classic login form component with labels and button for frontend projects.",
+    "metaKeywords": "Login, Form, Basic, FrontendKit, HTML, CSS, JS, Vue"
   },
   {
     "slug": "loginFormModern",
     "label": "Login Form Modern",
     "category": "Form",
     "description": "Modern login form with icon and divider.",
-    "previewImage": "loginFormModern.png"
+    "previewImage": "loginFormModern.png",
+    "seoTitle": "Login Form Modern | FrontendKit",
+    "metaDescription": "Modern login form component with icons and divider for stylish UI.",
+    "metaKeywords": "Login, Form, Modern, FrontendKit, HTML, CSS, JS, Vue"
   },
   {
     "slug": "TrimMultilineText",
     "label": "Trim Multiline Text",
     "category": "Text Utilities",
     "description": "Trims and limits text to multiple lines.",
-    "previewImage": "trimMultilineText.png"
-  }
-,
+    "previewImage": "trimMultilineText.png",
+    "seoTitle": "Trim Multiline Text Utility | FrontendKit",
+    "metaDescription": "Utility component to trim and limit text to multiple lines.",
+    "metaKeywords": "Text, Utility, Trim, Multiline, FrontendKit, Vue, JS"
+  },
   {
     "slug": "layoutGridDemo",
     "label": "Grid Layout Demo",
     "category": "Layout",
     "description": "Demo of a responsive grid layout.",
-    "previewImage": "layoutGridDemo.png"
+    "previewImage": "layoutGridDemo.png",
+    "seoTitle": "Grid Layout Demo | FrontendKit",
+    "metaDescription": "Responsive grid layout demo component for building layouts.",
+    "metaKeywords": "Grid, Layout, Demo, Responsive, FrontendKit, CSS, HTML, Vue"
   },
   {
     "slug": "primaryButton",
     "label": "Primary Button",
     "category": "Buttons",
     "description": "A simple primary button.",
-    "previewImage": "primaryButton.png"
+    "previewImage": "primaryButton.png",
+    "seoTitle": "Primary Button Component | FrontendKit",
+    "metaDescription": "Simple primary button component for forms and interfaces.",
+    "metaKeywords": "Button, Primary, UI, FrontendKit, HTML, CSS, JS, Vue"
   },
   {
     "slug": "statusSuccess",
     "label": "Status Success",
     "category": "Status",
     "description": "Success status indicator.",
-    "previewImage": "statusSuccess.png"
+    "previewImage": "statusSuccess.png",
+    "seoTitle": "Status Success Indicator | FrontendKit",
+    "metaDescription": "Component to display a success status indicator.",
+    "metaKeywords": "Status, Success, Indicator, FrontendKit, UI, Vue"
   },
   {
     "slug": "typographyHeading",
     "label": "Typography Heading",
     "category": "Typography",
     "description": "Heading styles demo.",
-    "previewImage": "typographyHeading.png"
+    "previewImage": "typographyHeading.png",
+    "seoTitle": "Typography Heading Component | FrontendKit",
+    "metaDescription": "Demo component showcasing heading typography styles.",
+    "metaKeywords": "Typography, Heading, FrontendKit, CSS, HTML, Vue"
   },
   {
     "slug": "overlayModal",
     "label": "Overlay Modal",
     "category": "Overlays",
     "description": "Basic modal overlay example.",
-    "previewImage": "overlayModal.png"
+    "previewImage": "overlayModal.png",
+    "seoTitle": "Overlay Modal Component | FrontendKit",
+    "metaDescription": "Basic overlay modal component for UI interactions.",
+    "metaKeywords": "Modal, Overlay, FrontendKit, UI, Vue, JS, HTML, CSS"
   },
   {
     "slug": "navSidebar",
     "label": "Sidebar Navigation",
     "category": "Navigation",
     "description": "Sidebar navigation menu demo.",
-    "previewImage": "navSidebar.png"
+    "previewImage": "navSidebar.png",
+    "seoTitle": "Sidebar Navigation Component | FrontendKit",
+    "metaDescription": "Sidebar navigation component demo for multi-level menus.",
+    "metaKeywords": "Sidebar, Navigation, Menu, FrontendKit, Vue, HTML, CSS"
   },
   {
     "slug": "mediaIconDemo",
     "label": "Media & Icon Demo",
     "category": "Media and icons",
     "description": "Demo of media and icon usage.",
-    "previewImage": "mediaIconDemo.png"
+    "previewImage": "mediaIconDemo.png",
+    "seoTitle": "Media & Icon Demo Component | FrontendKit",
+    "metaDescription": "Component demo for displaying media and icons.",
+    "metaKeywords": "Media, Icon, Demo, FrontendKit, UI, Vue, CSS, HTML"
   },
   {
     "slug": "dataEntryTable",
     "label": "Data Entry Table",
     "category": "Data Entry",
     "description": "Simple data entry table example.",
-    "previewImage": "dataEntryTable.png"
-  }
-,
+    "previewImage": "dataEntryTable.png",
+    "seoTitle": "Data Entry Table Component | FrontendKit",
+    "metaDescription": "Component for simple data entry tables in UI.",
+    "metaKeywords": "Data, Table, Entry, FrontendKit, Vue, HTML, CSS"
+  },
   {
     "slug": "cardProfile",
     "label": "Profile Card",
     "category": "Cards",
     "description": "Attractive user profile card with avatar and follow button.",
-    "previewImage": "cardProfile.png"
+    "previewImage": "cardProfile.png",
+    "seoTitle": "Profile Card Component | FrontendKit",
+    "metaDescription": "User profile card with avatar, name, and follow button.",
+    "metaKeywords": "Profile, Card, Avatar, FrontendKit, Vue, UI, HTML, CSS"
   },
   {
     "slug": "notificationToast",
     "label": "Notification Toast",
     "category": "Status",
     "description": "Animated notification toast with close button.",
-    "previewImage": "notificationToast.png"
+    "previewImage": "notificationToast.png",
+    "seoTitle": "Notification Toast Component | FrontendKit",
+    "metaDescription": "Animated notification toast component with close button.",
+    "metaKeywords": "Notification, Toast, Status, FrontendKit, UI, Vue, JS"
   },
   {
     "slug": "progressBar",
     "label": "Progress Bar",
     "category": "Status",
     "description": "Simple animated progress bar.",
-    "previewImage": "progressBar.png"
+    "previewImage": "progressBar.png",
+    "seoTitle": "Progress Bar Component | FrontendKit",
+    "metaDescription": "Animated progress bar component to indicate progress.",
+    "metaKeywords": "Progress, Bar, Status, FrontendKit, UI, Vue, CSS"
   },
   {
     "slug": "avatarGroup",
     "label": "Avatar Group",
     "category": "Media and icons",
     "description": "Group of overlapping user avatars.",
-    "previewImage": "avatarGroup.png"
+    "previewImage": "avatarGroup.png",
+    "seoTitle": "Avatar Group Component | FrontendKit",
+    "metaDescription": "Component showing a group of overlapping user avatars.",
+    "metaKeywords": "Avatar, Group, Media, FrontendKit, UI, Vue, CSS"
   },
   {
     "slug": "stepperHorizontal",
     "label": "Horizontal Stepper",
     "category": "Navigation",
     "description": "Horizontal stepper for multi-step processes.",
-    "previewImage": "stepperHorizontal.png"
+    "previewImage": "stepperHorizontal.png",
+    "seoTitle": "Horizontal Stepper Component | FrontendKit",
+    "metaDescription": "Horizontal stepper component for multi-step workflows.",
+    "metaKeywords": "Stepper, Horizontal, Navigation, FrontendKit, Vue, UI"
   }
 ]
